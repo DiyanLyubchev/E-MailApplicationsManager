@@ -51,10 +51,12 @@ namespace E_MailApplicationsManager.Models.Seed
 
         private static RoleUser[] SeedRoles()
         {
+           
             var userRole = new RoleUser[]
             {
                  new RoleUser
                 {
+                      
                     Id = "ca678235-7571-4177-984f-e9d1957b0187",
                     Name = "Admin",
                     NormalizedName = "ADMIN"

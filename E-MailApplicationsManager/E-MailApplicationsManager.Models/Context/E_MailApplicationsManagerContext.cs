@@ -24,6 +24,7 @@ namespace E_MailApplicationsManager.Models.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UserRole();
+            base.OnModelCreating(modelBuilder);
         }
 
     }
