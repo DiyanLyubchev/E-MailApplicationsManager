@@ -1,8 +1,9 @@
-﻿using E_MailApplicationsManager.Models.Common;
+﻿using E_MailApplicationsManager.Models.BaseEntitys;
+using E_MailApplicationsManager.Models.Common;
 
 namespace E_MailApplicationsManager.Models
 {
-    public class ReceivedEmail
+    public class ReceivedEmail : BaseIdEntity
     {
         public EmailStatusesType Status { get; set; }
 

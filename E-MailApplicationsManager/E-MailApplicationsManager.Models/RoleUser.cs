@@ -2,8 +2,7 @@
 
 namespace E_MailApplicationsManager.Models
 {
-    public class User : IdentityUser
+    public class RoleUser : IdentityRole
     {
-        public LoanApplicant LoanApplicant { get; set; }
     }
 }
