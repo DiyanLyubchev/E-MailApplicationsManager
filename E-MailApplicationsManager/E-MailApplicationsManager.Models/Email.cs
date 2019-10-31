@@ -6,6 +6,7 @@ namespace E_MailApplicationsManager.Models
 {
     public class Email : BaseIdEntity
     {
+        public string Subject { get; set; }
         public string Content { get; set; }
 
         public DateTime DateReceived { get; set; }
