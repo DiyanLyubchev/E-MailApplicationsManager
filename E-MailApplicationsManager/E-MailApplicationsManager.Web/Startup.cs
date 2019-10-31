@@ -11,6 +11,7 @@ using System;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using E_MailApplicationsManager.Service;
 
 namespace E_MailApplicationsManager.Web
 {
@@ -64,6 +65,9 @@ namespace E_MailApplicationsManager.Web
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             services.AddDbContext<E_MailApplicationsManagerContext>(options =>
              options.UseSqlServer(

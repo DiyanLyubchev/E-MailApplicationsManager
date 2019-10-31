@@ -5,4 +5,8 @@
     <RootNamespace>E_MailApplicationsManager.Service</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\E-MailApplicationsManager.Models\E-MailApplicationsManager.Models.csproj" />
+  </ItemGroup>
+
 </Project>
