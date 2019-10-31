@@ -2,7 +2,8 @@
 
 namespace E_MailApplicationsManager.Service
 {
-    public class UserService
+    public class UserService : IUserService
     {
+       
     }
 }

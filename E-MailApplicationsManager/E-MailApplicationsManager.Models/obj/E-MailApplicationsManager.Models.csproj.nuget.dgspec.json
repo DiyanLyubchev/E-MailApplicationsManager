@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[2.2.2, )"
             },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",

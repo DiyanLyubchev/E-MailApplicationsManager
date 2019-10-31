@@ -6,13 +6,11 @@ namespace E_MailApplicationsManager.Models
     {
         public string Name { get; set; }
 
-        public int ClientNumber { get; set; }
-
         public string PhoneNumber { get; set; }
 
         public string EGN { get; set; }
 
-        public bool IsApproved { get; set; } = true;
+        public bool IsApproved { get; set; } 
 
     }
 }

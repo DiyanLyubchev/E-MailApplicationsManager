@@ -16,10 +16,16 @@ namespace E_MailApplicationsManager.Models.Context
         }
 
         public DbSet<Email> Emails { get; set; }
+
         public DbSet<EmailAttachment> Attachments { get; set; }
+
         public DbSet<LoanApplicant> LoanApplicants { get; set; }
+
         public DbSet<ReceivedEmail> ReceivedEmails { get; set; }
+
         public DbSet<RoleUser> RoleUsers { get; set; }
+
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

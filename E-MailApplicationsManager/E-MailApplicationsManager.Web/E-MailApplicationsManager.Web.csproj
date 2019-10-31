@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\E-MailApplicationsManager.Models\E-MailApplicationsManager.Models.csproj" />
+    <ProjectReference Include="..\E-MailApplicationsManager.Service\E-MailApplicationsManager.Service.csproj" />
   </ItemGroup>
 
 </Project>
