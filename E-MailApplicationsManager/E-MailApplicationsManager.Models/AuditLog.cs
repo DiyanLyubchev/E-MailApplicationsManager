@@ -16,5 +16,9 @@ namespace E_MailApplicationsManager.Models
         public Email Email { get; set; }
 
         public int EmailId { get; set; }
+
+        public string LastStatusInfo { get; set; }
+
+        public string NewStatusInfo { get; set; }
     }
 }

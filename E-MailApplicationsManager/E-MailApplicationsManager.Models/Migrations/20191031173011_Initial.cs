@@ -24,34 +24,49 @@ namespace E_MailApplicationsManager.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Emails",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(nullable: true),
-                    DateReceived = table.Column<DateTime>(nullable: false)
+                    Subject = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
+                    Sender = table.Column<string>(nullable: true),
+                    DateReceived = table.Column<DateTime>(nullable: false),
+                    InitialRegistrationInData = table.Column<DateTime>(nullable: true),
+                    SetCurrentStatus = table.Column<DateTime>(nullable: false),
+                    SetTerminalState = table.Column<DateTime>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
+                    SizeInMb = table.Column<double>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Emails", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LoanApplicants",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    ClientNumber = table.Column<int>(nullable: false),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    EGN = table.Column<string>(nullable: true),
-                    IsApproved = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoanApplicants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,59 +88,6 @@ namespace E_MailApplicationsManager.Models.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Attachments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    EmailId = table.Column<int>(nullable: false),
-                    FileName = table.Column<string>(nullable: true),
-                    SizeInMb = table.Column<double>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attachments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Attachments_Emails_EmailId",
-                        column: x => x.EmailId,
-                        principalTable: "Emails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    LoanApplicantId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_LoanApplicants_LoanApplicantId",
-                        column: x => x.LoanApplicantId,
-                        principalTable: "LoanApplicants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,6 +176,80 @@ namespace E_MailApplicationsManager.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LoanApplicants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    EGN = table.Column<string>(nullable: true),
+                    IsApproved = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanApplicants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoanApplicants_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attachments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EmailId = table.Column<int>(nullable: false),
+                    FileName = table.Column<string>(nullable: true),
+                    SizeInMb = table.Column<double>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attachments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Attachments_Emails_EmailId",
+                        column: x => x.EmailId,
+                        principalTable: "Emails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuditLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Date = table.Column<DateTime>(nullable: false),
+                    InfoLog = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    EmailId = table.Column<int>(nullable: false),
+                    LastStatusInfo = table.Column<string>(nullable: true),
+                    NewStatusInfo = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditLogs_Emails_EmailId",
+                        column: x => x.EmailId,
+                        principalTable: "Emails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AuditLogs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReceivedEmails",
                 columns: table => new
                 {
@@ -239,6 +275,35 @@ namespace E_MailApplicationsManager.Models.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "9f263ca7-eefa-4edb-a4f8-cf04dd704cba", "RoleUser", "Admin", "ADMIN" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "8894e74d-2508-4213-9acf-8d7154c8d012", "RoleUser", "Manager", "MANAGER" },
+                    { "8af3ffe5-1a47-4a68-be62-851092160a36", "4cdd6c5f-352b-4c57-9706-dd254c4c933d", "RoleUser", "Operator", "OPERATOR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "f14ffc2f-7a06-4ba4-bbbf-54f43890c5b5", "admin1@admin.com", false, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEGXq/+8lf7gy3QeEgMg+iwpIb2CN01YC8I479ad1wHLggsgLw5fEK6AU7XMRXsCzFw==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "b027e316-994a-4864-89b6-ea8cff51e8ad", "admin2@admin.com", false, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAELCP2UvdYAoZJjHRYe4cM1CTYE/I617k+o5QEB4kl0FMAPFYeOZKwWxEZG1SIfNqeA==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "c23c3678-6194-4b7e-a928-09614190eb62", "ca678235-7571-4177-984f-e9d1957b0187" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", "ca678235-7571-4177-984f-e9d1957b0187" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -268,11 +333,6 @@ namespace E_MailApplicationsManager.Models.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_LoanApplicantId",
-                table: "AspNetUsers",
-                column: "LoanApplicantId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -288,6 +348,21 @@ namespace E_MailApplicationsManager.Models.Migrations
                 name: "IX_Attachments_EmailId",
                 table: "Attachments",
                 column: "EmailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditLogs_EmailId",
+                table: "AuditLogs",
+                column: "EmailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditLogs_UserId",
+                table: "AuditLogs",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanApplicants_UserId",
+                table: "LoanApplicants",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReceivedEmails_EmailId",
@@ -321,6 +396,12 @@ namespace E_MailApplicationsManager.Models.Migrations
                 name: "Attachments");
 
             migrationBuilder.DropTable(
+                name: "AuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "LoanApplicants");
+
+            migrationBuilder.DropTable(
                 name: "ReceivedEmails");
 
             migrationBuilder.DropTable(
@@ -331,9 +412,6 @@ namespace E_MailApplicationsManager.Models.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "LoanApplicants");
         }
     }
 }
