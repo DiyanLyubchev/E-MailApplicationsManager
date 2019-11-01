@@ -55,24 +55,18 @@ namespace E_MailApplicationsManager.Models.Seed
             var userRole = new RoleUser[]
             {
                  new RoleUser
-                {
-                      
-                    Id = "ca678235-7571-4177-984f-e9d1957b0187",
-                    Name = "Admin",
-                    NormalizedName = "ADMIN"
-                },
+                 {
+                       
+                     Id = "ca678235-7571-4177-984f-e9d1957b0187",
+                     Name = "Manager",
+                     NormalizedName = "MANAGER"
+                 },
                 new RoleUser
                 {
                     Id = "ef1c4fa2-0b76-4598-aaee-c6e02803d486",
-                    Name = "Manager",
-                    NormalizedName = "MANAGER"
-                },
-                new RoleUser
-                {
-                    Id = "8af3ffe5-1a47-4a68-be62-851092160a36",
                     Name = "Operator",
                     NormalizedName = "OPERATOR"
-                }
+                },
             };
             return userRole;
         }

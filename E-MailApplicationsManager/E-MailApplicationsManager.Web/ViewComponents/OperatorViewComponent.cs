@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Web.ViewComponents
 {
-    public class AdminViewComponent : ViewComponent
+    public class OperatorViewComponent : ViewComponent
     {
-
         private readonly IUserService service;
 
-        public AdminViewComponent(IUserService accountsService)
+        public OperatorViewComponent(IUserService service)
         {
 
-            this.service = accountsService;
+            this.service = service;
 
         }
 

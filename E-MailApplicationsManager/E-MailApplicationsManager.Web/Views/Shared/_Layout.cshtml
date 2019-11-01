@@ -32,14 +32,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            @await Component.InvokeAsync("Admin")
-                        }
-
                         @if (User.IsInRole("Manager"))
                         {
                             @await Component.InvokeAsync("Manager")
+                        }
+
+                        @if (User.IsInRole("Operator"))
+                        {
+                            @await Component.InvokeAsync("Operator")
                         }
                     </ul>
                 </div>
