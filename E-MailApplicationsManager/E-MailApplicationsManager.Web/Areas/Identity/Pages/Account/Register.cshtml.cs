@@ -20,6 +20,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+       
 
         public RegisterModel(
             UserManager<User> userManager,
@@ -54,6 +55,8 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string Role { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -66,7 +69,11 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.UserName, Email = Input.UserName };
+                var user = new User { UserName = Input.UserName };
+                var role = new RoleUser { Name = Input.Role };
+                var newUser = new IdentityUserRole<string>
+                { UserId = user.Id, RoleId = role.Id };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -78,9 +85,6 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.UserName, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

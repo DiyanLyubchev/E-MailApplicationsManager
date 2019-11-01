@@ -50,14 +50,40 @@ namespace E_MailApplicationsManager.Web
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
 
             var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
+            allListMails.LabelIds = "INBOX";    // take data only from inbox
+            allListMails.IncludeSpamTrash = false;  // not take data from spam
 
             var emails = allListMails.ExecuteAsync().Result;
+
+            string subject = null;
+            string date = null;
+            string from = null;
+            string body = null;
 
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
 
                 var responseMail = requestMail.ExecuteAsync().Result;
+
+                if (responseMail != null)
+                {
+                    subject = responseMail.Payload.Headers
+                        .FirstOrDefault(s => s.Name == "Subject").Value;
+
+                    date = responseMail.Payload.Headers
+                        .FirstOrDefault(s => s.Name == "Date").Value;
+
+                    from = responseMail.Payload.Headers
+                        .FirstOrDefault(s => s.Name == "From").Value;
+
+                    body = responseMail.Payload.Parts[0].Body.Data;
+
+
+
+                   // responseMail.Payload.Parts[0].Parts[0].Body.Data;  // with attachment
+
+                }
             }
         }
     }

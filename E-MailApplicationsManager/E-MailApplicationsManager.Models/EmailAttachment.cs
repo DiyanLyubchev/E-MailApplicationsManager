@@ -13,3 +13,4 @@ namespace E_MailApplicationsManager.Models
         public double? SizeInMb { get; set; }
     }
 }
+

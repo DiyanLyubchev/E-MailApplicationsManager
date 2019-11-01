@@ -54,6 +54,13 @@ namespace E_MailApplicationsManager.Service
             this.context.Users.Add(account);
             this.context.SaveChanges();
         }
+
+        public async Task<User> GetUserAsync(string userId)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            return user;
+        }
     }
 }
 
