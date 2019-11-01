@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Service;
 using E_MailApplicationsManager.Service.Dto;
-using E_MailApplicationsManager.Web.Areas.Identity.Pages.Account;
 using E_MailApplicationsManager.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,6 +29,8 @@ namespace E_MailApplicationsManager.Web.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Manager")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAccount(RegisterAccountViewModel viewModel)
         {
             var registerAccountDto = new RegisterAccountDto

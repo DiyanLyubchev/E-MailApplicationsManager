@@ -1,7 +1,6 @@
 ﻿using System;
 using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
-using E_MailApplicationsManager.Web.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -16,11 +15,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) =>
-            {
-                services.AddDbContext<E_MailApplicationsManagerContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("DefaultConnection")));
+            builder.ConfigureServices((context, services) => {
             });
         }
     }
