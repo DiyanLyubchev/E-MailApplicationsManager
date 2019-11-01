@@ -6,7 +6,7 @@ namespace E_MailApplicationsManager.Service
 {
     public interface IUserService
     {
-        void RegisterAccountAsync(RegisterAccountDto registerAccountDto);
+        Task RegisterAccountAsync(RegisterAccountDto registerAccountDto);
 
         Task<User> GetUserAsync(string userId);
     }

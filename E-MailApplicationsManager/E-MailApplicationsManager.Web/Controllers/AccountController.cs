@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Service;
 using E_MailApplicationsManager.Service.Dto;
+using E_MailApplicationsManager.Web.Areas.Identity.Pages.Account;
 using E_MailApplicationsManager.Web.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace E_MailApplicationsManager.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IUserService service;
+   
 
         public AccountController(IUserService service)
         {
-            this.service = service;
+            this.service = service;         
         }
 
         [HttpGet]
@@ -24,7 +29,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult RegisterAccount(RegisterAccountViewModel viewModel)
+        public async Task<IActionResult> RegisterAccount(RegisterAccountViewModel viewModel)
         {
             var registerAccountDto = new RegisterAccountDto
             {
@@ -33,9 +38,9 @@ namespace E_MailApplicationsManager.Web.Controllers
                 Role = viewModel.Role
             };
 
-            this.service.RegisterAccountAsync(registerAccountDto);
+            await this.service.RegisterAccountAsync(registerAccountDto);
 
             return View();
-        }
+        }            
     }
 }
