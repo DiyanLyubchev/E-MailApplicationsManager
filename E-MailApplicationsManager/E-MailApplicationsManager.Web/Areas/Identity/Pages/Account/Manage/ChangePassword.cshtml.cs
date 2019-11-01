@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Models.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,15 +16,18 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
+        private readonly E_MailApplicationsManagerContext context;
 
         public ChangePasswordModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<ChangePasswordModel> logger)
+            ILogger<ChangePasswordModel> logger, 
+            E_MailApplicationsManagerContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            this.context = context;
         }
 
         [BindProperty]
@@ -64,7 +68,8 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account.Manage
             {
                 return RedirectToPage("./SetPassword");
             }
-
+            user.FirstLog = true;
+            this.context.SaveChanges();
             return Page();
         }
 

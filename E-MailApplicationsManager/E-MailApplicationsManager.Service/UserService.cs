@@ -13,13 +13,11 @@ namespace E_MailApplicationsManager.Service
     public class UserService : IUserService
     {
         private readonly E_MailApplicationsManagerContext context;
-        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
-        public UserService(E_MailApplicationsManagerContext context, SignInManager<User> signInManager, UserManager<User> userManager)
+        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager)
         {
             this.context = context;
-            _signInManager = signInManager;
             _userManager = userManager;
         }
 
@@ -55,8 +53,6 @@ namespace E_MailApplicationsManager.Service
             { UserId = account.Id, RoleId = userRole.Id };
 
             await _userManager.CreateAsync(account);
-            //await this.context.Users.AddAsync(account);
-            //await this.context.SaveChangesAsync();
             await _userManager.AddToRoleAsync(account, registerAccountDto.Role);
         }
 
@@ -65,7 +61,8 @@ namespace E_MailApplicationsManager.Service
             var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
-        }       
+        }
+      
     }
 }
 

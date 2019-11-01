@@ -21,7 +21,8 @@ namespace E_MailApplicationsManager.Models.Seed
                 Email = "admin1@admin.com",
                 NormalizedEmail = "ADMIN1@ADMIN.COM",
                 SecurityStamp = "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN",
-                LockoutEnabled = true
+                LockoutEnabled = true,
+                FirstLog = true
             };
             var adminBobi = new User
             {
@@ -31,7 +32,8 @@ namespace E_MailApplicationsManager.Models.Seed
                 Email = "admin2@admin.com",
                 NormalizedEmail = "ADMIN2@ADMIN.COM",
                 SecurityStamp = "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU",
-                LockoutEnabled = true
+                LockoutEnabled = true,
+                FirstLog = true
             };
 
             adminDiyan.PasswordHash = hasher.HashPassword(adminDiyan, "123456");
@@ -51,12 +53,12 @@ namespace E_MailApplicationsManager.Models.Seed
 
         private static RoleUser[] SeedRoles()
         {
-           
+
             var userRole = new RoleUser[]
             {
                  new RoleUser
                  {
-                       
+
                      Id = "ca678235-7571-4177-984f-e9d1957b0187",
                      Name = "Manager",
                      NormalizedName = "MANAGER"

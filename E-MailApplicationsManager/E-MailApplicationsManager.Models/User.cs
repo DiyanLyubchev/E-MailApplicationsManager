@@ -8,5 +8,7 @@ namespace E_MailApplicationsManager.Models
         public ICollection<LoanApplicant> LoanApplicant { get; set; } = new List<LoanApplicant>();
 
         public ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
+
+        public bool FirstLog { get; set; }
     }
 }

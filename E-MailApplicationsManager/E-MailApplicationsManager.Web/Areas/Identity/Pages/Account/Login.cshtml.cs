@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using E_MailApplicationsManager.Models.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,13 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly E_MailApplicationsManagerContext context;
 
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, E_MailApplicationsManagerContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            this.context = context;
         }
 
         [BindProperty]
@@ -57,7 +60,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
+
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -71,9 +74,15 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var login =await this.context.Users
+                    .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
+
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+
+                if (login.FirstLog == false)
+                {
+                    return LocalRedirect("~/identity/account/manage/changepassword");
+                }
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -95,7 +104,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+
             return Page();
         }
     }
