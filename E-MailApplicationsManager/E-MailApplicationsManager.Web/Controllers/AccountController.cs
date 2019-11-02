@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
+using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Models;
+using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,15 +29,23 @@ namespace E_MailApplicationsManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAccount(RegisterAccountViewModel viewModel)
         {
-            var registerAccountDto = new RegisterAccountDto
+            try
             {
-                UserName = viewModel.UserName,
-                Password = viewModel.Password,
-                Role = viewModel.Role
-            };
+                var registerAccountDto = new RegisterAccountDto
+                {
+                    UserName = viewModel.UserName,
+                    Password = viewModel.Password,
+                    Role = viewModel.Role
+                };
 
-            await this.service.RegisterAccountAsync(registerAccountDto);
+                await this.service.RegisterAccountAsync(registerAccountDto);
 
+            }
+            catch (UserExeption ex)
+            {
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
+           
             return View();
         }
       

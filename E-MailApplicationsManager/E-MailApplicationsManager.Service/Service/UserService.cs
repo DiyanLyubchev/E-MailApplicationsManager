@@ -1,6 +1,7 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
+using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,17 +27,17 @@ namespace E_MailApplicationsManager.Service.Service
         {
             if (registerAccountDto.Role != "Manager" && registerAccountDto.Role != "Operator")
             {
-                throw new Exception("Wrong role name!");
+                throw new UserExeption("Wrong role name!");
             }
 
             if (registerAccountDto.UserName == null)
             {
-                throw new Exception("Please enter a username");
+                throw new UserExeption("Please enter a username");
             }
 
             if (registerAccountDto.Password.Length < 5)
             {
-                throw new Exception("Password cannot be less than 5 symbols");
+                throw new UserExeption("Password cannot be less than 5 symbols");
             }
 
             var passwordHasher = new PasswordHasher<User>();

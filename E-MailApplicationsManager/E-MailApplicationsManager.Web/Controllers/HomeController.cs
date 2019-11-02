@@ -10,17 +10,15 @@ namespace E_MailApplicationsManager.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IEmailService emailService;
-        private readonly E_MailApplicationsManagerContext context;
 
-        public HomeController(IEmailService emailService, E_MailApplicationsManagerContext context)
+
+        public HomeController(IEmailService emailService)
         {
             this.emailService = emailService;
-            this.context = context;
         }
 
         public IActionResult Index()
         {
-            var db = new EmailService(context);
             var run = new ConcreteMailService(emailService);
             run.QuickStart();
             return View();

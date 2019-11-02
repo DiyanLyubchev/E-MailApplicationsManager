@@ -1,6 +1,7 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
+using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using System;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace E_MailApplicationsManager.Service.Service
             if (emailDto.Body == null || emailDto.DateReceived == null ||
                 emailDto.Sender == null || emailDto.Subject == null)
             {
-                throw new Exception("");
+                throw new EmailExeption("");
             }
 
             var gmaiId = this.context.Emails

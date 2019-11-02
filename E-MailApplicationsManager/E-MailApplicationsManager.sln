@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-MailApplicationsManager.Models", "E-MailApplicationsManager.Models\E-MailApplicationsManager.Models.csproj", "{CE876C40-82A7-437D-909B-8AE642397D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-MailApplicationsManager.Service", "E-MailApplicationsManager.Service\E-MailApplicationsManager.Service.csproj", "{2FCF180C-12F4-4C03-BEC1-0ADA9CA51ADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-MailApplicationsManager.Service", "E-MailApplicationsManager.Service\E-MailApplicationsManager.Service.csproj", "{2FCF180C-12F4-4C03-BEC1-0ADA9CA51ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-MailApplicationsManager.Web", "E-MailApplicationsManager.Web\E-MailApplicationsManager.Web.csproj", "{BAED934C-C991-4F44-B076-B044A9B4EE52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-MailApplicationsManager.Web", "E-MailApplicationsManager.Web\E-MailApplicationsManager.Web.csproj", "{BAED934C-C991-4F44-B076-B044A9B4EE52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
