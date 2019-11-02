@@ -1,7 +1,7 @@
 ﻿using E_MailApplicationsManager.Service.Dto;
 using System.Threading.Tasks;
 
-namespace E_MailApplicationsManager.Service
+namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface IEmailService
     {

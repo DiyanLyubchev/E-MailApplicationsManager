@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using E_MailApplicationsManager.Service;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Models;
 using Microsoft.AspNetCore.Authorization;

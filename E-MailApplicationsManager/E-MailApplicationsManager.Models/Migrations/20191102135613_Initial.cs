@@ -55,13 +55,15 @@ namespace E_MailApplicationsManager.Models.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GmailId = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
                     Sender = table.Column<string>(nullable: true),
                     DateReceived = table.Column<string>(nullable: true),
                     InitialRegistrationInData = table.Column<DateTime>(nullable: true),
                     SetCurrentStatus = table.Column<DateTime>(nullable: false),
-                    SetTerminalState = table.Column<DateTime>(nullable: true)
+                    SetTerminalState = table.Column<DateTime>(nullable: true),
+                    IsSeen = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,8 +283,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "4500e06e-1ef4-4ab9-b60a-a4faefeadfd0", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "04ee1542-4a2f-4f58-b140-7bfaf26e5ece", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "4de7bb06-8b24-493e-b3dc-bbc68b663d3c", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "22446b63-432d-4f18-a4c6-c44a1d964677", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -290,8 +292,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "3f2034ab-ebac-47ec-a2f8-870929921e7d", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEAOIN1iRUtPX2yxD0TbJ+85eS19AXzJunnpTFbsN2fHi5B7LvoEQThhQ6kcvI+A7zg==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "1a9a9409-0a52-4a38-9cb3-732c24d8d6dc", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAECY/OkmM+AC6LkW0P0IAjrf4RO6pDwHK9i6syJHHwxdw8CVGE7M/+LSgSyNGViUAwQ==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "636f9f15-c443-4b72-9530-7346481af209", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEMLybJshu4VzkBWzxR0jgo/Y67OvDDlTWAc+jSY/Ayj49m3Rmjjz551hAZtQ5NClSg==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "194f6342-519a-4984-acaf-4e1c457a8f41", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEMkl9RXUl7zMe0xw3OE5o4FBBsGlNBETfKlHrQn7SG3Vt8eVhVhRwcE+D+V3ML4VAQ==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
                 });
 
             migrationBuilder.InsertData(
@@ -366,7 +368,8 @@ namespace E_MailApplicationsManager.Models.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ReceivedEmails_EmailId",
                 table: "ReceivedEmails",
-                column: "EmailId");
+                column: "EmailId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReceivedEmails_UserId",

@@ -6,6 +6,8 @@ namespace E_MailApplicationsManager.Models
 {
     public class Email : BaseIdEntity
     {
+        public string GmailId { get; set; }
+
         public string Subject { get; set; }
 
         public string Body { get; set; }
@@ -25,7 +27,5 @@ namespace E_MailApplicationsManager.Models
         public ReceivedEmail ReceivedEmail { get; set; }
 
         public bool IsSeen { get; set; } = true;
-
-
     }
 }

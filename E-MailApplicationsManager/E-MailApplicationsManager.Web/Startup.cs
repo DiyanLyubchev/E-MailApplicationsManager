@@ -11,7 +11,8 @@ using System;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using E_MailApplicationsManager.Service;
+using E_MailApplicationsManager.Service.Contracts;
+using E_MailApplicationsManager.Service.Service;
 
 namespace E_MailApplicationsManager.Web
 {
@@ -19,6 +20,7 @@ namespace E_MailApplicationsManager.Web
     {
         public Startup(IConfiguration configuration)
         {
+            
             Configuration = configuration;
         }
 
@@ -68,6 +70,7 @@ namespace E_MailApplicationsManager.Web
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IConcreteMailService, ConcreteMailService>();
 
             services.AddDbContext<E_MailApplicationsManagerContext>(options =>
              options.UseSqlServer(

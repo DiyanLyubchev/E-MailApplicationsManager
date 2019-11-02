@@ -1,8 +1,5 @@
-﻿using E_MailApplicationsManager.Service;
+﻿using E_MailApplicationsManager.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
