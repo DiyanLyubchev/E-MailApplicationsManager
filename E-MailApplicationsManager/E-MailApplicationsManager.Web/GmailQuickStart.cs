@@ -1,10 +1,13 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using E_MailApplicationsManager.Service;
+using E_MailApplicationsManager.Service.Dto;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Gmail.v1;
 using Google.Apis.Gmail.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,14 +16,25 @@ using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Web
 {
-    public static class QmailQuickStart
+    public class QmailQuickStart
     {
+        private readonly IEmailService emailService;
+
+        public QmailQuickStart(IEmailService emailService)
+        {
+            this.emailService = emailService;
+        }
+        public QmailQuickStart()
+        {
+
+        }
+
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/gmail-dotnet-quickstart.json
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
-        public static void QuickStart()
+        public void QuickStart()
         {
             UserCredential credential;
 
@@ -59,6 +73,7 @@ namespace E_MailApplicationsManager.Web
             string date = null;
             string from = null;
             string body = null;
+            var convertBody = new StringBuilder();
 
             foreach (var currentEmail in emails.Messages)
             {
@@ -79,11 +94,24 @@ namespace E_MailApplicationsManager.Web
 
                     body = responseMail.Payload.Parts[0].Body.Data;
 
+                    byte[] data = Convert.FromBase64String(body);
+                    var result = Encoding.UTF8.GetString(data);
 
+                    convertBody.Append(result);
 
-                   // responseMail.Payload.Parts[0].Parts[0].Body.Data;  // with attachment
+                    // responseMail.Payload.Parts[0].Parts[0].Body.Data;  // with attachment
 
                 }
+
+                var emailDto = new EmailDto
+                {
+                    Subject = subject,
+                    Sender = from,
+                    DateReceived = date,
+                    Body = convertBody.ToString()
+                };
+
+                 this.emailService.AddMail(emailDto);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace E_MailApplicationsManager.Models
 
         public string Sender { get; set; }
 
-        public DateTime DateReceived { get; set; }
+        public string DateReceived { get; set; }
 
         public DateTime? InitialRegistrationInData { get; set; }
 
@@ -22,8 +22,10 @@ namespace E_MailApplicationsManager.Models
 
         public ICollection<EmailAttachment> EmailAttachments { get; set; } = new List<EmailAttachment>();
 
-        public string FileName { get; set; }
+        public ReceivedEmail ReceivedEmail { get; set; }
 
-        public double? SizeInMb { get; set; }
+        public bool IsSeen { get; set; } = true;
+
+
     }
 }

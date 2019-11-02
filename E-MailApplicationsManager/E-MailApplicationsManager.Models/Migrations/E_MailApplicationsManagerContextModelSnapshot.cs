@@ -31,6 +31,8 @@ namespace E_MailApplicationsManager.Models.Migrations
 
                     b.Property<string>("InfoLog");
 
+                    b.Property<string>("InfoLogOut");
+
                     b.Property<string>("LastStatusInfo");
 
                     b.Property<string>("NewStatusInfo");
@@ -54,19 +56,17 @@ namespace E_MailApplicationsManager.Models.Migrations
 
                     b.Property<string>("Body");
 
-                    b.Property<DateTime>("DateReceived");
-
-                    b.Property<string>("FileName");
+                    b.Property<string>("DateReceived");
 
                     b.Property<DateTime?>("InitialRegistrationInData");
+
+                    b.Property<bool>("IsSeen");
 
                     b.Property<string>("Sender");
 
                     b.Property<DateTime>("SetCurrentStatus");
 
                     b.Property<DateTime?>("SetTerminalState");
-
-                    b.Property<double?>("SizeInMb");
 
                     b.Property<string>("Subject");
 
@@ -131,7 +131,8 @@ namespace E_MailApplicationsManager.Models.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmailId");
+                    b.HasIndex("EmailId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -195,14 +196,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "c23c3678-6194-4b7e-a928-09614190eb62",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7e6232be-2fde-4d41-9ef4-a2abdf8a3ef4",
+                            ConcurrencyStamp = "b4ef66af-cc76-450d-961f-6eb5c6b446a8",
                             Email = "admin1@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN1@ADMIN.COM",
                             NormalizedUserName = "DIYAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOUfor3Pp/eo+vbxd7qL+ebfZ7rn7BqfxGgxD8d0DMcaPBawN9tHiLIEOjlxzp4Q+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJJ2pyQHKYoFqSlBFrZg/i6JK5kjOqkNPyicPmn44nIEFsBPARoiQ1RqihTsPILn3g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN",
                             TwoFactorEnabled = false,
@@ -212,14 +213,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c74f3fe7-1e99-4753-b60b-32942dd3c4fc",
+                            ConcurrencyStamp = "8ca424c7-acc4-4578-9c7d-ab584b7f95d3",
                             Email = "admin2@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN2@ADMIN.COM",
                             NormalizedUserName = "BOBI",
-                            PasswordHash = "AQAAAAEAACcQAAAAECtqx2CWp3495SgU8Ta5KAtW4Ah8oz4JagHqwtlVRnshDvhRb8k8oRURMxe8kMAUkg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKmCnqyRj9yope/tBa/6TQ2pwavOF/14bTo9alDp23sD60Aw309iHP2YMuggTTkgjA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU",
                             TwoFactorEnabled = false,
@@ -368,14 +369,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         new
                         {
                             Id = "ca678235-7571-4177-984f-e9d1957b0187",
-                            ConcurrencyStamp = "500d5ce2-310b-4cba-a6b4-566ade43dcd9",
+                            ConcurrencyStamp = "2d9f5830-fd91-42b9-b753-4c89fa475115",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "ef1c4fa2-0b76-4598-aaee-c6e02803d486",
-                            ConcurrencyStamp = "e8f979bc-eb27-408f-8c21-174a9aca90cc",
+                            ConcurrencyStamp = "6a5b11f3-3169-4be4-a6f0-b5a23032ab02",
                             Name = "Operator",
                             NormalizedName = "OPERATOR"
                         });
@@ -411,8 +412,8 @@ namespace E_MailApplicationsManager.Models.Migrations
             modelBuilder.Entity("E_MailApplicationsManager.Models.ReceivedEmail", b =>
                 {
                     b.HasOne("E_MailApplicationsManager.Models.Email", "Email")
-                        .WithMany()
-                        .HasForeignKey("EmailId")
+                        .WithOne("ReceivedEmail")
+                        .HasForeignKey("E_MailApplicationsManager.Models.ReceivedEmail", "EmailId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("E_MailApplicationsManager.Models.User", "User")

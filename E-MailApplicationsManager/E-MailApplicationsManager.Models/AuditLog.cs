@@ -9,6 +9,8 @@ namespace E_MailApplicationsManager.Models
 
         public string InfoLog { get; set; }
 
+        public string InfoLogOut { get; set; }
+
         public User User { get; set; }
 
         public string UserId { get; set; }

@@ -14,7 +14,9 @@ namespace E_MailApplicationsManager.Web
     {
         public static void Main(string[] args)
         {
-            QmailQuickStart.QuickStart();
+            var run = new QmailQuickStart();
+            run.QuickStart();
+
             CreateWebHostBuilder(args).Build().Run();
         }
 

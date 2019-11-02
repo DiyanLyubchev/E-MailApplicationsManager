@@ -12,6 +12,6 @@ namespace E_MailApplicationsManager.Service.Dto
 
         public string Sender { get; set; }
 
-        public DateTime DateReceived { get; set; }
+        public string DateReceived { get; set; }
     }
 }
