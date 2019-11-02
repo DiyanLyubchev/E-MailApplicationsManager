@@ -34,7 +34,7 @@ namespace E_MailApplicationsManager.Web
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
-        public void QuickStart()
+        public  void QuickStart()
         {
             UserCredential credential;
 
@@ -94,8 +94,7 @@ namespace E_MailApplicationsManager.Web
 
                     body = responseMail.Payload.Parts[0].Body.Data;
 
-                    byte[] data = Convert.FromBase64String(body);
-                    var result = Encoding.UTF8.GetString(data);
+                    var result = Base64Decode(body);
 
                     convertBody.Append(result);
 
@@ -111,8 +110,13 @@ namespace E_MailApplicationsManager.Web
                     Body = convertBody.ToString()
                 };
 
-                 this.emailService.AddMail(emailDto);
+                // this.emailService.AddMail(emailDto);
             }
+        }
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }
 }
