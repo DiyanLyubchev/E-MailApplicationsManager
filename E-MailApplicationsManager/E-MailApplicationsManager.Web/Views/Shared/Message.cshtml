@@ -1,0 +1,33 @@
+﻿@model E_MailApplicationsManager.Web.Models.Message.MessageViewModel
+@{
+    ViewData["Title"] = "";
+}
+
+<h1>@Model.Message</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/css/app.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <div class="container">
+        <div class="row">
+            <strong>
+                @{
+                    if (Model.IsSuccess)
+                    {
+                        <a class="goback" asp-controller="Home" asp-action="Index">Home</a>
+                    }
+                    else
+                    {
+                        <a class="goback" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
+                    }
+                }
+            </strong>
+        </div>
+    </div>
+</body>
+</html>
