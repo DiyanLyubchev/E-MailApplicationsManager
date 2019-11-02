@@ -1,12 +1,11 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 
-namespace E_MailApplicationsManager.Service
+namespace E_MailApplicationsManager.Service.Service
 {
     public class EmailService : IEmailService
     {
@@ -25,16 +24,25 @@ namespace E_MailApplicationsManager.Service
                 throw new Exception("");
             }
 
-            var email = new Email
-            {
-                Sender = emailDto.Sender,
-                DateReceived = emailDto.DateReceived,
-                Subject = emailDto.Subject,
-                Body = emailDto.Body
-            };
+            var gmaiId = this.context.Emails
+                .FirstOrDefault(id => id.GmailId == emailDto.GmailId);
 
-            this.context.Emails.Add(email);
-            this.context.SaveChanges();
+            if (gmaiId == null)
+            {
+                var email = new Email
+                {
+                    GmailId = emailDto.GmailId,
+                    Sender = emailDto.Sender,
+                    DateReceived = emailDto.DateReceived,
+                    Subject = emailDto.Subject,
+                    Body = emailDto.Body
+
+                };
+
+                this.context.Emails.Add(email);
+                this.context.SaveChanges();
+
+            }
 
         }
     }

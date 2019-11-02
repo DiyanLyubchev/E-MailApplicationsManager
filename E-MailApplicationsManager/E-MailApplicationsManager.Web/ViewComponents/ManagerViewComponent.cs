@@ -1,8 +1,5 @@
-﻿using E_MailApplicationsManager.Service;
+﻿using E_MailApplicationsManager.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -15,9 +12,7 @@ namespace E_MailApplicationsManager.Web.ViewComponents
 
         public ManagerViewComponent(IUserService service)
         {
-
             this.service = service;
-
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

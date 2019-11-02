@@ -1,9 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>E_MailApplicationsManager.Service</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.41.1.1635" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\E-MailApplicationsManager.Models\E-MailApplicationsManager.Models.csproj" />

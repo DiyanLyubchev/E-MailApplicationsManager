@@ -6,6 +6,8 @@ namespace E_MailApplicationsManager.Service.Dto
 {
     public class EmailDto
     {
+        public string GmailId { get; set; }
+
         public string Subject { get; set; }
 
         public string Body { get; set; }

@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Service;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Gmail.v1;
@@ -14,19 +15,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace E_MailApplicationsManager.Web
+namespace E_MailApplicationsManager.Service.Service
 {
-    public class QmailQuickStart
+    public class ConcreteMailService : IConcreteMailService
     {
         private readonly IEmailService emailService;
 
-        public QmailQuickStart(IEmailService emailService)
+        public ConcreteMailService(IEmailService emailService)
         {
             this.emailService = emailService;
-        }
-        public QmailQuickStart()
-        {
-
         }
 
         // If modifying these scopes, delete your previously saved credentials
@@ -34,7 +31,7 @@ namespace E_MailApplicationsManager.Web
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
-        public  void QuickStart()
+        public void QuickStart()
         {
             UserCredential credential;
 
@@ -73,6 +70,7 @@ namespace E_MailApplicationsManager.Web
             string date = null;
             string from = null;
             string body = null;
+            string id = null;
             var convertBody = new StringBuilder();
 
             foreach (var currentEmail in emails.Messages)
@@ -83,6 +81,8 @@ namespace E_MailApplicationsManager.Web
 
                 if (responseMail != null)
                 {
+                    id = responseMail.Id;
+
                     subject = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "Subject").Value;
 
@@ -104,16 +104,17 @@ namespace E_MailApplicationsManager.Web
 
                 var emailDto = new EmailDto
                 {
+                    GmailId = id,
                     Subject = subject,
                     Sender = from,
                     DateReceived = date,
                     Body = convertBody.ToString()
                 };
 
-                // this.emailService.AddMail(emailDto);
+                this.emailService.AddMail(emailDto);
             }
         }
-        public static string Base64Decode(string base64EncodedData)
+        public string Base64Decode(string base64EncodedData)
         {
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(base64EncodedBytes);
