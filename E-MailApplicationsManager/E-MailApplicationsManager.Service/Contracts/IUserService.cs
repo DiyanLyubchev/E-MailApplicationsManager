@@ -10,6 +10,6 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<User> GetUserAsync(string userId);
 
-        void GetEmail();
+        //void GetEmail();
     }
 }

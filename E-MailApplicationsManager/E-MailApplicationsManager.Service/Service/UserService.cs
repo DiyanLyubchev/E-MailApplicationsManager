@@ -16,13 +16,11 @@ namespace E_MailApplicationsManager.Service.Service
     {
         private readonly E_MailApplicationsManagerContext context;
         private readonly UserManager<User> userManager;
-        private readonly IEmailService service;
 
-        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager , IEmailService service)
+        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager)
         {
             this.context = context;
             this.userManager = userManager;
-            this.service = service;
         }
 
         public async Task RegisterAccountAsync(RegisterAccountDto registerAccountDto)
@@ -32,14 +30,14 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new UserExeption("Wrong role name!");
             }
 
-            if (registerAccountDto.UserName == null)
+            if (registerAccountDto.UserName.Length < 3)
             {
-                throw new UserExeption("Please enter a username");
+                throw new UserExeption("Username cannotbe less that 3 symbols!");
             }
 
             if (registerAccountDto.Password.Length < 5)
             {
-                throw new UserExeption("Password cannot be less than 5 symbols");
+                throw new UserExeption("Password cannot be less than 5 symbols!");
             }
 
             var passwordHasher = new PasswordHasher<User>();
@@ -51,10 +49,6 @@ namespace E_MailApplicationsManager.Service.Service
                 LockoutEnabled = true
             };
             account.PasswordHash = passwordHasher.HashPassword(account, registerAccountDto.Password);
-            var userRole = new RoleUser { Name = registerAccountDto.Role };
-
-            var newAccount = new IdentityUserRole<string>
-            { UserId = account.Id, RoleId = userRole.Id };
 
             await this.userManager.CreateAsync(account);
             await this.userManager.AddToRoleAsync(account, registerAccountDto.Role);
@@ -68,14 +62,14 @@ namespace E_MailApplicationsManager.Service.Service
         }
 
 
-        public void GetEmail()
-        {
-            var id = "16e25e33c1c6245e"; 
+        //public void GetEmail()
+        //{
+        //    var id = "16e25e33c1c6245e"; 
 
-            var run = new ConcreteMailService(service);
-            run.GetEmailById(id);
+        //    var run = new ConcreteMailService(service);
+        //    run.GetEmailById(id);
 
-        }
+        //}
       
     }
 }

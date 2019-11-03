@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-MailApplicationsManager.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-MailApplicationsManager.Web", "E-MailApplicationsManager.Web\E-MailApplicationsManager.Web.csproj", "{BAED934C-C991-4F44-B076-B044A9B4EE52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-MailApplicationsManager.UnitTests", "E-MailApplicationsManager.UnitTests\E-MailApplicationsManager.UnitTests.csproj", "{51E9F157-E692-4846-B751-0BF96999EA18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BAED934C-C991-4F44-B076-B044A9B4EE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAED934C-C991-4F44-B076-B044A9B4EE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAED934C-C991-4F44-B076-B044A9B4EE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E9F157-E692-4846-B751-0BF96999EA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E9F157-E692-4846-B751-0BF96999EA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E9F157-E692-4846-B751-0BF96999EA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E9F157-E692-4846-B751-0BF96999EA18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
