@@ -45,9 +45,14 @@ namespace E_MailApplicationsManager.Web.Controllers
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-           
-            return View();
+
+            return View("Message", new MessageViewModel
+            {
+                Message = $"Sucssesful registration for user with the following username" +
+                $" {viewModel.UserName} ",
+                IsSuccess = true
+            });
         }
-      
+        
     }
 }

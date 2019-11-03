@@ -9,5 +9,7 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task RegisterAccountAsync(RegisterAccountDto registerAccountDto);
 
         Task<User> GetUserAsync(string userId);
+
+        void GetEmail();
     }
 }

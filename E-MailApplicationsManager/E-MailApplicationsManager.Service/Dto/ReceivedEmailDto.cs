@@ -4,20 +4,14 @@ using System.Text;
 
 namespace E_MailApplicationsManager.Service.Dto
 {
-    public class EmailDto
+    public class ReceivedEmailDto
     {
         public string GmailId { get; set; }
 
         public string Subject { get; set; }
 
-        public string Body { get; set; }
-
         public string Sender { get; set; }
 
         public string DateReceived { get; set; }
-
-        public DateTime InitialRegistrationInData { get; set; }
-
-        public DateTime SetCurrentStatus { get; set; }
     }
 }

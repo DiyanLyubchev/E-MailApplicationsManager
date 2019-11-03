@@ -3,8 +3,10 @@ using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Service
 {
@@ -12,39 +14,36 @@ namespace E_MailApplicationsManager.Service.Service
     {
         private readonly E_MailApplicationsManagerContext context;
 
+
         public EmailService(E_MailApplicationsManagerContext context)
         {
             this.context = context;
         }
 
-        public  void AddMail(EmailDto emailDto)
+        public void AddMail(Dto.ReceivedEmailDto emailDto)
         {
-            if (emailDto.Body == null || emailDto.DateReceived == null ||
+            if (emailDto.DateReceived == null ||
                 emailDto.Sender == null || emailDto.Subject == null)
             {
-                throw new EmailExeption("");
+                throw new EmailExeption(""); // TODO: IF data is n ot full set status
             }
 
-            var gmaiId = this.context.Emails
+            var gmaiId =  this.context.ReceivedEmails
                 .FirstOrDefault(id => id.GmailId == emailDto.GmailId);
 
             if (gmaiId == null)
             {
-                var email = new Email
+                var email = new ReceivedEmail
                 {
                     GmailId = emailDto.GmailId,
                     Sender = emailDto.Sender,
                     DateReceived = emailDto.DateReceived,
                     Subject = emailDto.Subject,
-                    Body = emailDto.Body
-
                 };
 
-                this.context.Emails.Add(email);
-                this.context.SaveChanges();
-
+                 this.context.ReceivedEmails.Add(email);
+                 this.context.SaveChanges();
             }
-
         }
     }
 }
