@@ -15,12 +15,14 @@ namespace E_MailApplicationsManager.Service.Service
     public class UserService : IUserService
     {
         private readonly E_MailApplicationsManagerContext context;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<User> userManager;
+        private readonly IEmailService service;
 
-        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager)
+        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager , IEmailService service)
         {
             this.context = context;
-            _userManager = userManager;
+            this.userManager = userManager;
+            this.service = service;
         }
 
         public async Task RegisterAccountAsync(RegisterAccountDto registerAccountDto)
@@ -54,8 +56,8 @@ namespace E_MailApplicationsManager.Service.Service
             var newAccount = new IdentityUserRole<string>
             { UserId = account.Id, RoleId = userRole.Id };
 
-            await _userManager.CreateAsync(account);
-            await _userManager.AddToRoleAsync(account, registerAccountDto.Role);
+            await this.userManager.CreateAsync(account);
+            await this.userManager.AddToRoleAsync(account, registerAccountDto.Role);
         }
 
         public async Task<User> GetUserAsync(string userId)
@@ -63,6 +65,16 @@ namespace E_MailApplicationsManager.Service.Service
             var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
+        }
+
+
+        public void GetEmail()
+        {
+            var id = "16e25e33c1c6245e"; 
+
+            var run = new ConcreteMailService(service);
+            run.GetEmailById(id);
+
         }
       
     }

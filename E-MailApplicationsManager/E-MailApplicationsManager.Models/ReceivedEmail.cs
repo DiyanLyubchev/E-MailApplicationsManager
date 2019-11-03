@@ -5,14 +5,14 @@ namespace E_MailApplicationsManager.Models
 {
     public class ReceivedEmail : BaseIdEntity
     {
-        public EmailStatusesType Status { get; set; }
+        public EmailStatusesType Status { get; set; } = EmailStatusesType.NotReviewed;
+        public string GmailId { get; set; }
 
-        public string UserId { get; set; }
+        public string Subject { get; set; }
 
-        public User User { get; set; }
+        public string Sender { get; set; }
 
-        public int EmailId { get; set; }
-        public Email Email { get; set; }
+        public string DateReceived { get; set; }
 
     }
 }

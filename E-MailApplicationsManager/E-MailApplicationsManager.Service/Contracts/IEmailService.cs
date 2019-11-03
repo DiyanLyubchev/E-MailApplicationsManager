@@ -5,6 +5,6 @@ namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface IEmailService
     {
-        void AddMail(EmailDto emailDto);
+        void AddMail(ReceivedEmailDto emailDto);
     }
 }
