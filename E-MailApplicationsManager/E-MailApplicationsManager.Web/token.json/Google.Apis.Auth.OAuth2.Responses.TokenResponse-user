@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 {"access_token":"ya29.ImCvB02qhJKjX4VMFwmtsIFQLhfLeUARLG3JLy-0v2D6y5HdI4CFrDUaEMu4CeZm8NwEknQ5LjVodWrJtm6lp9a-XrnP8jeOgN2xKEPI18pQtNRKR0gnDy9ZECBoJRSlfh0","token_type":"Bearer","expires_in":3600,"refresh_token":"1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4","scope":"https://www.googleapis.com/auth/gmail.readonly","Issued":"2019-11-03T16:29:19.023+02:00","IssuedUtc":"2019-11-03T14:29:19.023Z"}
+=======
+{"access_token":"ya29.ImCvByqHeKMcM40MEVGS3NQITpmXFdz_NGylCV08ZI3ON-dhAsEPZXr1PPU3YST33KvtwwFv2PbzQpaQM6oEB2BhJ8LFqd2d22P0NSWBNuVmbjM10f8IcWwWAzNzb4Kj_Fo","token_type":"Bearer","expires_in":3600,"refresh_token":"1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4","scope":"https://www.googleapis.com/auth/gmail.readonly","Issued":"2019-11-03T16:11:22.767+02:00","IssuedUtc":"2019-11-03T14:11:22.767Z"}
+>>>>>>> Stashed changes

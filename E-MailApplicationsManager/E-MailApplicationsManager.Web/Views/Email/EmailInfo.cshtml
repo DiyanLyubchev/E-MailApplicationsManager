@@ -1,0 +1,33 @@
+﻿@model EmailListViewModel
+@{
+    ViewData["Title"] = "EmailInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EmailInfo</h1>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="row">
+
+        @foreach (var email in Model.Emails)
+        {
+
+            <div class="col-6">
+                <strong>
+                    <a class="login-text" asp-controller="Email" asp-action="Details" asp-route-id="@email.Id">   <p>@email.Sender </p>  </a>
+                </strong>
+            </div>
+
+        }
+    </div>
+    <div>
+        <strong>
+            <a style="color:olive" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
+        </strong>
+    </div>
+</body>
+</html>

@@ -61,16 +61,6 @@ namespace E_MailApplicationsManager.Service.Service
             return user;
         }
 
-
-        //public void GetEmail()
-        //{
-        //    var id = "16e25e33c1c6245e"; 
-
-        //    var run = new ConcreteMailService(service);
-        //    run.GetEmailById(id);
-
-        //}
-      
     }
 }
 
