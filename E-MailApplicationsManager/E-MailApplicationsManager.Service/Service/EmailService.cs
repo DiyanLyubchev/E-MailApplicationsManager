@@ -3,10 +3,8 @@ using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
-using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Service
 {
@@ -20,7 +18,7 @@ namespace E_MailApplicationsManager.Service.Service
             this.context = context;
         }
 
-        public void AddMail(Dto.ReceivedEmailDto emailDto)
+        public void AddMail(ReceivedEmailDto emailDto)
         {
             if (emailDto.DateReceived == null ||
                 emailDto.Sender == null || emailDto.Subject == null)
@@ -46,6 +44,16 @@ namespace E_MailApplicationsManager.Service.Service
                 this.context.ReceivedEmails.Add(email);
                 this.context.SaveChanges();
             }
+        }
+
+        public IEnumerable<ReceivedEmail> GetAllEmail(string name)
+        {
+            var emailList = this.context.ReceivedEmails
+               .Where(mail => mail.Sender.Contains(name))
+               .Select(email => email)
+               .ToList();
+
+            return emailList;
         }
     }
 }

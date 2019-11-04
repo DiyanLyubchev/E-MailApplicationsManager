@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const serverResponseHandler = (serverData) => {
+    console.log(serverData);
 
-// Write your JavaScript code.
+    $('.info-word').remove();
+
+    const teamContainer = $('#fill-email');
+
+    serverData
+        .map(email => $(`<div class="info-word"> ${email.sender}   ${email.dateReceived}  ${email.status}</div>`))
+        .forEach(teamElement => {
+            teamContainer.append(teamElement);
+        });
+
+};
+
+$('#search-text').on('keyup', function() {
+    console.log($(this).val());
+});
+
+$('#search-button').click(function() {
+    const searchText = $('#search-text').val();
+
+    $.get('/email/search?name=' + searchText, serverResponseHandler);
+});
