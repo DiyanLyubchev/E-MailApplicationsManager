@@ -91,6 +91,17 @@ namespace E_MailApplicationsManager.Service.Service
 
                     from = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "From").Value;
+
+                    emailDto = new ReceivedEmailDto
+                    {
+                        GmailId = id,
+                        Subject = subject,
+                        Sender = from,
+                        DateReceived = date,
+
+                    };
+
+                    this.emailService.AddMail(emailDto);
                 }
                 else
                 {
@@ -139,16 +150,7 @@ namespace E_MailApplicationsManager.Service.Service
                     }
                 }
 
-                emailDto = new ReceivedEmailDto
-                {
-                    GmailId = id,
-                    Subject = subject,
-                    Sender = from,
-                    DateReceived = date,
-
-                };
-
-                this.emailService.AddMail(emailDto);
+                
             }
         }
 
