@@ -31,8 +31,8 @@ namespace E_MailApplicationsManager.Service.Service
             var gmaiId = this.context.ReceivedEmails
                 .FirstOrDefault(id => id.GmailId == emailDto.GmailId);
 
-           
-
+            if (gmaiId == null)
+            {
                 var email = new ReceivedEmail
                 {
                     GmailId = emailDto.GmailId,
@@ -45,7 +45,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                 this.context.ReceivedEmails.Add(email);
                 this.context.SaveChanges();
-           
+            }
         }
     }
 }
