@@ -7,8 +7,10 @@ namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface IEmailService
     {
-        void AddMail(ReceivedEmailDto emailDto);
+        void AddMail(EmailDto emailDto);
 
-        IEnumerable<ReceivedEmail> GetAllEmail(string name);
+        Task<IEnumerable<Email>> GetAllEmailAsync(string name);
+
+        EmailAttachment AddAttachment(AttachmentDTO attachmentDTO);
     }
 }

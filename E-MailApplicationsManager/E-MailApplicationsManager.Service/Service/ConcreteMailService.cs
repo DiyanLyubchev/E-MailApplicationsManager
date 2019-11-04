@@ -66,9 +66,9 @@ namespace E_MailApplicationsManager.Service.Service
             string from = null;
             string id = null;
 
-            double fileSize = 0;
-            string fileName = null;
-            var emailDto = new ReceivedEmailDto();
+            //double fileSize = 0;
+            //string fileName = null;
+            var emailDto = new EmailDto();
 
             foreach (var currentEmail in emails.Messages)
             {
@@ -91,7 +91,7 @@ namespace E_MailApplicationsManager.Service.Service
                     from = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "From").Value;
 
-                    emailDto = new ReceivedEmailDto
+                    emailDto = new EmailDto
                     {
                         GmailId = id,
                         Subject = subject,
@@ -117,31 +117,31 @@ namespace E_MailApplicationsManager.Service.Service
 
                     var attachmentLists = responseMail.Payload.Parts.Skip(1).ToList();
 
-                    if (attachmentLists.Count > 0)
+                    if (attachmentLists.Any())
                     {
 
                         foreach (var attachment in attachmentLists)
                         {
-                            fileName = attachment.Filename;
-                            fileSize = double.Parse(attachment.Body.Size.ToString());
+                            string fileName = attachment.Filename;
+                            double fileSize = double.Parse(attachment.Body.Size.ToString());
                             fileSize /= 1024;
-
-                            emailDto = new ReceivedEmailDto
+                            var attachmentDto = new AttachmentDTO
                             {
                                 GmailId = id,
-                                Subject = subject,
-                                Sender = from,
-                                DateReceived = date,
                                 FileName = fileName,
-                                SizeInMb = fileSize
-
+                                SizeInKB = fileSize
                             };
 
-                            this.emailService.AddMail(emailDto);
-
-                            fileName = null;
-                            fileSize = 0;
+                            this.emailService.AddAttachment(attachmentDto);
                         }
+                        emailDto = new EmailDto
+                        {
+                            GmailId = id,
+                            Subject = subject,
+                            Sender = from,
+                            DateReceived = date,
+                        };
+                        this.emailService.AddMail(emailDto);
                     }
                 }
             }
@@ -182,9 +182,7 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.IncludeSpamTrash = false;
 
             var emails = allListMails.ExecuteAsync().Result;
-            string subject = null;
-            string date = null;
-            string from = null;
+
             string body = null;
             var convertBody = new StringBuilder();
 
@@ -194,16 +192,10 @@ namespace E_MailApplicationsManager.Service.Service
 
                 var responseMail = requestMail.ExecuteAsync().Result;
 
-                if (responseMail != null && responseMail.Id == id)
+                var mailAttach = responseMail.Payload.Parts[0];
+
+                if (mailAttach.MimeType == "text/plain" && responseMail.Id == id)
                 {
-                    subject = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "Subject").Value;
-
-                    date = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "Date").Value;
-
-                    from = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "From").Value;
 
                     body = responseMail.Payload.Parts[0].Body.Data;
 
