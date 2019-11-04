@@ -43,7 +43,6 @@ namespace E_MailApplicationsManager.Service.Service
                     "user",
                     CancellationToken.None,
                     new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
             }
 
             // Create Gmail API service.
@@ -140,17 +139,11 @@ namespace E_MailApplicationsManager.Service.Service
 
                             this.emailService.AddMail(emailDto);
 
-
-
                             fileName = null;
                             fileSize = 0;
                         }
-
-
                     }
                 }
-
-                
             }
         }
 
@@ -174,7 +167,6 @@ namespace E_MailApplicationsManager.Service.Service
                     "user",
                     CancellationToken.None,
                     new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
             }
 
             var service = new GmailService(new BaseClientService.Initializer()
@@ -219,7 +211,6 @@ namespace E_MailApplicationsManager.Service.Service
 
                     convertBody.Append(result);
 
-                    // responseMail.Payload.Parts[0].Parts[0].Body.Data;  // with attachment
                 }
             }
         }
