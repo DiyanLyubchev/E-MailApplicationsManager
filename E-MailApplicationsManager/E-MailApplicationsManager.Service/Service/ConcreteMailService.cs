@@ -66,10 +66,6 @@ namespace E_MailApplicationsManager.Service.Service
             string from = null;
             string id = null;
 
-            //double fileSize = 0;
-            //string fileName = null;
-            var emailDto = new EmailDto();
-
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
@@ -91,7 +87,7 @@ namespace E_MailApplicationsManager.Service.Service
                     from = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "From").Value;
 
-                    emailDto = new EmailDto
+                    var emailDto = new EmailDto
                     {
                         GmailId = id,
                         Subject = subject,
@@ -134,7 +130,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                             this.emailService.AddAttachment(attachmentDto);
                         }
-                        emailDto = new EmailDto
+                        var emailDto = new EmailDto
                         {
                             GmailId = id,
                             Subject = subject,
@@ -182,8 +178,7 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.IncludeSpamTrash = false;
 
             var emails = allListMails.ExecuteAsync().Result;
-
-            string body = null;
+         
             var convertBody = new StringBuilder();
 
             foreach (var currentEmail in emails.Messages)
@@ -197,12 +192,19 @@ namespace E_MailApplicationsManager.Service.Service
                 if (mailAttach.MimeType == "text/plain" && responseMail.Id == id)
                 {
 
-                    body = responseMail.Payload.Parts[0].Body.Data;
+                    string body = responseMail.Payload.Parts[0].Body.Data;
 
                     var result = Base64Decode(body);
 
                     convertBody.Append(result);
 
+                    var emailDto = new EmailDto
+                    {
+                        GmailId = id,
+                        Body = body
+                    };
+
+                    this.emailService.AddBodyToCurrentEmail(emailDto);
                 }
             }
         }

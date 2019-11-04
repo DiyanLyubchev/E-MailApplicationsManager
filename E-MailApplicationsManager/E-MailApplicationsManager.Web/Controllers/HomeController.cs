@@ -10,17 +10,16 @@ namespace E_MailApplicationsManager.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IEmailService emailService;
+        private readonly IConcreteMailService concreteMailService;
 
-        public HomeController(IEmailService emailService)
+        public HomeController(IConcreteMailService concreteMailService)
         {
-            this.emailService = emailService;
+            this.concreteMailService = concreteMailService;
         }
 
         public IActionResult Index()
         {
-            var run = new ConcreteMailService(emailService);
-            run.QuickStart();
+            this.concreteMailService.QuickStart();
             return View();
         }
 

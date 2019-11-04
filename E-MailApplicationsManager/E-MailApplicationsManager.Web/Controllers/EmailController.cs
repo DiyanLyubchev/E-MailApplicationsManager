@@ -11,10 +11,12 @@ namespace E_MailApplicationsManager.Web.Controllers
     public class EmailController : Controller
     {
         private readonly IEmailService service;
+        private readonly IConcreteMailService concreteMailService;
 
-        public EmailController(IEmailService service)
+        public EmailController(IEmailService service, IConcreteMailService concreteMailService)
         {
             this.service = service;
+            this.concreteMailService = concreteMailService;
         }
 
         [Authorize]
