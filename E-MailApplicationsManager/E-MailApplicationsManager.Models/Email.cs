@@ -27,6 +27,8 @@ namespace E_MailApplicationsManager.Models
 
         public bool IsSeen { get; set; } = true;
 
-        public EmailStatusesType Status { get; set; } = EmailStatusesType.NotReviewed;
+        public EmailStatus Status { get; set; }
+
+        public int EmailStatusId { get; set; } = (int)EmailStatusesType.NotReviewed;
     }
 }

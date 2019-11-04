@@ -5,11 +5,11 @@ namespace E_MailApplicationsManager.Models.Seed
 {
     public static class ApplicationUserSeed
     {
-        public static void UserRole(this ModelBuilder modelBuilder)
+        public static void SeedUserRoles(this ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Entity<RoleUser>()
-                .HasData(SeedRoles());
+                .HasData(CreateRoles());
 
             var hasher = new PasswordHasher<User>();
 
@@ -51,7 +51,7 @@ namespace E_MailApplicationsManager.Models.Seed
                   { UserId = adminBobi.Id, RoleId = "ca678235-7571-4177-984f-e9d1957b0187" });
         }
 
-        private static RoleUser[] SeedRoles()
+        private static RoleUser[] CreateRoles()
         {
 
             var userRole = new RoleUser[]
@@ -72,5 +72,6 @@ namespace E_MailApplicationsManager.Models.Seed
             };
             return userRole;
         }
+        
     }
 }

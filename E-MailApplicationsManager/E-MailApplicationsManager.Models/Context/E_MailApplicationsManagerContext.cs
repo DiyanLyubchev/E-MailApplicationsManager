@@ -21,6 +21,7 @@ namespace E_MailApplicationsManager.Models.Context
 
         public DbSet<LoanApplicant> LoanApplicants { get; set; }
 
+        public DbSet<EmailStatus> Statuses { get; set; }
 
         public DbSet<RoleUser> RoleUsers { get; set; }
 
@@ -34,9 +35,11 @@ namespace E_MailApplicationsManager.Models.Context
                 .WithMany(attachment => attachment.EmailAttachments)
                 .HasForeignKey(id => id.EmailId);
 
-            modelBuilder.UserRole();
+            modelBuilder.SeedUserRoles();
+            modelBuilder.SeedStatuses();
             base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }

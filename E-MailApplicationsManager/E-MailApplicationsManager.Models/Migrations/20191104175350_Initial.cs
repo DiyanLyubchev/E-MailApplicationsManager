@@ -50,25 +50,16 @@ namespace E_MailApplicationsManager.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Emails",
+                name: "Statuses",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GmailId = table.Column<string>(nullable: true),
-                    Subject = table.Column<string>(nullable: true),
-                    Body = table.Column<string>(nullable: true),
-                    Sender = table.Column<string>(nullable: true),
-                    DateReceived = table.Column<string>(nullable: true),
-                    InitialRegistrationInData = table.Column<DateTime>(nullable: true),
-                    SetCurrentStatus = table.Column<DateTime>(nullable: true),
-                    SetTerminalState = table.Column<DateTime>(nullable: true),
-                    IsSeen = table.Column<bool>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Emails", x => x.Id);
+                    table.PrimaryKey("PK_Statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,26 +169,31 @@ namespace E_MailApplicationsManager.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LoanApplicants",
+                name: "Emails",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    EGN = table.Column<string>(nullable: true),
-                    IsApproved = table.Column<bool>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    GmailId = table.Column<string>(nullable: true),
+                    Subject = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
+                    Sender = table.Column<string>(nullable: true),
+                    DateReceived = table.Column<string>(nullable: true),
+                    InitialRegistrationInData = table.Column<DateTime>(nullable: true),
+                    SetCurrentStatus = table.Column<DateTime>(nullable: true),
+                    SetTerminalState = table.Column<DateTime>(nullable: true),
+                    IsSeen = table.Column<bool>(nullable: false),
+                    EmailStatusId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LoanApplicants", x => x.Id);
+                    table.PrimaryKey("PK_Emails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LoanApplicants_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_Emails_Statuses_EmailStatusId",
+                        column: x => x.EmailStatusId,
+                        principalTable: "Statuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,13 +249,43 @@ namespace E_MailApplicationsManager.Models.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LoanApplicants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    EGN = table.Column<string>(nullable: true),
+                    EmailId = table.Column<int>(nullable: true),
+                    IsApproved = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanApplicants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoanApplicants_Emails_EmailId",
+                        column: x => x.EmailId,
+                        principalTable: "Emails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoanApplicants_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "3c436565-a6a9-4f60-a9e8-418d186cdf35", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "dd9211d2-3c74-404c-a810-4b36b269d32c", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "bc6fe40a-abc6-41a0-a97d-a9fab5c22289", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "e72e486b-adc6-4692-bbe6-79b44ce745b0", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -267,8 +293,20 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "67a43075-12f5-4f77-abe1-a7a77ec724a3", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEE0d8Yti7bKR4x9nEzWJ1P/v8+f7/V2DsdMDFoRxPc3ZfZys36OfMd4LdWwlbWPyNw==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "181e5305-db2a-4b67-8d64-e199a3cfa7fc", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEMkrzv7y9sU/4JIuNCo1WGNHxrW9swWsmWf69OM/rhsClvyDs1nqEVEIDuoAWyvrKA==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "10f4e590-78cf-46e8-95d4-07c988caa0f9", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEP64Y1kdXQtwoXMh3feXaHUPOaWZAkZtaWn0xIkzGqmhBrxR4Ko2ifCWVeftswhgvg==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "d761d47d-ab31-4c46-975f-684d2fd1433e", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEN4nN3Kb5vyswYrIQfcFVy6l/4ywDJPByKR0z3qBnVmMFsJY1FP96YAyDzKdFbxU/g==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Statuses",
+                columns: new[] { "Id", "Status" },
+                values: new object[,]
+                {
+                    { 1, "Not Reviewed" },
+                    { 2, "Invalid Application" },
+                    { 3, "New" },
+                    { 4, "Open" },
+                    { 5, "Closed" }
                 });
 
             migrationBuilder.InsertData(
@@ -336,6 +374,16 @@ namespace E_MailApplicationsManager.Models.Migrations
                 column: "EmailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Emails_EmailStatusId",
+                table: "Emails",
+                column: "EmailStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanApplicants_EmailId",
+                table: "LoanApplicants",
+                column: "EmailId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LoanApplicants_UserId",
                 table: "LoanApplicants",
                 column: "UserId");
@@ -375,6 +423,9 @@ namespace E_MailApplicationsManager.Models.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Statuses");
         }
     }
 }
