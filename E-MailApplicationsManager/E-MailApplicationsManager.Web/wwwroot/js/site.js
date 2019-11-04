@@ -1,24 +1,24 @@
 ﻿const serverResponseHandler = (serverData) => {
     console.log(serverData);
 
-    $('.info-word').remove();
+    $('.info-email').remove();
 
     const teamContainer = $('#fill-email');
 
     serverData
-        .map(email => $(`<div class="info-word"> ${email.sender}   ${email.dateReceived}  ${email.status}</div>`))
+        .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived}  ${email.status}</div>`))
         .forEach(teamElement => {
             teamContainer.append(teamElement);
         });
 
 };
 
-$('#search-text').on('keyup', function() {
+$('#search-email').on('keyup', function() {
     console.log($(this).val());
 });
 
 $('#search-button').click(function() {
-    const searchText = $('#search-text').val();
+    const searchText = $('#search-email').val();
 
     $.get('/email/search?name=' + searchText, serverResponseHandler);
 });

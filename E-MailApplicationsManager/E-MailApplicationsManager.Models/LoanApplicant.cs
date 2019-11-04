@@ -10,6 +10,9 @@ namespace E_MailApplicationsManager.Models
 
         public string EGN { get; set; }
 
+        
+        public Email Email { get; set; }
+
         public bool IsApproved { get; set; } 
 
     }

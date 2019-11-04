@@ -24,9 +24,9 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult Search([FromQuery]string name)
+        public async Task<IActionResult> Search([FromQuery]string name)
         {
-            var words = this.service.GetAllEmail(name);
+            var words =await this.service.GetAllEmailAsync(name);
 
             return Json(words);
         }

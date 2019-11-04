@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
+using E_MailApplicationsManager.Models.Common;
 using System;
 using System.Collections.Generic;
 
@@ -18,19 +19,16 @@ namespace E_MailApplicationsManager.Models
 
         public DateTime? InitialRegistrationInData { get; set; }
 
-        public DateTime SetCurrentStatus { get; set; }
+        public DateTime? SetCurrentStatus { get; set; }
 
         public DateTime? SetTerminalState { get; set; }
 
         public ICollection<EmailAttachment> EmailAttachments { get; set; } = new List<EmailAttachment>();
 
-        public ReceivedEmail ReceivedEmail { get; set; }
-
         public bool IsSeen { get; set; } = true;
 
-        public string FileName { get; set; }
+        public EmailStatus Status { get; set; }
 
-        public double? SizeInMb { get; set; }
-
+        public int EmailStatusId { get; set; } = (int)EmailStatusesType.NotReviewed;
     }
 }

@@ -17,11 +17,11 @@ namespace E_MailApplicationsManager.Models.Context
 
         public DbSet<Email> Emails { get; set; }
 
-        public DbSet<EmailAttachment> Attachments { get; set; }
+        public DbSet<EmailAttachment> EmailAttachments { get; set; }
 
         public DbSet<LoanApplicant> LoanApplicants { get; set; }
 
-        public DbSet<ReceivedEmail> ReceivedEmails { get; set; }
+        public DbSet<EmailStatus> Statuses { get; set; }
 
         public DbSet<RoleUser> RoleUsers { get; set; }
 
@@ -29,9 +29,17 @@ namespace E_MailApplicationsManager.Models.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UserRole();
+            modelBuilder.Entity<EmailAttachment>().HasKey(key => key.Id);
+            modelBuilder.Entity<EmailAttachment>()
+                .HasOne(email => email.Email)
+                .WithMany(attachment => attachment.EmailAttachments)
+                .HasForeignKey(id => id.EmailId);
+
+            modelBuilder.SeedUserRoles();
+            modelBuilder.SeedStatuses();
             base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }

@@ -1,18 +1,19 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_MailApplicationsManager.Models
 {
     public class EmailAttachment : BaseIdEntity
     {
-        public int EmailId { get; set; }
-
+      
+        public int? EmailId { get; set; }
         public Email Email { get; set; }
 
         public string GmailId { get; set; }
 
         public string FileName { get; set; }
 
-        public double? SizeInMb { get; set; }
+        public double? SizeInKB { get; set; }
 
     }
 }

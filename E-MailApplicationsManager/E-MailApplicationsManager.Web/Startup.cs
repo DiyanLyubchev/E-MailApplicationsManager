@@ -20,7 +20,7 @@ namespace E_MailApplicationsManager.Web
     {
         public Startup(IConfiguration configuration)
         {
-            
+
             Configuration = configuration;
         }
 
@@ -82,10 +82,9 @@ namespace E_MailApplicationsManager.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddRouting(options => options.LowercaseUrls = true);
 
-            services.AddDefaultIdentity<User>()
-                .AddRoles<RoleUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<E_MailApplicationsManagerContext>();
+            services.AddIdentity<User, RoleUser>()
+                    .AddEntityFrameworkStores<E_MailApplicationsManagerContext>()
+                    .AddDefaultTokenProviders();
 
         }
 
