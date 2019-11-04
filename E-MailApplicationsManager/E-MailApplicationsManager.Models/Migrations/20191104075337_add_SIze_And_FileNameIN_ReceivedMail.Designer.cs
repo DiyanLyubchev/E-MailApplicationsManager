@@ -4,14 +4,16 @@ using E_MailApplicationsManager.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_MailApplicationsManager.Models.Migrations
 {
     [DbContext(typeof(E_MailApplicationsManagerContext))]
-    partial class E_MailApplicationsManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20191104075337_add_SIze_And_FileNameIN_ReceivedMail")]
+    partial class add_SIze_And_FileNameIN_ReceivedMail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -5,6 +5,7 @@ using Google.Apis.Gmail.v1;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,13 +67,19 @@ namespace E_MailApplicationsManager.Service.Service
             string from = null;
             string id = null;
 
+            double fileSize = 0;
+            string fileName = null;
+            var emailDto = new ReceivedEmailDto();
+
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
 
                 var responseMail = requestMail.ExecuteAsync().Result;
 
-                if (responseMail != null)
+                var mailAttach = responseMail.Payload.Parts[0];
+
+                if (responseMail != null && mailAttach.MimeType == "text/plain")
                 {
                     id = responseMail.Id;
 
@@ -85,13 +92,60 @@ namespace E_MailApplicationsManager.Service.Service
                     from = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "From").Value;
                 }
+                else
+                {
+                    id = responseMail.Id;
 
-                var emailDto = new ReceivedEmailDto
+                    subject = responseMail.Payload.Headers
+                        .FirstOrDefault(s => s.Name == "Subject").Value;
+
+                    date = responseMail.Payload.Headers
+                        .FirstOrDefault(s => s.Name == "Date").Value;
+
+                    from = responseMail.Payload.Headers
+                        .FirstOrDefault(s => s.Name == "From").Value;
+
+                    var attachmentLists = responseMail.Payload.Parts.Skip(1).ToList();
+
+                    if (attachmentLists.Count > 0)
+                    {
+
+                        foreach (var attachment in attachmentLists)
+                        {
+                            fileName = attachment.Filename;
+                            fileSize = double.Parse(attachment.Body.Size.ToString());
+                            fileSize /= 1024;
+
+                            emailDto = new ReceivedEmailDto
+                            {
+                                GmailId = id,
+                                Subject = subject,
+                                Sender = from,
+                                DateReceived = date,
+                                FileName = fileName,
+                                SizeInMb = fileSize
+
+                            };
+
+                            this.emailService.AddMail(emailDto);
+
+
+
+                            fileName = null;
+                            fileSize = 0;
+                        }
+
+
+                    }
+                }
+
+                emailDto = new ReceivedEmailDto
                 {
                     GmailId = id,
                     Subject = subject,
                     Sender = from,
                     DateReceived = date,
+
                 };
 
                 this.emailService.AddMail(emailDto);
@@ -130,8 +184,8 @@ namespace E_MailApplicationsManager.Service.Service
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
 
             var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
-            allListMails.LabelIds = "INBOX";    
-            allListMails.IncludeSpamTrash = false; 
+            allListMails.LabelIds = "INBOX";
+            allListMails.IncludeSpamTrash = false;
 
             var emails = allListMails.ExecuteAsync().Result;
             string subject = null;

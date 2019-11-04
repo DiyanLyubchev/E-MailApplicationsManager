@@ -8,9 +8,12 @@ namespace E_MailApplicationsManager.Models
 
         public Email Email { get; set; }
 
+        public string GmailId { get; set; }
+
         public string FileName { get; set; }
 
         public double? SizeInMb { get; set; }
+
     }
 }
 

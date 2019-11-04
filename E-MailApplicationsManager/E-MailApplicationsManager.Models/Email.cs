@@ -27,5 +27,10 @@ namespace E_MailApplicationsManager.Models
         public ReceivedEmail ReceivedEmail { get; set; }
 
         public bool IsSeen { get; set; } = true;
+
+        public string FileName { get; set; }
+
+        public double? SizeInMb { get; set; }
+
     }
 }

@@ -28,22 +28,24 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption(""); // TODO: IF data is n ot full set status
             }
 
-            var gmaiId =  this.context.ReceivedEmails
+            var gmaiId = this.context.ReceivedEmails
                 .FirstOrDefault(id => id.GmailId == emailDto.GmailId);
 
-            if (gmaiId == null)
-            {
+           
+
                 var email = new ReceivedEmail
                 {
                     GmailId = emailDto.GmailId,
                     Sender = emailDto.Sender,
                     DateReceived = emailDto.DateReceived,
                     Subject = emailDto.Subject,
+                    FileName = emailDto.FileName,
+                    SizeInMb = emailDto.SizeInMb
                 };
 
-                 this.context.ReceivedEmails.Add(email);
-                 this.context.SaveChanges();
-            }
+                this.context.ReceivedEmails.Add(email);
+                this.context.SaveChanges();
+           
         }
     }
 }

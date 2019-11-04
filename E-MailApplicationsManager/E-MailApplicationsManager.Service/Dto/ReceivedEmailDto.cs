@@ -13,5 +13,9 @@ namespace E_MailApplicationsManager.Service.Dto
         public string Sender { get; set; }
 
         public string DateReceived { get; set; }
+
+        public string FileName { get; set; }
+
+        public double? SizeInMb { get; set; }
     }
 }
