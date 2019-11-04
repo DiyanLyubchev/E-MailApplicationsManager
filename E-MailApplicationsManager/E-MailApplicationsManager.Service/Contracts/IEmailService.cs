@@ -9,8 +9,10 @@ namespace E_MailApplicationsManager.Service.Contracts
     {
         void AddMail(EmailDto emailDto);
 
+        void AddBodyToCurrentEmail(EmailDto emailDto);
+
         Task<IEnumerable<Email>> GetAllEmailAsync(string name);
 
-        EmailAttachment AddAttachment(AttachmentDTO attachmentDTO);
+        void AddAttachment(AttachmentDTO attachmentDTO);
     }
 }

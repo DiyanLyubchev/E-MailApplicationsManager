@@ -25,7 +25,7 @@ namespace E_MailApplicationsManager.Models
 
         public ICollection<EmailAttachment> EmailAttachments { get; set; } = new List<EmailAttachment>();
 
-        public bool IsSeen { get; set; } = true;
+        public bool IsSeen { get; set; } 
 
         public EmailStatus Status { get; set; }
 
