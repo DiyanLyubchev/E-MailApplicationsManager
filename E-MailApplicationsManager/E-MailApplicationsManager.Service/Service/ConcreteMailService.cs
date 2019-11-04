@@ -79,7 +79,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                 var mailAttach = responseMail.Payload.Parts[0];
 
-                if (responseMail != null && mailAttach.MimeType == "text/plain")
+                if (mailAttach.MimeType == "text/plain")
                 {
                     id = responseMail.Id;
 
