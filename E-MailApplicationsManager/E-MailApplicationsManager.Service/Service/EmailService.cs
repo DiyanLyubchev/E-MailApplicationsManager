@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Service
@@ -22,7 +23,7 @@ namespace E_MailApplicationsManager.Service.Service
             this.context = context;
         }
 
-        public void AddMail(EmailDto emailDto)
+        public async Task AddMailAsync(EmailDto emailDto)
         {
             if (emailDto.DateReceived == null ||
                 emailDto.Sender == null || emailDto.Subject == null)
@@ -30,10 +31,10 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption(""); // TODO: IF data is n ot full set status
             }
 
-            var gmaiId = this.context.Emails
-                .FirstOrDefault(id => id.GmailId == emailDto.GmailId);
+            var gmaiId =await this.context.Emails
+                .FirstOrDefaultAsync(id => id.GmailId == emailDto.GmailId);
 
-            if (gmaiId == null)
+            if (gmaiId == null && gmaiId.IsSeen == false)
             {
                 var email = new Email
                 {
@@ -43,8 +44,8 @@ namespace E_MailApplicationsManager.Service.Service
                     Subject = emailDto.Subject,
                 };
 
-                this.context.Emails.Add(email);
-                this.context.SaveChanges();
+               await this.context.Emails.AddAsync(email);
+               await this.context.SaveChangesAsync();
             }
         }
 
@@ -75,24 +76,46 @@ namespace E_MailApplicationsManager.Service.Service
 
                 this.context.EmailAttachments.Add(attachment);
                 this.context.SaveChanges();
-
             }
         }
 
-        public void AddBodyToCurrentEmail(EmailDto emailDto)
+        public async Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto)
         {
-            var email = this.context.Emails
+            var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
-            if (email == null)
+            if (emailDto.Body == null)
             {
                 throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
             }
 
-            email.Body = emailDto.Body;
-            email.InitialRegistrationInData = DateTime.Now;
-            this.context.SaveChanges();
+            if (email.Body.Any())
+            {
+                throw new EmailExeption($"Email with the following id {emailDto.GmailId} contains body");
+            }
+
+            if (email.Body == null)
+            {
+                email.Body = emailDto.Body;
+                email.InitialRegistrationInData = DateTime.Now;
+                email.IsSeen = true;
+                await this.context.SaveChangesAsync();
+            }
+
+            return email;
+        }
+
+        public  string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        public  string Base64Encode(string plainText)
+        {
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
     }
 }

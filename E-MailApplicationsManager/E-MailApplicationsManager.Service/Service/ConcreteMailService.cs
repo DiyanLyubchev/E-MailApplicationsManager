@@ -1,4 +1,5 @@
-﻿using E_MailApplicationsManager.Service.Contracts;
+﻿using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Gmail.v1;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Service
 {
@@ -27,7 +29,7 @@ namespace E_MailApplicationsManager.Service.Service
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
-        public void QuickStart()
+        public async Task QuickStartAsync()
         {
             UserCredential credential;
 
@@ -61,10 +63,10 @@ namespace E_MailApplicationsManager.Service.Service
 
             var emails = allListMails.ExecuteAsync().Result;
 
-            string subject = null;
-            string date = null;
-            string from = null;
-            string id = null;
+            string subjectOfEmail = null;
+            string dateOfEmail = null;
+            string senderOfEmail = null;
+            string gmailId = null;
 
             foreach (var currentEmail in emails.Messages)
             {
@@ -76,39 +78,38 @@ namespace E_MailApplicationsManager.Service.Service
 
                 if (mailAttach.MimeType == "text/plain")
                 {
-                    id = responseMail.Id;
+                    gmailId = responseMail.Id;
 
-                    subject = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "Subject").Value;
+                    subjectOfEmail = responseMail.Payload.Headers
+                        .FirstOrDefault(subject => subject.Name == "Subject").Value;
 
-                    date = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "Date").Value;
+                    dateOfEmail = responseMail.Payload.Headers
+                        .FirstOrDefault(date => date.Name == "Date").Value;
 
-                    from = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "From").Value;
+                    senderOfEmail = responseMail.Payload.Headers
+                        .FirstOrDefault(sender => sender.Name == "From").Value;
 
                     var emailDto = new EmailDto
                     {
-                        GmailId = id,
-                        Subject = subject,
-                        Sender = from,
-                        DateReceived = date,
-
+                        GmailId = gmailId,
+                        Subject = subjectOfEmail,
+                        Sender = senderOfEmail,
+                        DateReceived = dateOfEmail,
                     };
 
-                    this.emailService.AddMail(emailDto);
+                    await this.emailService.AddMailAsync(emailDto);
                 }
                 else
                 {
-                    id = responseMail.Id;
+                    gmailId = responseMail.Id;
 
-                    subject = responseMail.Payload.Headers
+                    subjectOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "Subject").Value;
 
-                    date = responseMail.Payload.Headers
+                    dateOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "Date").Value;
 
-                    from = responseMail.Payload.Headers
+                    senderOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(s => s.Name == "From").Value;
 
                     var attachmentLists = responseMail.Payload.Parts.Skip(1).ToList();
@@ -123,7 +124,7 @@ namespace E_MailApplicationsManager.Service.Service
                             fileSize /= 1024;
                             var attachmentDto = new AttachmentDTO
                             {
-                                GmailId = id,
+                                GmailId = gmailId,
                                 FileName = fileName,
                                 SizeInKB = fileSize
                             };
@@ -132,24 +133,18 @@ namespace E_MailApplicationsManager.Service.Service
                         }
                         var emailDto = new EmailDto
                         {
-                            GmailId = id,
-                            Subject = subject,
-                            Sender = from,
-                            DateReceived = date,
+                            GmailId = gmailId,
+                            Subject = subjectOfEmail,
+                            Sender = senderOfEmail,
+                            DateReceived = dateOfEmail,
                         };
-                        this.emailService.AddMail(emailDto);
+                        await this.emailService.AddMailAsync(emailDto);
                     }
                 }
             }
         }
 
-        public string Base64Decode(string base64EncodedData)
-        {
-            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
-            return Encoding.UTF8.GetString(base64EncodedBytes);
-        }
-
-        public void GetEmailById(string id)
+        public async Task<Email> GetEmailByIdAsync(string id)
         {
             UserCredential credential;
 
@@ -178,8 +173,10 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.IncludeSpamTrash = false;
 
             var emails = allListMails.ExecuteAsync().Result;
-         
+
             var convertBody = new StringBuilder();
+
+            var email = new Email();
 
             foreach (var currentEmail in emails.Messages)
             {
@@ -194,19 +191,22 @@ namespace E_MailApplicationsManager.Service.Service
 
                     string body = responseMail.Payload.Parts[0].Body.Data;
 
-                    var result = Base64Decode(body);
+                    //  var result = Base64Decode(body);
 
-                    convertBody.Append(result);
+                    // convertBody.Append(result);
 
-                    var emailDto = new EmailDto
+                    convertBody.Append(body);
+
+                    var emailDto = new EmailContentDto
                     {
                         GmailId = id,
                         Body = body
                     };
 
-                    this.emailService.AddBodyToCurrentEmail(emailDto);
+                    email = await this.emailService.AddBodyToCurrentEmailAsync(emailDto);
                 }
             }
+            return email;
         }
     }
 }

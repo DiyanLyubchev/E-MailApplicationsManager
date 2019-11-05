@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using E_MailApplicationsManager.Models;
+using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface IConcreteMailService
     {
-        string Base64Decode(string base64EncodedData);
+        Task QuickStartAsync();
 
-        void QuickStart();
-
-        void GetEmailById(string id);
+        Task<Email> GetEmailByIdAsync(string id);
     }
 }
