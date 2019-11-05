@@ -21,4 +21,11 @@
     <ProjectReference Include="..\E-MailApplicationsManager.Service\E-MailApplicationsManager.Service.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="Areas\Identity\Pages\Account\Login.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

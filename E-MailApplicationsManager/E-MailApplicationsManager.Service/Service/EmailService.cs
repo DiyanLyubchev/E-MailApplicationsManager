@@ -31,10 +31,10 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption(""); // TODO: IF data is n ot full set status
             }
 
-            var gmaiId =await this.context.Emails
+            var gmailId =await this.context.Emails
                 .FirstOrDefaultAsync(id => id.GmailId == emailDto.GmailId);
 
-            if (gmaiId == null && gmaiId.IsSeen == false)
+            if (gmailId == null)
             {
                 var email = new Email
                 {

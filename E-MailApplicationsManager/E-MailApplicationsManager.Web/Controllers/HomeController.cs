@@ -20,6 +20,11 @@ namespace E_MailApplicationsManager.Web.Controllers
         public async Task<IActionResult> Index()
         {
             await this.concreteMailService.QuickStartAsync();
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return LocalRedirect("~/identity/account/login");
+            }
             return View();
         }
 
