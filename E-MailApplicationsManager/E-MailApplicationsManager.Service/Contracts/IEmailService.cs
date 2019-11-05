@@ -7,12 +7,16 @@ namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface IEmailService
     {
-        void AddMail(EmailDto emailDto);
+        Task AddMailAsync(EmailDto emailDto);
 
-        void AddBodyToCurrentEmail(EmailDto emailDto);
+        Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto);
 
         Task<IEnumerable<Email>> GetAllEmailAsync(string name);
 
         void AddAttachment(AttachmentDTO attachmentDTO);
+
+        string Base64Decode(string base64EncodedData);
+
+        string Base64Encode(string plainText);
     }
 }
