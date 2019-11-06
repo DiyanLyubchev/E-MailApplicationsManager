@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
+using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Models.Email;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
@@ -48,14 +50,15 @@ namespace E_MailApplicationsManager.Web.Controllers
         {
             try
             {
-                var email = await this.concreteMailService.GetEmailByIdAsync(viewModel.GmailId);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var email = await this.concreteMailService.GetEmailByIdAsync(viewModel.GmailId, userId);
                 return Json(email.Body);
             }
             catch (EmailExeption ex)
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            //TODO: View and take UserId
+            //TODO: View 
         }
     }
 }

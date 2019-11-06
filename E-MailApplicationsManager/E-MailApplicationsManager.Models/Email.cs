@@ -30,5 +30,9 @@ namespace E_MailApplicationsManager.Models
         public EmailStatus Status { get; set; }
 
         public int EmailStatusId { get; set; } = (int)EmailStatusesType.NotReviewed;
+
+        public User User { get; set; }
+
+        public string UserId { get; set; }
     }
 }

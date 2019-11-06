@@ -144,7 +144,7 @@ namespace E_MailApplicationsManager.Service.Service
             }
         }
 
-        public async Task<Email> GetEmailByIdAsync(string id)
+        public async Task<Email> GetEmailByIdAsync(string id, string userId)
         {
             UserCredential credential;
 
@@ -200,7 +200,9 @@ namespace E_MailApplicationsManager.Service.Service
                     var emailDto = new EmailContentDto
                     {
                         GmailId = id,
-                        Body = body
+                        Body = body,
+                        UserId = userId
+
                     };
 
                     email = await this.emailService.AddBodyToCurrentEmailAsync(emailDto);

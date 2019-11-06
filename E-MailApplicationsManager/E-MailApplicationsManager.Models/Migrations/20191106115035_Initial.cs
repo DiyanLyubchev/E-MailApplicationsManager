@@ -183,7 +183,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                     SetCurrentStatus = table.Column<DateTime>(nullable: true),
                     SetTerminalState = table.Column<DateTime>(nullable: true),
                     IsSeen = table.Column<bool>(nullable: false),
-                    EmailStatusId = table.Column<int>(nullable: false)
+                    EmailStatusId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,6 +195,12 @@ namespace E_MailApplicationsManager.Models.Migrations
                         principalTable: "Statuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Emails_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -284,8 +291,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "9892b413-be79-42ff-9d5b-b9db37d4f066", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "9a8445ba-f6ab-4af4-824c-b95bf830912c", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "9803141a-40d9-4bba-9a32-719c8c46f1f4", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "af627778-1dfe-417c-a980-badd6f1f1b55", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -293,8 +300,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "bab7e94a-0f83-4d30-96e2-b194944db7f4", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEC/JH7Ml4gry9WMO2GLYdIxqI7JwHBfR2o92dcy4u/01nUE0RL4+J0KOt1H3oveLvw==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "e59a07f2-2608-473f-b851-eacd0419b962", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEA82dVpkPwFlXx90Z2d0xX3g+KRWURF9Hu/6Wo8Hbs4gdriJjd0GfV+/T0uV2RF8yQ==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "11fe12be-a90e-4fed-b096-fd3ad290f3e6", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEFBjJqpOPguCYUnuU/gSoMUW03UBPbFVdK7er/KaZGI5eROYV1+tA60RqDxjuRMF9A==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "6ee181ee-44fc-40cf-b3a4-49003ba77c9b", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEPTq2dIu2k/Ih5W6N6rbuwDsur/a9SkZv3iqw9hqGIQHDj+h6D5pQaSUxGqi1xTdOg==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
                 });
 
             migrationBuilder.InsertData(
@@ -379,6 +386,11 @@ namespace E_MailApplicationsManager.Models.Migrations
                 column: "EmailStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Emails_UserId",
+                table: "Emails",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LoanApplicants_EmailId",
                 table: "LoanApplicants",
                 column: "EmailId");
@@ -422,10 +434,10 @@ namespace E_MailApplicationsManager.Models.Migrations
                 name: "Emails");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Statuses");
 
             migrationBuilder.DropTable(
-                name: "Statuses");
+                name: "AspNetUsers");
         }
     }
 }
