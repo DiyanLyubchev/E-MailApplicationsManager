@@ -71,6 +71,7 @@ namespace E_MailApplicationsManager.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IConcreteMailService, ConcreteMailService>();
+            services.AddScoped<ISearchService, SearchService>();
 
             services.AddDbContext<E_MailApplicationsManagerContext>(options =>
              options.UseSqlServer(

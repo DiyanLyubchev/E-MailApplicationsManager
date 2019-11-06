@@ -1,0 +1,22 @@
+﻿@model EmailListViewModel
+@{
+    ViewData["Title"] = "EmailInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EmailInfo</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1 class="text-center">Welcome!</h1>
+    <hr />
+    <div>
+        @foreach (var email in Model.Emails)
+        {
+            <a asp-controller="Email" asp-action="Details" asp-route-id="@email.Id"><p style="color:black">@email.DateReceived </p>  </a>
+        }
+    </div>
+</body>
+</html>

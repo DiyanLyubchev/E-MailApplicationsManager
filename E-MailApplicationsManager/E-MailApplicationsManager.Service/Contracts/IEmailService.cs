@@ -11,12 +11,11 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto);
 
-        Task<IEnumerable<Email>> GetAllEmailAsync(string name);
-
         Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
 
         string Base64Decode(string base64EncodedData);
 
         string Base64Encode(string plainText);
+     
     }
 }
