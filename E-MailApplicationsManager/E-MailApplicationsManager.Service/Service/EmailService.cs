@@ -81,7 +81,7 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
             }
 
-            if (email.Body.Any())
+            if (email.Body != null)
             {
                 throw new EmailExeption($"Email with the following id {emailDto.GmailId} contains body");
             }

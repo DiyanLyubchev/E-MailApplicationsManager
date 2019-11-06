@@ -35,21 +35,15 @@ namespace E_MailApplicationsManager.Web.Controllers
 
             return Json(words);
         }
-        [Authorize]
-        [HttpGet]
-        public IActionResult FillEmailsBody()
-        {
-            return View();
-        }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> FillEmailsBody(EmailBodyViewModel viewModel)
+        [HttpGet]
+        public async Task<IActionResult> FillEmailsBody(string id)
         {
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var email = await this.concreteMailService.GetEmailByIdAsync(viewModel.GmailId, userId);
+                var email = await this.concreteMailService.GetEmailByIdAsync(id, userId);
                 return Json(email.Body);
             }
             catch (EmailExeption ex)
