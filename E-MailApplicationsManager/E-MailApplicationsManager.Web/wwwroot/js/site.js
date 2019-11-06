@@ -6,7 +6,7 @@
     const teamContainer = $('#fill-email');
 
     serverData
-        .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived}  ${email.status}</div>`))
+        .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived}  ${email.emailStatusId}</div>`))
         .forEach(teamElement => {
             teamContainer.append(teamElement);
         });

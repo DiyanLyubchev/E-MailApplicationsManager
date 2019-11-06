@@ -7,6 +7,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -85,6 +86,10 @@ namespace E_MailApplicationsManager.Service.Service
 
                     dateOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(date => date.Name == "Date").Value;
+                    //Mon, 4 Nov 2019 01:43:12 +0000 (GMT)
+                    //var convertDate = DateTime.ParseExact(dateOfEmail,
+                    //    "ddd, d MMM yyyy HH:mm:ss К (GMT)",
+                    //    CultureInfo.InvariantCulture);
 
                     senderOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(sender => sender.Name == "From").Value;
@@ -177,7 +182,6 @@ namespace E_MailApplicationsManager.Service.Service
             var convertBody = new StringBuilder();
 
             var email = new Email();
-
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
@@ -206,9 +210,11 @@ namespace E_MailApplicationsManager.Service.Service
                     };
 
                     email = await this.emailService.AddBodyToCurrentEmailAsync(emailDto);
+                    break;
                 }
             }
             return email;
+            
         }
     }
 }

@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.GmailId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GmailId)
+           <a asp-route-id="@Model.GmailId" asp-action="FillEmailsBody" asp-controller="Email" >@Model.GmailId</a>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Subject)
