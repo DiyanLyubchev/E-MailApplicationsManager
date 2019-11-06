@@ -122,14 +122,14 @@ namespace E_MailApplicationsManager.Service.Service
                             string fileName = attachment.Filename;
                             double fileSize = double.Parse(attachment.Body.Size.ToString());
                             fileSize /= 1024;
-                            var attachmentDto = new AttachmentDTO
+                            var attachmentDto = new EmailAttachmentDTO
                             {
                                 GmailId = gmailId,
                                 FileName = fileName,
                                 SizeInKB = fileSize
                             };
 
-                            this.emailService.AddAttachment(attachmentDto);
+                            await this.emailService.AddAttachmentAsync(attachmentDto);
                         }
                         var emailDto = new EmailDto
                         {

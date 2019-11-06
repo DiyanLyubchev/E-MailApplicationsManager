@@ -4,7 +4,7 @@ using System.Text;
 
 namespace E_MailApplicationsManager.Service.Dto
 {
-    public class AttachmentDTO
+    public class EmailAttachmentDTO
     {
         public string FileName { get; set; }
 

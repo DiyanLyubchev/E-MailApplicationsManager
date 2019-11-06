@@ -31,7 +31,7 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption(""); // TODO: IF data is n ot full set status
             }
 
-            var gmailId =await this.context.Emails
+            var gmailId = await this.context.Emails
                 .FirstOrDefaultAsync(id => id.GmailId == emailDto.GmailId);
 
             if (gmailId == null)
@@ -44,8 +44,8 @@ namespace E_MailApplicationsManager.Service.Service
                     Subject = emailDto.Subject,
                 };
 
-               await this.context.Emails.AddAsync(email);
-               await this.context.SaveChangesAsync();
+                await this.context.Emails.AddAsync(email);
+                await this.context.SaveChangesAsync();
             }
         }
 
@@ -59,11 +59,11 @@ namespace E_MailApplicationsManager.Service.Service
             return emailList;
         }
 
-        public void AddAttachment(AttachmentDTO attachmentDTO)
+        public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
         {
 
-            var gmaiId = this.context.Emails
-               .FirstOrDefault(id => id.GmailId == attachmentDTO.GmailId);
+            var gmaiId = await this.context.Emails
+               .FirstOrDefaultAsync(id => id.GmailId == attachmentDTO.GmailId);
 
             if (gmaiId == null)
             {
@@ -74,8 +74,8 @@ namespace E_MailApplicationsManager.Service.Service
                     GmailId = attachmentDTO.GmailId
                 };
 
-                this.context.EmailAttachments.Add(attachment);
-                this.context.SaveChanges();
+                await this.context.EmailAttachments.AddAsync(attachment);
+                await this.context.SaveChangesAsync();
             }
         }
 
@@ -106,13 +106,13 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-        public  string Base64Decode(string base64EncodedData)
+        public string Base64Decode(string base64EncodedData)
         {
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
-        public  string Base64Encode(string plainText)
+        public string Base64Encode(string plainText)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);

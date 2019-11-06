@@ -13,7 +13,7 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<IEnumerable<Email>> GetAllEmailAsync(string name);
 
-        void AddAttachment(AttachmentDTO attachmentDTO);
+        Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
 
         string Base64Decode(string base64EncodedData);
 
