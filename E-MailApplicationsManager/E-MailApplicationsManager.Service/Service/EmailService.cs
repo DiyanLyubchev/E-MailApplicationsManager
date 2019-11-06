@@ -48,15 +48,7 @@ namespace E_MailApplicationsManager.Service.Service
             }
         }
 
-        public async Task<IEnumerable<Email>> GetAllEmailAsync(string name)
-        {
-            var emailList = await this.context.Emails
-               .Where(mail => mail.Sender.Contains(name))
-               .Select(email => email)
-               .ToListAsync();
-
-            return emailList;
-        }
+       
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
         {
@@ -106,6 +98,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             return email;
         }
+      
 
         public string Base64Decode(string base64EncodedData)
         {
