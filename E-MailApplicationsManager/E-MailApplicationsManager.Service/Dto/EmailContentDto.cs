@@ -9,5 +9,7 @@ namespace E_MailApplicationsManager.Service.Dto
         public string GmailId { get; set; }
 
         public string Body { get; set; }
+
+        public string UserId { get; set; }
     }
 }
