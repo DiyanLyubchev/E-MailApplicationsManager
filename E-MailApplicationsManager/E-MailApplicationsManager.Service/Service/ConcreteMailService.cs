@@ -194,10 +194,7 @@ namespace E_MailApplicationsManager.Service.Service
                 {
 
                     string body = responseMail.Payload.Parts[0].Body.Data;
-
-                    //  var result = Base64Decode(body);
-
-                    // convertBody.Append(result);
+                 
 
                     convertBody.Append(body);
 
