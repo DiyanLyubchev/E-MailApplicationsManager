@@ -17,9 +17,12 @@ namespace E_MailApplicationsManager.Service.Service
     {
         private readonly E_MailApplicationsManagerContext context;
 
-        public EmailService(E_MailApplicationsManagerContext context)
+        private readonly IEncodeDecodeService encodeDecodeService;
+
+        public EmailService(E_MailApplicationsManagerContext context, IEncodeDecodeService encodeDecodeService)
         {
             this.context = context;
+            this.encodeDecodeService = encodeDecodeService;
         }
 
         public async Task AddMailAsync(EmailDto emailDto)
@@ -97,19 +100,6 @@ namespace E_MailApplicationsManager.Service.Service
             }
 
             return email;
-        }
-      
-
-        public string Base64Decode(string base64EncodedData)
-        {
-            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
-            return Encoding.UTF8.GetString(base64EncodedBytes);
-        }
-
-        public string Base64Encode(string plainText)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
         }
     }
 }

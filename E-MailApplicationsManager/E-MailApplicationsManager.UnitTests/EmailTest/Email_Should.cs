@@ -1,9 +1,11 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,6 +22,8 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var dateReceived = "TestDate";
             var sender = "TestSender";
 
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDontHaveSubject_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
@@ -31,7 +35,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     DateReceived = dateReceived
                 };
 
-                var sut = new EmailService(actContext);
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
 
                 await sut.AddMailAsync(emailDto);
             }
@@ -45,6 +49,8 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var dateReceived = "TestDate";
             string sender = null;
 
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDontHaveSender_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
@@ -56,7 +62,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     DateReceived = dateReceived
                 };
 
-                var sut = new EmailService(actContext);
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
 
                 await sut.AddMailAsync(emailDto);
             }
@@ -69,6 +75,8 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             string dateReceived = null;
             var sender = "TestSender";
 
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDontHaveDateReceived_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
@@ -80,7 +88,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     DateReceived = dateReceived
                 };
 
-                var sut = new EmailService(actContext);
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
 
                 await sut.AddMailAsync(emailDto);
             }
@@ -92,6 +100,8 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
             var options = TestUtilities.GetOptions(nameof(AddEmail_Test));
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
@@ -107,7 +117,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId
                 };
 
-                var sut = new EmailService(actContext);
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
 
                 var result = sut.AddMailAsync(emailDto);
 

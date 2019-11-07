@@ -93,27 +93,5 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 Assert.IsNotNull(result);
             }
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(EmailExeption))]
-        public async Task ThrowExeption_WhenUserNoWorkingOnEmail_Test()
-        {
-            var emailContentDto = new EmailContentDto
-            {
-                UserId = "TestId1234"
-            };
-
-            var options = TestUtilities.GetOptions(nameof(ThrowExeption_WhenUserNoWorkingOnEmail_Test));
-
-            using (var actContext = new E_MailApplicationsManagerContext(options))
-            {
-
-                await actContext.SaveChangesAsync();
-
-                var sut = new SearchService(actContext);
-
-                var result = sut.GetAllUserWorkingOnEmail(emailContentDto);
-            }
-        }
     }
 }

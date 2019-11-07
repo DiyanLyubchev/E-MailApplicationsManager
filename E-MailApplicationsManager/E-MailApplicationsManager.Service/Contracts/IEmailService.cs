@@ -12,10 +12,6 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto);
 
         Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
-
-        string Base64Decode(string base64EncodedData);
-
-        string Base64Encode(string plainText);
      
     }
 }
