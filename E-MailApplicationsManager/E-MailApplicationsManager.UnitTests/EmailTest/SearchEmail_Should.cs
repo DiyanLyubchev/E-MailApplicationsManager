@@ -1,8 +1,11 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Service.CustomException;
+using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+
 
 namespace E_MailApplicationsManager.UnitTests.EmailTest
 {
@@ -37,39 +40,17 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
         [TestMethod]
         public async Task GetAllEmail_Test()
         {
-            var subject = "TestSubject";
-            var dateReceived = "TestDateReceived";
-            var sender = "TestSender";
-            var gmailId = "TestgmailId";
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
-            var subject2 = "TestSubject2";
-            var dateReceived2 = "TestDateReceived2";
-            var sender2 = "TestSender2";
-            var gmailId2 = "TestgmailId2";
+            var secondEmail = EmailGeneratorUtil.GenerateEmailSecond();
 
             var options = TestUtilities.GetOptions(nameof(GetAllEmail_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                await actContext.Emails.AddAsync(
-                     new Email
-                     {
-                         Sender = sender,
-                         GmailId = gmailId,
-                         Subject = subject,
-                         DateReceived = dateReceived,
-                         IsSeen = false
+                await actContext.Emails.AddAsync(firstEmail);
 
-                     });
-
-                await actContext.Emails.AddAsync(new Email
-                      {
-                          Sender = sender2,
-                          DateReceived = dateReceived2,
-                          Subject = subject2,
-                          GmailId = gmailId2,
-                          IsSeen = false
-                      });
+                await actContext.Emails.AddAsync(secondEmail);
 
                 await actContext.SaveChangesAsync();
 
@@ -81,5 +62,58 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             }
         }
 
+        [TestMethod]
+        public async Task GetAllUserWorkingOnEmail_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var secondEmail = EmailGeneratorUtil.GenerateEmailSecond();
+
+            var userId = secondEmail.UserId;
+
+            var emailContentDto = new EmailContentDto
+            {
+                UserId = userId
+            };
+
+            var options = TestUtilities.GetOptions(nameof(GetAllUserWorkingOnEmail_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.Emails.AddAsync(secondEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = sut.GetAllUserWorkingOnEmail(emailContentDto);
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeption_WhenUserNoWorkingOnEmail_Test()
+        {
+            var emailContentDto = new EmailContentDto
+            {
+                UserId = "TestId1234"
+            };
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeption_WhenUserNoWorkingOnEmail_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = sut.GetAllUserWorkingOnEmail(emailContentDto);
+            }
+        }
     }
 }

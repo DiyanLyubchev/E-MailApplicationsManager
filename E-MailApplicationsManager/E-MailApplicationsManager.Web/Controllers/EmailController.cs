@@ -1,7 +1,9 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
+using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Models.Emails;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
@@ -36,8 +38,8 @@ namespace E_MailApplicationsManager.Web.Controllers
             return Json(words);
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> FillEmailsBody(string id)
         {
             try
@@ -53,6 +55,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             //TODO: View 
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var email = await this.searchService.FindEmailAsync(id);
@@ -66,6 +69,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             return View(result);
         }
 
+        [Authorize]
         public async Task<IActionResult> EmailInfo()
         {
             var emails = await this.searchService.GetAllEmailsAsync();
@@ -73,6 +77,22 @@ namespace E_MailApplicationsManager.Web.Controllers
             var libraryViewModel = new EmailListViewModel(emails);
 
             return View(libraryViewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> CheckMyEmail()
+        {
+            var baseDto = new EmailContentDto
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+
+            var emails = (await this.searchService.GetAllUserWorkingOnEmail(baseDto))
+              .Select(email => new EmailViewModel(email));
+
+            var results = new SearchEmailViewModel(emails);
+
+            return View("CheckMyEmail", results);
         }
     }
 }
