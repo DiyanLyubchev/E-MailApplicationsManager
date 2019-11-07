@@ -54,7 +54,8 @@ namespace E_MailApplicationsManager.Web.Controllers
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            return RedirectToAction(nameof(FillEmailForm),id);//TO FIX
+            var gmailId = new EmailBodyViewModel(id);
+            return View(gmailId);//TO FIX
         }
 
         [Authorize]

@@ -1,0 +1,9 @@
+﻿@model EmailBodyViewModel
+
+@{
+    ViewData["Title"] = "FillEmailBody";
+}
+
+<h1>FillEmailBody</h1>
+
+<a asp-route-id="@Model.Body" asp-action="FillEmailForm" asp-controller="Email">@Model.Body</a>

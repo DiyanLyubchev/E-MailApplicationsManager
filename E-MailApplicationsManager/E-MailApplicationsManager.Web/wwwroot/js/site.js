@@ -29,10 +29,10 @@ const serverHandler = (serverData) => {
     console.log(serverData);
 };
 
-$('#send-button-button').click(function() {
+$('#send-button').click(function() {
     const addName = $('#fullname').val();
     const addEGN = $('#egn').val();
     const addPhoneNumber = $('#phone-number').val();
 
-    $.get('/email/loanApplicantForm?name=' + addName, '&egn=' + addEGN, '&phoneNumber=' + addPhoneNumber, serverHandler);
+    $.get('/email/loanapplicantform?name=' + addName, '&egn=' + addEGN, '&phoneNumber=' + addPhoneNumber, serverHandler);
 });
