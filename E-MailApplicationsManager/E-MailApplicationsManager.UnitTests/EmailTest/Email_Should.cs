@@ -89,31 +89,22 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
         [TestMethod]
         public async Task AddEmail_Test()
         {
-            var subject = "TestSubject";
-            var dateReceived = "TestDateReceived";
-            var sender = "TestSender";
-            var gmailId = "TestgmailId";
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
             var options = TestUtilities.GetOptions(nameof(AddEmail_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var email = await actContext.Emails.AddAsync(
-                      new Email
-                      {
-                          Sender = sender,
-                          GmailId = gmailId,
-                          Subject = subject,
-                          DateReceived = dateReceived
-                      });
+                var email = await actContext.Emails.AddAsync(firstEmail);
+                     
                 await actContext.SaveChangesAsync();
 
                 var emailDto = new EmailDto
                 {
-                    Subject = subject,
-                    Sender = sender,
-                    DateReceived = dateReceived,
-                    GmailId = gmailId
+                    Subject = firstEmail.Subject,
+                    Sender = firstEmail.Sender,
+                    DateReceived = firstEmail.DateReceived,
+                    GmailId = firstEmail.GmailId
                 };
 
                 var sut = new EmailService(actContext);
