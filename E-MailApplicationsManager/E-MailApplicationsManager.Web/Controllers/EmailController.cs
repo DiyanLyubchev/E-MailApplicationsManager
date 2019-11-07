@@ -49,13 +49,12 @@ namespace E_MailApplicationsManager.Web.Controllers
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var email = await this.concreteMailService.GetEmailByIdAsync(id, userId);
-             
             }
             catch (EmailExeption ex)
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            return RedirectToAction(nameof(FillEmailForm), id);
+            return RedirectToAction("FillEmailForm",id);
         }
 
         [Authorize]
@@ -109,13 +108,29 @@ namespace E_MailApplicationsManager.Web.Controllers
                 };
                 var email = await this.service.FillLoanForm(emailDto);
                 var encodeBody = this.encodeDecodeService.Base64Encode(email.Body);
-                return View("FillEmailForm", encodeBody);
+
+                var result = new EmailBodyViewModel(encodeBody);
+
+                return View("FillEmailForm", result);
             }
             catch (EmailExeption ex)
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            //TODO: VIEW
+        }
+
+        public IActionResult LoanApplicantForm([FromQuery]string name, [FromQuery]string egn, [FromQuery]string phoneNumber)
+        {
+            var dto = new LoanApplicantDto
+            {
+                Name = name,
+                EGN = egn,
+                PhoneNumber = phoneNumber,
+                userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+
+
+            return View();
         }
     }
 }

@@ -22,3 +22,17 @@ $('#search-button').click(function() {
 
     $.get('/email/search?name=' + searchText, serverResponseHandler);
 });
+
+
+
+const serverHandler = (serverData) => {
+    console.log(serverData);
+};
+
+$('#send-button-button').click(function() {
+    const addName = $('#fullname').val();
+    const addEGN = $('#egn').val();
+    const addPhoneNumber = $('#phone-number').val();
+
+    $.get('/email/loanApplicantForm?name=' + addName, '&egn=' + addEGN, '&phoneNumber=' + addPhoneNumber, serverHandler);
+});

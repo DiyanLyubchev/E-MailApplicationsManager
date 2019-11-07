@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using E_MailApplicationsManager.Models;
 
 namespace E_MailApplicationsManager.Web.Models.Emails
 {
     public class EmailBodyViewModel
     {
-        public string GmailId { get; set; }
+        public EmailBodyViewModel(string body)
+        {
+            this.Body = body;
+        }
+
+        public string Body { get; set; }
     }
 }
