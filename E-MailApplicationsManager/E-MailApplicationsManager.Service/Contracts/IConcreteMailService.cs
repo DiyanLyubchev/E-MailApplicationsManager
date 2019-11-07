@@ -7,6 +7,6 @@ namespace E_MailApplicationsManager.Service.Contracts
     {
         Task QuickStartAsync();
 
-        Task<Email> GetEmailByIdAsync(string id);
+        Task<Email> GetEmailByIdAsync(string id, string userId);
     }
 }

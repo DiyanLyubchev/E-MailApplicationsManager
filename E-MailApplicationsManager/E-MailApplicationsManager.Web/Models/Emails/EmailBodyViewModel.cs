@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E_MailApplicationsManager.Web.Models.Email
+namespace E_MailApplicationsManager.Web.Models.Emails
 {
     public class EmailBodyViewModel
     {

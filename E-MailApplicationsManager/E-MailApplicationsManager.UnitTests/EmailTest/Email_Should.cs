@@ -118,9 +118,9 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new EmailService(actContext);
 
-                await sut.AddMailAsync(emailDto);
+                var result = sut.AddMailAsync(emailDto);
 
-                Assert.IsNotNull(email);
+                Assert.IsNotNull(result);
             }
 
             using (var assertContext = new E_MailApplicationsManagerContext(options))

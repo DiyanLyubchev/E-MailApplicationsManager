@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
-using E_MailApplicationsManager.Web.Models.Email;
+using E_MailApplicationsManager.Web.Models.Emails;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +13,13 @@ namespace E_MailApplicationsManager.Web.Controllers
     {
         private readonly IEmailService service;
         private readonly IConcreteMailService concreteMailService;
+        private readonly ISearchService searchService;
 
-        public EmailController(IEmailService service, IConcreteMailService concreteMailService)
+        public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService)
         {
             this.service = service;
             this.concreteMailService = concreteMailService;
+            this.searchService = searchService;
         }
 
         [Authorize]
@@ -31,31 +31,48 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string name)
         {
-            var words = await this.service.GetAllEmailAsync(name);
+            var words = await this.searchService.GetAllEmailAsync(name);
 
             return Json(words);
         }
-        [Authorize]
-        [HttpGet]
-        public IActionResult FillEmailsBody()
-        {
-            return View();
-        }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> FillEmailsBody(EmailBodyViewModel viewModel)
+        [HttpGet]
+        public async Task<IActionResult> FillEmailsBody(string id)
         {
             try
             {
-                var email = await this.concreteMailService.GetEmailByIdAsync(viewModel.GmailId);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var email = await this.concreteMailService.GetEmailByIdAsync(id, userId);
                 return Json(email.Body);
             }
             catch (EmailExeption ex)
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            //TODO: View and take UserId
+            //TODO: View 
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var email = await this.searchService.FindEmailAsync(id);
+            if (email == null)
+            {
+                return View("Message", new MessageViewModel { Message = "The email was not found!" });
+            }
+
+            var result = new EmailViewModel(email);
+
+            return View(result);
+        }
+
+        public async Task<IActionResult> EmailInfo()
+        {
+            var emails = await this.searchService.GetAllEmailsAsync();
+
+            var libraryViewModel = new EmailListViewModel(emails);
+
+            return View(libraryViewModel);
         }
     }
 }

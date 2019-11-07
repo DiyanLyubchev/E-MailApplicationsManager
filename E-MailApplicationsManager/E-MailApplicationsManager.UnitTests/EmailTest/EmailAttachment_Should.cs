@@ -42,9 +42,9 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 };
 
                 var sut = new EmailService(actContext);
-                await sut.AddAttachmentAsync(ettachmentDto);
+                var result = sut.AddAttachmentAsync(ettachmentDto);
 
-                Assert.IsNotNull(sut);
+                Assert.IsNotNull(result);
             }
             using (var assertContext = new E_MailApplicationsManagerContext(options))
             {

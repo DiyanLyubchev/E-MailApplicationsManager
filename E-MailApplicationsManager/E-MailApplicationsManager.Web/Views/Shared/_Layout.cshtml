@@ -61,7 +61,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole("Manager"))
                         {
-                            @await Component.InvokeAsync("Manager")
+                            @await Component.InvokeAsync("Manager") 
                         }
 
                         @if (User.IsInRole("Operator"))
