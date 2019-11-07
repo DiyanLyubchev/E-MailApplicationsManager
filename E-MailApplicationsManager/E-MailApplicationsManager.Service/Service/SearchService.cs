@@ -1,6 +1,8 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
+using E_MailApplicationsManager.Service.CustomException;
+using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,20 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(email => email.IsSeen == false)
                 .OrderBy(email => email.DateReceived)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Email>> GetAllUserWorkingOnEmail(EmailContentDto userIdDto)
+        {
+            var userId = await this.context.Users
+                .FirstOrDefaultAsync(uId => uId.Id == userIdDto.UserId);
+
+            var email = await this.context.Emails
+                .Include(u => u.User)
+                .Where(workingOnEmail => workingOnEmail.UserId == userIdDto.UserId)
+                .Select(emails => emails)
+                .ToListAsync();
+           
+            return email;
         }
     }
 }

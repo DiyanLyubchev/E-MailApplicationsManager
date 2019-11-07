@@ -13,9 +13,6 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
 
-        string Base64Decode(string base64EncodedData);
-
-        string Base64Encode(string plainText);
-     
+        Task<Email> FillLoanForm(EmailContentDto emailDto);
     }
 }
