@@ -29,6 +29,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             return emailList;
         }
+
         public async Task<Email> FindEmailAsync(int id)
         {
             return await this.context.Emails
