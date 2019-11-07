@@ -12,6 +12,7 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto);
 
         Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
-     
+
+        Task<Email> FillLoanForm(EmailContentDto emailDto);
     }
 }

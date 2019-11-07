@@ -30,7 +30,7 @@ namespace E_MailApplicationsManager.Service.Service
             if (emailDto.DateReceived == null ||
                 emailDto.Sender == null || emailDto.Subject == null)
             {
-                throw new EmailExeption("Email does not exist!");  
+                throw new EmailExeption("Email does not exist!");
             }
 
             var gmailId = await this.context.Emails
@@ -51,7 +51,7 @@ namespace E_MailApplicationsManager.Service.Service
             }
         }
 
-       
+
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
         {
@@ -96,8 +96,27 @@ namespace E_MailApplicationsManager.Service.Service
                 email.UserId = emailDto.UserId;
                 email.IsSeen = true;
                 email.EmailStatusId = (int)EmailStatusesType.New;
+                email.SetCurrentStatus = DateTime.Now;
                 await this.context.SaveChangesAsync();
             }
+            return email;
+        }
+
+        public async Task<Email> FillLoanForm(EmailContentDto emailDto)
+        {
+            var email = await this.context.Emails
+                .Where(gMail => gMail.GmailId == emailDto.GmailId)
+                .FirstOrDefaultAsync();
+
+            if (email.EmailStatusId == (int)EmailStatusesType.NotReviewed)
+            {
+                await AddBodyToCurrentEmailAsync(emailDto);
+                return email;
+            }
+
+            email.EmailStatusId = (int)EmailStatusesType.Open;
+            email.SetCurrentStatus = DateTime.Now;
+            await this.context.SaveChangesAsync();
 
             return email;
         }

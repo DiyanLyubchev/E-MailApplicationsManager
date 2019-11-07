@@ -16,12 +16,15 @@ namespace E_MailApplicationsManager.Web.Controllers
         private readonly IEmailService service;
         private readonly IConcreteMailService concreteMailService;
         private readonly ISearchService searchService;
+        private readonly IEncodeDecodeService encodeDecodeService;
 
-        public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService)
+        public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService,
+            IEncodeDecodeService encodeDecodeService)
         {
             this.service = service;
             this.concreteMailService = concreteMailService;
             this.searchService = searchService;
+            this.encodeDecodeService = encodeDecodeService;
         }
 
         [Authorize]
@@ -40,19 +43,19 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> FillEmailsBody(string id)
+        public async Task<IActionResult> FillEmailBody(string id)
         {
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var email = await this.concreteMailService.GetEmailByIdAsync(id, userId);
-                return Json(email.Body);
+             
             }
             catch (EmailExeption ex)
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            //TODO: View 
+            return RedirectToAction(nameof(FillEmailForm), id);
         }
 
         [Authorize]
@@ -93,6 +96,26 @@ namespace E_MailApplicationsManager.Web.Controllers
             var results = new SearchEmailViewModel(emails);
 
             return View("CheckMyEmail", results);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> FillEmailForm(string id)
+        {
+            try
+            {
+                var emailDto = new EmailContentDto
+                {
+                    GmailId = id
+                };
+                var email = await this.service.FillLoanForm(emailDto);
+                var encodeBody = this.encodeDecodeService.Base64Encode(email.Body);
+                return View("FillEmailForm", encodeBody);
+            }
+            catch (EmailExeption ex)
+            {
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
+            //TODO: VIEW
         }
     }
 }
