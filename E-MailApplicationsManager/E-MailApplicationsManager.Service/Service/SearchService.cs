@@ -56,13 +56,8 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(workingOnEmail => workingOnEmail.UserId == userIdDto.UserId)
                 .Select(emails => emails)
                 .ToListAsync();
-
-            if (email == null)
-            {
-                throw new EmailExeption("You do not have any emails.");
-            }
+           
             return email;
-               
         }
     }
 }
