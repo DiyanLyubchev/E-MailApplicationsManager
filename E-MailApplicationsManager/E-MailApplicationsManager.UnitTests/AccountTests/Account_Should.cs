@@ -24,7 +24,7 @@ namespace E_MailApplicationsManager.UnitTests
             var options = TestUtilities.GetOptions(nameof(ThrowException_IfPasswordIsLessThenFiveSymbols));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
-            {                
+            {
                 var accountDto = new RegisterAccountDto
                 {
                     UserName = username,
@@ -84,6 +84,31 @@ namespace E_MailApplicationsManager.UnitTests
 
                 await accountService.RegisterAccountAsync(accountDto);
             }
+        }
+
+        [TestMethod]
+        public async Task FindUserByUserId_Test()
+        {
+            string id = "2456Test";
+
+            var options = TestUtilities.GetOptions(nameof(FindUserByUserId_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Users.AddAsync(new User { Id = id });
+                await actContext.SaveChangesAsync();
+
+            }
+
+
+            using (var assertContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new UserService(assertContext, null);
+                var findUser = await sut.GetUserAsync(id);
+
+                Assert.IsInstanceOfType(findUser, typeof(User));
+            }
+
         }
     }
 }

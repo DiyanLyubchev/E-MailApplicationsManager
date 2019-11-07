@@ -56,7 +56,8 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<User> GetUserAsync(string userId)
         {
-            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await this.context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
         }
