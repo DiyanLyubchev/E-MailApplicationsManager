@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj": {}
+    "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj": {}
   },
   "projects": {
-    "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj": {
+    "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj",
+        "projectUniqueName": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj",
         "projectName": "E-MailApplicationsManager.Models",
-        "projectPath": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj",
-        "packagesPath": "C:\\Users\\diyan\\.nuget\\packages\\",
-        "outputPath": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\obj\\",
+        "projectPath": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj",
+        "packagesPath": "C:\\Users\\Bobi\\.nuget\\packages\\",
+        "outputPath": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\diyan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Bobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -78,20 +78,20 @@
         }
       }
     },
-    "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj": {
+    "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj",
+        "projectUniqueName": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj",
         "projectName": "E-MailApplicationsManager.Service",
-        "projectPath": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj",
-        "packagesPath": "C:\\Users\\diyan\\.nuget\\packages\\",
-        "outputPath": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\obj\\",
+        "projectPath": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\E-MailApplicationsManager.Service.csproj",
+        "packagesPath": "C:\\Users\\Bobi\\.nuget\\packages\\",
+        "outputPath": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\diyan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Bobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,8 +104,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj": {
-                "projectPath": "D:\\Work\\E-MailApplicationsManager\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj"
+              "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj": {
+                "projectPath": "D:\\TBI Bank Project\\E-MailApplicationsManager\\E-MailApplicationsManager.Models\\E-MailApplicationsManager.Models.csproj"
               }
             }
           }
