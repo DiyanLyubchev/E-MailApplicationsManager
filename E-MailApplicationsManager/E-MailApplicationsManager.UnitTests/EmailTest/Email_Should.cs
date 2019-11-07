@@ -106,7 +106,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
                 var email = await actContext.Emails.AddAsync(firstEmail);
-                     
+
                 await actContext.SaveChangesAsync();
 
                 var emailDto = new EmailDto
@@ -129,5 +129,102 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 Assert.AreEqual(1, assertContext.Emails.Count());
             }
         }
+
+        [TestMethod]
+        public async Task AddBodyToCurrentEmail_Test()
+        {
+            var body = "TestBody";
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var options = TestUtilities.GetOptions(nameof(AddBodyToCurrentEmail_Test));
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var emailDto = new EmailContentDto
+                {
+                    Body = body,
+                    GmailId = firstEmail.GmailId
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+
+                await sut.AddBodyToCurrentEmailAsync(emailDto);
+            }
+
+            using (var assertContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = assertContext.Emails
+                    .Select(emailBody => emailBody.Body)
+                    .ToString();
+
+                Assert.IsNotNull(sut);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenCurrentEmailHaveBody_Test()
+        {
+            string body = null;
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCurrentEmailHaveBody_Test));
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+
+                await actContext.SaveChangesAsync();
+
+                var emailDto = new EmailContentDto
+                {
+                    Body = body,
+                    GmailId = firstEmail.GmailId
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+
+                await sut.AddBodyToCurrentEmailAsync(emailDto);
+            }
+        }
     }
 }
+//public async Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto)
+//{
+//    var email = await this.context.Emails
+//        .Where(gMail => gMail.GmailId == emailDto.GmailId)
+//        .FirstOrDefaultAsync();
+
+//    if (emailDto.Body == null)
+//    {
+//        throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
+//    }
+
+//    if (email.Body != null)
+//    {
+//        throw new EmailExeption($"Email with the following id {emailDto.GmailId} contains body");
+//    }
+
+//    if (email.Body == null)
+//    {
+//        email.Body = emailDto.Body;
+//        email.InitialRegistrationInData = DateTime.Now;
+//        email.UserId = emailDto.UserId;
+//        email.IsSeen = true;
+//        email.EmailStatusId = (int)EmailStatusesType.New;
+//        await this.context.SaveChangesAsync();
+//    }
+
+//    return email;
+//}
