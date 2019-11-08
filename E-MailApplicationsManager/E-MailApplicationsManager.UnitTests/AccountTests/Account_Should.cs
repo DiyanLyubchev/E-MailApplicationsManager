@@ -1,4 +1,4 @@
-using E_MailApplicationsManager.Models;
+﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
@@ -73,6 +73,41 @@ namespace E_MailApplicationsManager.UnitTests
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
+                var accountDto = new RegisterAccountDto
+                {
+                    UserName = username,
+                    Password = password,
+                    Role = role
+                };
+
+                var accountService = new UserService(actContext, null);
+
+                await accountService.RegisterAccountAsync(accountDto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserExeption))]
+        public async Task ThrowException_IfUsernameIsТaken()
+        {
+            var username = "TestUsername";
+            var password = "TestPassword";
+            var role = "TestRole";
+
+            var options = TestUtilities.GetOptions(nameof(ThrowException_IfUsernameIsТaken));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var user = await actContext.Users.AddAsync(
+                    new User
+                    {
+                        UserName = username,
+                        NormalizedUserName = username.ToUpper(),
+                        LockoutEnabled = true
+                    });
+
+                await actContext.SaveChangesAsync();
+
                 var accountDto = new RegisterAccountDto
                 {
                     UserName = username,

@@ -39,6 +39,14 @@ namespace E_MailApplicationsManager.Service.Service
             {
                 throw new UserExeption("Password cannot be less than 5 symbols!");
             }
+            var user = this.context.Users
+                .Where(name => name.UserName == registerAccountDto.UserName)
+                .FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                throw new UserExeption($"You cannot register accout with the following username {registerAccountDto.UserName}");
+            }
 
             var passwordHasher = new PasswordHasher<User>();
 

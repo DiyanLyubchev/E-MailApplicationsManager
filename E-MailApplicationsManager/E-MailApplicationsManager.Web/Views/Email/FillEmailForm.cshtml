@@ -19,17 +19,19 @@
         <div class="col-6">
             <div class="form-group row">
                 <div class="col-xs-2">
-                    <h5>FullName</h5>
-                    <input type="text" name="name" id="fullname" class="form-control" />
-                    <br />
-                    <h5>EGN</h5>
-                    <input type="text" name="name" id="egn" class="form-control" />
-                    <br />
-                    <h5>Phone number</h5>
-                    <input type="text" name="name" id="phone-number" class="form-control" />
-                    <br />
-                    <button class="btn btn-primary" type="submit" id="send-button">Create!</button><br />
-                    <hr />
+                    <form action="" autocomplete="on">
+                        <h5>FullName</h5>
+                        <input type="text" name="name" id="fullname" class="form-control" minlength="3" required />
+                        <br />
+                        <h5>EGN</h5>
+                        <input type="text" name="name" id="egn" class="form-control" minlength="10" maxlength="10" required />
+                        <br />
+                        <h5>Phone number</h5>
+                        <input type="text" name="name" id="phone-number" class="form-control" minlength="10" maxlength="10" required />
+                        <br />
+                        <button class="btn btn-primary" type="submit" id="send-button">Create!</button><br />
+                        <hr />
+                    </form>
                 </div>
             </div>
         </div>
