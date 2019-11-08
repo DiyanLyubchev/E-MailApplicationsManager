@@ -1,4 +1,5 @@
-﻿const serverResponseHandler = (serverData) => {
+﻿//search
+const serverResponseHandler = (serverData) => {
     console.log(serverData);
 
     $('.info-email').remove();
@@ -29,26 +30,22 @@ const serverHandler = (serverData) => {
     console.log(serverData);
 };
 
+
+//fill loan form
+
 $('#send-button').click(function () {
     const addName = $('#fullname').val();
     const addEGN = $('#egn').val();
-   // const addPhoneNumber = $('#phone-number').val();
-  
-    $.get('/email/loanform?name=' + addName, '&egn=' + addEGN, /*'&phoneNumber=' + addPhoneNumber,*/ serverHandler);
+    const addPhoneNumber = $('#phone-number').val();
+    $.ajax({
+        url: '/Email/Loanform',
+        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+        }
+    });
 });
-  /////////////////////////////////////
-    //$.ajax({
-    //    type: 'GET',
-    //    url: 'Email/Loanform',
-    //    data: {
-    //        AddName: $('#fullname').val(),
-    //        AddEGN: $('#egn').val(),
-    //        AddPhoneNumber: $('#phone-number').val()
-    //    },
-    //    cache: false,
-    //    success: function (result) {
-    //        desc = result;
-    //    }
-    //});
-
-    //////////////////////////////////////////////////////
+  

@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
+using E_MailApplicationsManager.Web.Models.Account;
 using E_MailApplicationsManager.Web.Models.Emails;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
@@ -122,28 +125,28 @@ namespace E_MailApplicationsManager.Web.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Loanform([FromQuery]string name, [FromQuery]string egn  /*, [FromQuery]string phoneNumber*/)
+        [HttpPost]
+        public async Task<JsonResult> Loanform(string userData, string egnData, string phoneData)
         {
             try
             {
                 var loanDto = new LoanApplicantDto
                 {
-                    Name = name,
-                    EGN = egn,
-                    //  PhoneNumber = phoneNumber,
+                    Name = userData,
+                    EGN = egnData,
+                    PhoneNumber = phoneData,
                     userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
 
-                this.loanService.FillInFormForLoan(loanDto);
+                await this.loanService.FillInFormForLoan(loanDto);
             }
             catch (LoanExeption ex)
             {
 
-                return View("Message", new MessageViewModel { Message = ex.Message });
+                return Json($"{ex.Message}");
             }
 
-            return View();
+            return Json(new { Response = "Success" });
         }
     }
 }
