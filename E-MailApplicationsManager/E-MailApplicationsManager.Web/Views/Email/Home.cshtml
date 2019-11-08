@@ -8,9 +8,15 @@
             <h5>Search Email</h5>
             <div class="form-group row">
                 <div class="col-xs-2">
-                    <input type="text" name="name" id="search-email" class="form-control" />
                     <br />
-                    <button class="btn btn-primary" type="submit" id="search-button">Search!</button><br />
+                    <select id="search-email">
+                        <option value="1">NotReviewed</option>
+                        <option value="2">InvalidApplication</option>
+                        <option value="3">New</option>
+                        <option value="4">Open</option>
+                        <option value="5">Closed</option>
+                    </select>
+                    <button class="btn btn-primary" type="submit" id="search-button">Search</button><br />
                     <hr />
                 </div>
             </div>

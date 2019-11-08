@@ -2,13 +2,10 @@
 using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
-using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Service
@@ -25,8 +22,10 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<IEnumerable<Email>> GetAllEmailAsync(string name)
         {
+            int numberStatus = int.Parse(name);
+
             var emailList = await this.context.Emails
-               .Where(mail => mail.Sender.Contains(name))
+               .Where(mail => mail.EmailStatusId == numberStatus)
                .Select(email => email)
                .ToListAsync();
 
