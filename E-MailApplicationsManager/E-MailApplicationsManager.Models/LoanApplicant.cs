@@ -10,9 +10,12 @@ namespace E_MailApplicationsManager.Models
 
         public string EGN { get; set; }
 
-        public Email Email { get; set; }
+        public string GmailId { get; set; }
 
         public bool IsApproved { get; set; } 
+
+        public User User { get; set; }
+        public string UserId { get; set; }
 
     }
 }

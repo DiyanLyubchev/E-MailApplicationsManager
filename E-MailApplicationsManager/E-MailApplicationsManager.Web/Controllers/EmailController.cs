@@ -17,14 +17,16 @@ namespace E_MailApplicationsManager.Web.Controllers
         private readonly IConcreteMailService concreteMailService;
         private readonly ISearchService searchService;
         private readonly IEncodeDecodeService encodeDecodeService;
+        private readonly ILoanService loanService;
 
         public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService,
-            IEncodeDecodeService encodeDecodeService)
+            IEncodeDecodeService encodeDecodeService, ILoanService loanService)
         {
             this.service = service;
             this.concreteMailService = concreteMailService;
             this.searchService = searchService;
             this.encodeDecodeService = encodeDecodeService;
+            this.loanService = loanService;
         }
 
         [Authorize]
@@ -55,7 +57,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
             var gmailId = new EmailBodyViewModel(id);
-            return View(gmailId);//TO FIX
+            return View(gmailId);
         }
 
         [Authorize]
@@ -108,7 +110,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                     GmailId = id
                 };
                 var email = await this.service.FillLoanForm(emailDto);
-                var encodeBody = this.encodeDecodeService.Base64Encode(email.Body);
+                var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
                 var result = new EmailBodyViewModel(encodeBody);
 
@@ -120,16 +122,26 @@ namespace E_MailApplicationsManager.Web.Controllers
             }
         }
 
-        public IActionResult LoanApplicantForm([FromQuery]string name, [FromQuery]string egn, [FromQuery]string phoneNumber)
+        [HttpGet]
+        public IActionResult Loanform([FromQuery]string name, [FromQuery]string egn  /*, [FromQuery]string phoneNumber*/)
         {
-            var dto = new LoanApplicantDto
+            try
             {
-                Name = name,
-                EGN = egn,
-                PhoneNumber = phoneNumber,
-                userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
-            };
+                var loanDto = new LoanApplicantDto
+                {
+                    Name = name,
+                    EGN = egn,
+                    //  PhoneNumber = phoneNumber,
+                    userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
 
+                this.loanService.FillInFormForLoan(loanDto);
+            }
+            catch (LoanExeption ex)
+            {
+
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
 
             return View();
         }
