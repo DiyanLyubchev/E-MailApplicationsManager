@@ -200,31 +200,3 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
         }
     }
 }
-//public async Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto)
-//{
-//    var email = await this.context.Emails
-//        .Where(gMail => gMail.GmailId == emailDto.GmailId)
-//        .FirstOrDefaultAsync();
-
-//    if (emailDto.Body == null)
-//    {
-//        throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
-//    }
-
-//    if (email.Body != null)
-//    {
-//        throw new EmailExeption($"Email with the following id {emailDto.GmailId} contains body");
-//    }
-
-//    if (email.Body == null)
-//    {
-//        email.Body = emailDto.Body;
-//        email.InitialRegistrationInData = DateTime.Now;
-//        email.UserId = emailDto.UserId;
-//        email.IsSeen = true;
-//        email.EmailStatusId = (int)EmailStatusesType.New;
-//        await this.context.SaveChangesAsync();
-//    }
-
-//    return email;
-//}

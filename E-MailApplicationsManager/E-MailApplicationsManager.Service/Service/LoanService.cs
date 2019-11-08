@@ -26,7 +26,7 @@ namespace E_MailApplicationsManager.Service.Service
         {
             if (loanApplicantDto.Name == null ||
                 loanApplicantDto.EGN == null
-               /* || loanApplicantDto.PhoneNumber == null*/)
+                || loanApplicantDto.PhoneNumber == null)
             {
                 throw new LoanExeption("Тhe details of the loan request have not been filled in correctly");
 
@@ -34,26 +34,35 @@ namespace E_MailApplicationsManager.Service.Service
 
             var user = await this.context.Users
                 .Include(l => l.LoanApplicant)
+                .Where(userId => userId.Id == loanApplicantDto.userId)
                 .FirstOrDefaultAsync();
 
 
             var encodeName = this.encodeDecodeService.Base64Encode(loanApplicantDto.Name);
             var encodeEGN = this.encodeDecodeService.Base64Encode(loanApplicantDto.EGN);
-           // var encodePhoneNumber = this.encodeDecodeService.Base64Encode(loanApplicantDto.PhoneNumber);
+            var encodePhoneNumber = this.encodeDecodeService.Base64Encode(loanApplicantDto.PhoneNumber);
 
-            var loan = new LoanApplicant
+            var loanApplicant = await this.context.LoanApplicants
+                .Where(egn => egn.EGN == encodeEGN)
+                .FirstOrDefaultAsync();
+
+            if (loanApplicant == null)
             {
-                Name = encodeName,
-                EGN = encodeEGN,
-                //  PhoneNumber = encodePhoneNumber,
-                UserId = loanApplicantDto.userId,
-                User = user
-            };
+                var loan = new LoanApplicant
+                {
+                    Name = encodeName,
+                    EGN = encodeEGN,
+                    PhoneNumber = encodePhoneNumber,
+                    UserId = loanApplicantDto.userId,
+                    User = user
+                };
 
-            await this.context.LoanApplicants.AddAsync(loan);
-            await this.context.SaveChangesAsync();
+                await this.context.LoanApplicants.AddAsync(loan);
+                await this.context.SaveChangesAsync();
+                return loan;
+            }
 
-            return loan;
+            return null;
         }
     }
 }
