@@ -123,7 +123,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Loanform(string userData, string egnData, string phoneData)
+        public async Task<IActionResult> Loanform(string userData, string egnData, string phoneData)
         {
             try
             {
@@ -140,10 +140,10 @@ namespace E_MailApplicationsManager.Web.Controllers
             catch (LoanExeption ex)
             {
 
-                return Json($"{ex.Message}");
+                return View("Message", new MessageViewModel { Message = ex.Message });
             }
 
-            return Json(new { Response = "Success" });
+            return View();
         }
     }
 }
