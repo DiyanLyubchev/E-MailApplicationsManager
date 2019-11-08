@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
-using E_MailApplicationsManager.Web.Models.Account;
 using E_MailApplicationsManager.Web.Models.Emails;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
@@ -41,9 +38,9 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string name)
         {
-            var words = await this.searchService.GetAllEmailAsync(name);
+            var emailStatus = await this.searchService.GetAllEmailAsync(name);
 
-            return Json(words);
+            return Json(emailStatus);
         }
 
         [HttpGet]
