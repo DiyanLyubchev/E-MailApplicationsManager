@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
@@ -53,7 +54,8 @@ namespace E_MailApplicationsManager.Service.Service
 
             var email = await this.context.Emails
                 .Include(u => u.User)
-                .Where(workingOnEmail => workingOnEmail.UserId == userIdDto.UserId)
+                .Where(workingOnEmail => workingOnEmail.UserId == userIdDto.UserId 
+                && workingOnEmail.EmailStatusId != (int)EmailStatusesType.Closed)
                 .Select(emails => emails)
                 .ToListAsync();
            

@@ -15,7 +15,7 @@
     <div>
         @foreach (var email in Model.Emails)
         {
-            <a asp-controller="Email" asp-action="Details" asp-route-id="@email.Id"><p style="color:black">@email.DateReceived </p>  </a>
+            <a asp-controller="Email" asp-action="Details" asp-route-id="@email.Id"><p >@email.DateReceived </p>  </a>
         }
     </div>
 </body>
