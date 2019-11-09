@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace E_MailApplicationsManager.Web.Controllers
 {
+
     public class EmailController : Controller
     {
         private readonly IEmailService service;
@@ -29,6 +30,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             this.loanService = loanService;
         }
 
+
         [Authorize]
         public IActionResult Home()
         {
@@ -36,28 +38,44 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Search([FromQuery]string name)
+        public async Task<IActionResult> Search([FromQuery]string status)
         {
-            var emailStatus = await this.searchService.GetAllEmailAsync(name);
+            var emailStatus = await this.searchService.GetAllEmailAsync(status);
 
             return Json(emailStatus);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> FillEmailBody(string id)
+        public async Task<IActionResult> FillEmailBody(string emailData, string setInvalidEmail)
         {
+
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var email = await this.concreteMailService.GetEmailByIdAsync(id, userId);
+                if (emailData != null)
+                {
+                    var email = await this.concreteMailService.GetEmailByIdAsync(emailData, userId);
+                }
+                else if (setInvalidEmail != null)
+                {
+                    var dto = new StatusInvalidApplicationDto
+                    {
+                        GmailId = setInvalidEmail,
+                        UserId = userId,
+                    };
+                    await this.service.SetEmailStatusInvalidApplication(dto);
+
+                    return Json(new { emailId = emailData });
+                }
+
             }
             catch (EmailExeption ex)
             {
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
-            var gmailId = new EmailBodyViewModel(id);
-            return View(gmailId);
+
+            return Json(new { emailId = emailData });
         }
 
         [Authorize]
@@ -100,6 +118,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             return View("CheckMyEmail", results);
         }
 
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> FillEmailForm(string id)
         {
@@ -123,6 +142,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Loanform(string userData, string egnData, string phoneData)
         {
             try

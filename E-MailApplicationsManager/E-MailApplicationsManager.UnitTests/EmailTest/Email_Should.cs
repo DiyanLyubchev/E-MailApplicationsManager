@@ -198,5 +198,59 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 await sut.AddBodyToCurrentEmailAsync(emailDto);
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExceptionWhenGmailIdIsNUllSetEmailStatusInvalidApplication_Test()
+        {
+            var userID = "TestID";
+            string gmailId = null;
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExceptionWhenGmailIdIsNUllSetEmailStatusInvalidApplication_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var dto = new StatusInvalidApplicationDto
+                {
+                    GmailId = gmailId,
+                    UserId = userID
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                await sut.SetEmailStatusInvalidApplication(dto);
+            }
+        }
+
+        [TestMethod]
+        public async Task SetEmailStatusInvalidApplication_Test()
+        {
+            var userID = "TestId";
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(SetEmailStatusInvalidApplication_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new StatusInvalidApplicationDto
+                {
+                    GmailId = firstEmail.GmailId,
+                    UserId = userID
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                var result = await sut.SetEmailStatusInvalidApplication(dto);
+
+                Assert.IsTrue(result);
+            }
+        }
     }
 }

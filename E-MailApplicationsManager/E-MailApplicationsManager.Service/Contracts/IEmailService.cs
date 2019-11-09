@@ -14,5 +14,7 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
 
         Task<Email> FillLoanForm(EmailContentDto emailDto);
+
+        Task<bool> SetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto);
     }
 }
