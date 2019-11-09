@@ -131,7 +131,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 var email = await this.service.FillLoanForm(emailDto);
                 var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
-                var result = new EmailBodyViewModel(encodeBody);
+                var result = new EmailBodyViewModel(id, encodeBody);
 
                 return View("FillEmailForm", result);
             }
@@ -152,7 +152,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                     Name = userData,
                     EGN = egnData,
                     PhoneNumber = phoneData,
-                    userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
 
                 await this.loanService.FillInFormForLoan(loanDto);

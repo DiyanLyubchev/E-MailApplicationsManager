@@ -34,7 +34,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             var user = await this.context.Users
                 .Include(l => l.LoanApplicant)
-                .Where(userId => userId.Id == loanApplicantDto.userId)
+                .Where(userId => userId.Id == loanApplicantDto.UserId)
                 .FirstOrDefaultAsync();
 
 
@@ -53,7 +53,7 @@ namespace E_MailApplicationsManager.Service.Service
                     Name = encodeName,
                     EGN = encodeEGN,
                     PhoneNumber = encodePhoneNumber,
-                    UserId = loanApplicantDto.userId,
+                    UserId = loanApplicantDto.UserId,
                     User = user
                 };
 

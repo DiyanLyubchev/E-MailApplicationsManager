@@ -139,7 +139,7 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(emailId => emailId.GmailId == dto.GmailId)
                 .FirstOrDefaultAsync();
 
-            var currentUser = await this.context.Users
+            var currentUser = await this.context.Users  
                .Where(id => id.Id == dto.UserId)
                .SingleOrDefaultAsync();
 

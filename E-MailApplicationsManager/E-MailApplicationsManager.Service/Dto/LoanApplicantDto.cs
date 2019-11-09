@@ -12,6 +12,6 @@ namespace E_MailApplicationsManager.Service.Dto
 
         public string EGN { get; set; }
 
-        public string userId { get; set; }
+        public string UserId { get; set; }
     }
 }

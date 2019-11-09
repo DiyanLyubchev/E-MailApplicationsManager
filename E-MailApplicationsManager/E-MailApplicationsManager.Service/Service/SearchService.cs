@@ -54,11 +54,26 @@ namespace E_MailApplicationsManager.Service.Service
 
             var email = await this.context.Emails
                 .Include(u => u.User)
-                .Where(workingOnEmail => workingOnEmail.UserId == userIdDto.UserId 
+                .Where(workingOnEmail => workingOnEmail.UserId == userIdDto.UserId
                 && workingOnEmail.EmailStatusId != (int)EmailStatusesType.Closed)
                 .Select(emails => emails)
                 .ToListAsync();
-           
+
+            return email;
+        }
+
+        public async Task<IEnumerable<Email>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto)
+        {
+            var userId = await this.context.Users
+                .FirstOrDefaultAsync(uId => uId.Id == loanApplicantDto.UserId);
+
+            var email = await this.context.Emails
+                .Include(u => u.User)
+                .Where(currentUser => currentUser.UserId == loanApplicantDto.UserId
+                && currentUser.EmailStatusId != (int)EmailStatusesType.Open)
+                .Select(emails => emails)
+                .ToListAsync();
+
             return email;
         }
     }
