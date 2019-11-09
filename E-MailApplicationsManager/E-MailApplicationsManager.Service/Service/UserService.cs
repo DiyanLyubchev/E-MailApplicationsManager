@@ -39,9 +39,11 @@ namespace E_MailApplicationsManager.Service.Service
             {
                 throw new UserExeption("Password cannot be less than 5 symbols!");
             }
-            var user = this.context.Users
+
+            var user = await this.context.Users
                 .Where(name => name.UserName == registerAccountDto.UserName)
-                .FirstOrDefaultAsync();
+                .Select(username => username.UserName)
+                .SingleOrDefaultAsync();
 
             if (user != null)
             {

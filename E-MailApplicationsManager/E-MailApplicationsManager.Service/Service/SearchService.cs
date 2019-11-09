@@ -20,9 +20,9 @@ namespace E_MailApplicationsManager.Service.Service
         }
 
 
-        public async Task<IEnumerable<Email>> GetAllEmailAsync(string name)
+        public async Task<IEnumerable<Email>> GetAllEmailAsync(string status)
         {
-            int numberStatus = int.Parse(name);
+            int numberStatus = int.Parse(status);
 
             var emailList = await this.context.Emails
                .Where(mail => mail.EmailStatusId == numberStatus)
@@ -41,7 +41,8 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<IEnumerable<Email>> GetAllEmailsAsync()
         {
             return await this.context.Emails
-                .Where(email => email.IsSeen == false)
+                .Where(email => email.IsSeen == false 
+                && email.EmailStatusId != (int)EmailStatusesType.InvalidApplication)
                 .OrderBy(email => email.DateReceived)
                 .ToListAsync();
         }

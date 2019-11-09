@@ -21,14 +21,8 @@ $('#search-email').on('keyup', function () {
 $('#search-button').click(function () {
     const searchText = $('#search-email').val();
 
-    $.get('/email/search?name=' + searchText, serverResponseHandler);
+    $.get('/email/search?status=' + searchText, serverResponseHandler);
 });
-
-
-
-const serverHandler = (serverData) => {
-    console.log(serverData);
-};
 
 
 //fill loan form
@@ -45,7 +39,53 @@ $('#send-button').click(function () {
         traditional: true,
         cache: false,
         success: function (result) {
+
         }
     });
 });
 
+//fill email body  
+
+$('#email-result').click(function () {
+
+    const emailbody = $('#email-result').val();
+
+    $(this).css('background-color', 'red');
+    clicked = false;
+
+    $.ajax({
+        url: '/Email/FillEmailBody',
+        data: { emailData: emailbody },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+            console.log(result.emailId);
+            window.location.href = "/email/fillemailform/" + result.emailId;
+        }
+    });
+
+
+});
+
+$('#email-invalid').click(function () {
+
+    const emailinvalid = $('#email-invalid').val();
+
+    $(this).css('background-color', 'red');
+    clicked = false;
+
+    $.ajax({
+        url: '/Email/FillEmailBody',
+        data: { setInvalidEmail: emailinvalid },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+            console.log(result.emailId);
+            window.location.href = "/email/emailinfo/" + result.emailId;
+        }
+    });
+});

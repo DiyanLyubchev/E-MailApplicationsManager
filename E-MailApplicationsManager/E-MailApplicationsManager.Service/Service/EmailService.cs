@@ -76,13 +76,18 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
+                .Include(u => u.User)
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
                 .FirstOrDefaultAsync();
 
-            if (emailDto.Body == null)
-            {
-                throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
-            }
+            var currentUser =await this.context.Users
+                .Where(id => id.Id == emailDto.UserId)
+                .SingleOrDefaultAsync();
+
+            //if (emailDto.Body == null)
+            //{
+            //    throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
+            //}
 
             if (email.Body != null)
             {
@@ -93,6 +98,7 @@ namespace E_MailApplicationsManager.Service.Service
             {
                 email.Body = emailDto.Body;
                 email.InitialRegistrationInData = DateTime.Now;
+                email.User = currentUser;
                 email.UserId = emailDto.UserId;
                 email.IsSeen = true;
                 email.EmailStatusId = (int)EmailStatusesType.New;
@@ -119,6 +125,30 @@ namespace E_MailApplicationsManager.Service.Service
             await this.context.SaveChangesAsync();
 
             return email;
+        }
+
+        public async Task<bool> SetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto)
+        {
+            if (dto.GmailId == null)
+            {
+                throw new EmailExeption($"Email with the following id {dto.GmailId} does not exist!");
+            }
+
+            var email = await this.context.Emails
+                .Include(u => u.User)
+                .Where(emailId => emailId.GmailId == dto.GmailId)
+                .FirstOrDefaultAsync();
+
+            var currentUser = await this.context.Users
+               .Where(id => id.Id == dto.UserId)
+               .SingleOrDefaultAsync();
+
+            email.User = currentUser;
+            email.UserId = dto.UserId;
+            email.EmailStatusId = (int)EmailStatusesType.InvalidApplication;
+            await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
