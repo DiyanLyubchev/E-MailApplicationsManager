@@ -4,9 +4,10 @@ $('#send-button').click(function () {
     const addName = $('#fullname').val();
     const addEGN = $('#egn').val();
     const addPhoneNumber = $('#phone-number').val();
+    const gmailId = $('#send-button').val();
     $.ajax({
         url: '/Email/Loanform',
-        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber },
+        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId },
         type: 'POST',
         dataType: 'json',
         traditional: true,

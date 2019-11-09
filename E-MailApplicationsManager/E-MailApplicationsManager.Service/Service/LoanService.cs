@@ -54,7 +54,8 @@ namespace E_MailApplicationsManager.Service.Service
                     EGN = encodeEGN,
                     PhoneNumber = encodePhoneNumber,
                     UserId = loanApplicantDto.UserId,
-                    User = user
+                    User = user,
+                    GmailId = loanApplicantDto.GmailId
                 };
 
                 await this.context.LoanApplicants.AddAsync(loan);

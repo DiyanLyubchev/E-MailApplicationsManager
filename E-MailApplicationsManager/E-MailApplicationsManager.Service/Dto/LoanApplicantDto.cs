@@ -13,5 +13,7 @@ namespace E_MailApplicationsManager.Service.Dto
         public string EGN { get; set; }
 
         public string UserId { get; set; }
+
+        public string GmailId { get; set; }
     }
 }

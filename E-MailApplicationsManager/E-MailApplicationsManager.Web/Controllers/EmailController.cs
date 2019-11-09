@@ -143,7 +143,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Loanform(string userData, string egnData, string phoneData)
+        public async Task<IActionResult> Loanform(string userData, string egnData, string phoneData, string idData)
         {
             try
             {
@@ -152,6 +152,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                     Name = userData,
                     EGN = egnData,
                     PhoneNumber = phoneData,
+                    GmailId = idData, 
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
 
