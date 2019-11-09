@@ -179,8 +179,6 @@ namespace E_MailApplicationsManager.Service.Service
 
             var emails = allListMails.ExecuteAsync().Result;
 
-            var convertBody = new StringBuilder();
-
             var email = new Email();
             foreach (var currentEmail in emails.Messages)
             {
@@ -194,14 +192,13 @@ namespace E_MailApplicationsManager.Service.Service
                 {
 
                     string body = responseMail.Payload.Parts[0].Body.Data;
-                 
-
-                    convertBody.Append(body);
+                    string codedBody = body.Replace("-", "+");
+                    codedBody = codedBody.Replace("_", "/");
 
                     var emailDto = new EmailContentDto
                     {
                         GmailId = id,
-                        Body = body,
+                        Body = codedBody,
                         UserId = userId
 
                     };

@@ -84,10 +84,10 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(id => id.Id == emailDto.UserId)
                 .SingleOrDefaultAsync();
 
-            //if (emailDto.Body == null)
-            //{
-            //    throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
-            //}
+            if (emailDto.Body == null)
+            {
+                throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
+            }
 
             if (email.Body != null)
             {

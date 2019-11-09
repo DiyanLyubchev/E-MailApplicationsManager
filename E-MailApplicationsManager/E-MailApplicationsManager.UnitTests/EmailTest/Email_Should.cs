@@ -201,14 +201,43 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
         [TestMethod]
         [ExpectedException(typeof(EmailExeption))]
-        public async Task ThrowExceptionWhenGmailIdIsNUllSetEmailStatusInvalidApplication_Test()
+        public async Task ThrowExeptionWhenEmailDtoIsNull_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCurrentEmailHaveBody_Test));
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+
+                await actContext.SaveChangesAsync();
+
+                var emailDto = new EmailContentDto
+                {
+                    Body = null,
+                    GmailId = firstEmail.GmailId
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+
+                await sut.AddBodyToCurrentEmailAsync(emailDto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExceptionWhenGmailIdIsNullSetEmailStatusInvalidApplication_Test()
         {
             var userID = "TestID";
             string gmailId = null;
 
             var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
 
-            var options = TestUtilities.GetOptions(nameof(ThrowExceptionWhenGmailIdIsNUllSetEmailStatusInvalidApplication_Test));
+            var options = TestUtilities.GetOptions(nameof(ThrowExceptionWhenGmailIdIsNullSetEmailStatusInvalidApplication_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
