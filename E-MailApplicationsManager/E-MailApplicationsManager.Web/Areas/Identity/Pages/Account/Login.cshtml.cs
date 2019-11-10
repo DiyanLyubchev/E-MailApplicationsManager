@@ -68,7 +68,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
         }
-
+        
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -76,14 +76,19 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
             var login = await this.context.Users
                 .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
 
+            if (login == null)
+            {
+                return LocalRedirect("~/identity/account/login");
+            }
+
             if (ModelState.IsValid && login.UserName != null)
             {
-              // string url = "~/identity/account/manage/changepassword";
-              //
-              // if (login.FirstLog == false)
-              // {
-              //     return LocalRedirect(url);
-              // }
+                //string url = "~/identity/account/manage/changepassword";
+
+                //if (login.FirstLog == false)
+                //{
+                //    return LocalRedirect(url);
+                //}
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
                 if (result.Succeeded)
