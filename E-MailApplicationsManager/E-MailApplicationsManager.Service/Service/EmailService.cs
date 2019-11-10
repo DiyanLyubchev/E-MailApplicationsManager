@@ -101,24 +101,35 @@ namespace E_MailApplicationsManager.Service.Service
                 email.User = currentUser;
                 email.UserId = emailDto.UserId;
                 email.IsSeen = true;
-                email.EmailStatusId = (int)EmailStatusesType.New;
-                email.SetCurrentStatus = DateTime.Now;
                 await this.context.SaveChangesAsync();
             }
             return email;
         }
+
+        public async Task<Email> CheckEmailBody(EmailContentDto emailDto)
+        {
+            var email = await this.context.Emails
+                .Where(gMail => gMail.GmailId == emailDto.GmailId)
+                .FirstOrDefaultAsync();
+
+            if (email.Body == null)
+            {
+                throw new EmailExeption("Email body is empty");
+            }
+
+            email.EmailStatusId = (int)EmailStatusesType.New;
+            email.SetCurrentStatus = DateTime.Now;
+            await this.context.SaveChangesAsync();
+
+            return email;
+        }
+
 
         public async Task<Email> FillLoanForm(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
                 .FirstOrDefaultAsync();
-
-            if (email.EmailStatusId == (int)EmailStatusesType.NotReviewed)
-            {
-                await AddBodyToCurrentEmailAsync(emailDto);
-                return email;
-            }
 
             email.EmailStatusId = (int)EmailStatusesType.Open;
             email.SetCurrentStatus = DateTime.Now;

@@ -18,16 +18,15 @@ namespace E_MailApplicationsManager.Web.Controllers
         private readonly IConcreteMailService concreteMailService;
         private readonly ISearchService searchService;
         private readonly IEncodeDecodeService encodeDecodeService;
-        private readonly ILoanService loanService;
+
 
         public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService,
-            IEncodeDecodeService encodeDecodeService, ILoanService loanService)
+            IEncodeDecodeService encodeDecodeService)
         {
             this.service = service;
             this.concreteMailService = concreteMailService;
             this.searchService = searchService;
             this.encodeDecodeService = encodeDecodeService;
-            this.loanService = loanService;
         }
 
 
@@ -40,7 +39,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string status)
         {
-            var emailStatus = await this.searchService.GetAllEmailAsync(status);
+            var emailStatus = await this.searchService.SearchEamilByStatusId(status);
 
             return Json(emailStatus);
         }
@@ -76,6 +75,29 @@ namespace E_MailApplicationsManager.Web.Controllers
             }
 
             return Json(new { emailId = emailData });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> CheckBody(string id)
+        {
+            try
+            {
+                var emailDto = new EmailContentDto
+                {
+                    GmailId = id
+                };
+                var email = await this.service.CheckEmailBody(emailDto);
+                var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
+
+                var result = new EmailBodyViewModel(id, encodeBody);
+
+                return View("CheckBody", result);
+            }
+            catch (EmailExeption ex)
+            {
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
         }
 
         [Authorize]
@@ -141,30 +163,28 @@ namespace E_MailApplicationsManager.Web.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Loanform(string userData, string egnData, string phoneData, string idData)
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> DetailsManager(int id)
         {
-            try
+            var email = await this.searchService.FindEmailAsync(id);
+            if (email == null)
             {
-                var loanDto = new LoanApplicantDto
-                {
-                    Name = userData,
-                    EGN = egnData,
-                    PhoneNumber = phoneData,
-                    GmailId = idData, 
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                };
-
-                await this.loanService.FillInFormForLoan(loanDto);
-            }
-            catch (LoanExeption ex)
-            {
-
-                return View("Message", new MessageViewModel { Message = ex.Message });
+                return View("Message", new MessageViewModel { Message = "The email was not found!" });
             }
 
-            return View();
+            var result = new EmailViewModel(email);
+
+            return View(result);
+        }
+
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> EmailInfoManager()
+        {
+            var emails = await this.searchService.GetAllEmailsForManagerAsync();
+
+            var libraryViewModel = new EmailListViewModel(emails);
+
+            return View(libraryViewModel);
         }
     }
 }

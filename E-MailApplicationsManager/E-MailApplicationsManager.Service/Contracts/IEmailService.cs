@@ -16,5 +16,7 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<Email> FillLoanForm(EmailContentDto emailDto);
 
         Task<bool> SetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto);
+
+        Task<Email> CheckEmailBody(EmailContentDto emailDto);
     }
 }

@@ -28,4 +28,9 @@
     </Content>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Views\Loan\" />
+  </ItemGroup>
+
 </Project>

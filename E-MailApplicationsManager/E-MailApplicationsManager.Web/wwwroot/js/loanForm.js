@@ -5,15 +5,18 @@ $('#send-button').click(function () {
     const addEGN = $('#egn').val();
     const addPhoneNumber = $('#phone-number').val();
     const gmailId = $('#send-button').val();
+
     $.ajax({
-        url: '/Email/Loanform',
+        url: '/Loan/Loanform',
         data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId },
         type: 'POST',
         dataType: 'json',
         traditional: true,
         cache: false,
         success: function (result) {
-
+            console.log(result);
+            window.location.href = "/email/emailinfo/" + result;
         }
     });
 });
+

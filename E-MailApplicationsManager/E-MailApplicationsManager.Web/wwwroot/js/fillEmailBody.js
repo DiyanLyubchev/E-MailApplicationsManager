@@ -16,7 +16,7 @@ $('#email-result').click(function () {
         cache: false,
         success: function (result) {
             console.log(result.emailId);
-            window.location.href = "/email/fillemailform/" + result.emailId;
+            window.location.href = "/email/checkbody/" + result.emailId;
         }
     });
 
@@ -38,8 +38,8 @@ $('#email-invalid').click(function () {
         traditional: true,
         cache: false,
         success: function (result) {
-            console.log(result.emailId);
-            window.location.href = "/email/emailinfo/" + result.emailId;
+            console.log(result);
+            window.location.href = "/email/emailinfo/" + result;
         }
     });
 });

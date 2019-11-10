@@ -281,5 +281,65 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 Assert.IsTrue(result);
             }
         }
+        [TestMethod]
+        public async Task CheckEmailBody_Test()
+        {
+            var body = "TestBody";
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.Body = body;
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(CheckEmailBody_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailContentDto
+                {
+                    GmailId = firstEmail.GmailId,
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                var result = await sut.CheckEmailBody(dto);
+
+                Assert.AreEqual(result.Body, firstEmail.Body);
+                Assert.IsNotNull(result.Body);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenCheckEmailBodyIsNull_Test()
+        {
+            string body = null;
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.Body = body;
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCheckEmailBodyIsNull_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailContentDto
+                {
+                    GmailId = firstEmail.GmailId,
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                await sut.CheckEmailBody(dto);
+            }
+        }
+
     }
 }

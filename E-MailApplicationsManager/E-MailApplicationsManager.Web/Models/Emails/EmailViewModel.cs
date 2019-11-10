@@ -15,7 +15,10 @@ namespace E_MailApplicationsManager.Web.Models.Emails
             this.DateReceived = email.DateReceived;
             this.IsSeen = email.IsSeen;
             this.Status = email.EmailStatusId;
+            this.UserId = email.UserId;
         }
+
+      
 
         public EmailViewModel()
         {
@@ -41,5 +44,7 @@ namespace E_MailApplicationsManager.Web.Models.Emails
         public bool IsSeen { get; set; }
 
         public int Status { get; set; }
+
+        public string UserId { get; set; }
     }
 }

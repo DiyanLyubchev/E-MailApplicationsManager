@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
@@ -56,7 +57,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new SearchService(actContext);
 
-                var result = sut.GetAllEmailsAsync();
+                var result =await sut.GetAllEmailsAsync();
 
                 Assert.IsNotNull(result);
             }
@@ -88,10 +89,35 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new SearchService(actContext);
 
-                var result = sut.GetAllUserWorkingOnEmail(emailContentDto);
+                var result =await sut.GetAllUserWorkingOnEmail(emailContentDto);
 
                 Assert.IsNotNull(result);
             }
         }
+
+        [TestMethod]
+        public async Task GetAllEmailAsyncByStatus_Test()
+        {
+            var status = "2";
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.EmailStatusId = (int)EmailStatusesType.InvalidApplication;
+
+            var options = TestUtilities.GetOptions(nameof(GetAllEmailAsyncByStatus_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result =await sut.SearchEamilByStatusId(status);
+
+                Assert.IsNotNull(result);
+            }
+        }
+       
     }
 }

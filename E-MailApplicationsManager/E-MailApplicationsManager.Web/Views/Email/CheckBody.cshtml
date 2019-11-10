@@ -1,0 +1,27 @@
+﻿@model EmailBodyViewModel
+@{
+    ViewData["Title"] = "CheckBody";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Check Email Body</h1>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-6">
+            <ul style="font-weight: bold" class="col-sm-2">Text:</ul>
+            <ul class="col-sm-10">@Model.Body</ul>
+        </div>
+        <form asp-controller="Email" asp-action="FillEmailForm" asp-route-id="@Model.GmailId" method="get">
+            <div class="form-group row">
+                    <button id="email-open" value="@Model.GmailId" class="btn btn-primary">Open</button>
+            </div>
+        </form>
+        <button id="email-invalid" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
+    </div>
+</body>
+</html>
