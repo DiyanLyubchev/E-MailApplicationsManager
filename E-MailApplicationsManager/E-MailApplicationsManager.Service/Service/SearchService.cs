@@ -20,7 +20,7 @@ namespace E_MailApplicationsManager.Service.Service
         }
 
 
-        public async Task<IEnumerable<Email>> GetAllEmailAsync(string status)
+        public async Task<IEnumerable<Email>> SearchEamilByStatusId(string status)
         {
             int numberStatus = int.Parse(status);
 
@@ -43,6 +43,13 @@ namespace E_MailApplicationsManager.Service.Service
             return await this.context.Emails
                 .Where(email => email.IsSeen == false 
                 && email.EmailStatusId != (int)EmailStatusesType.InvalidApplication)
+                .OrderBy(email => email.DateReceived)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Email>> GetAllEmailsForManagerAsync()
+        {
+            return await this.context.Emails
                 .OrderBy(email => email.DateReceived)
                 .ToListAsync();
         }

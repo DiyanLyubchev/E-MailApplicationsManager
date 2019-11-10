@@ -24,10 +24,5 @@ $('#search-button').click(function () {
     $.get('/email/search?status=' + searchText, serverResponseHandler);
 });
 
-
-//fill loan form
-
-
-
-//fill email body  
+ 
 

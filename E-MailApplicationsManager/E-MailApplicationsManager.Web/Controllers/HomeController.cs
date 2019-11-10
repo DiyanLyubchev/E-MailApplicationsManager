@@ -17,7 +17,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         {
             this.concreteMailService = concreteMailService;
         }
-
+  
         public async Task<IActionResult> Index()
         {
             await this.concreteMailService.QuickStartAsync();
