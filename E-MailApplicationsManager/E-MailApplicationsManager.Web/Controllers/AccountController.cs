@@ -35,6 +35,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 {
                     UserName = viewModel.UserName,
                     Password = viewModel.Password,
+                    Email = viewModel.Email,
                     Role = viewModel.Role
                 };
 
@@ -53,6 +54,6 @@ namespace E_MailApplicationsManager.Web.Controllers
                 IsSuccess = true
             });
         }
-        
+
     }
 }

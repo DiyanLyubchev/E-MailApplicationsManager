@@ -40,6 +40,11 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new UserExeption("Password cannot be less than 5 symbols!");
             }
 
+            if (registerAccountDto.Email == null)
+            {
+                throw new UserExeption("Email cannot be null!");
+            }
+
             var user = await this.context.Users
                 .Where(name => name.UserName == registerAccountDto.UserName)
                 .Select(username => username.UserName)
@@ -56,7 +61,9 @@ namespace E_MailApplicationsManager.Service.Service
             {
                 UserName = registerAccountDto.UserName,
                 NormalizedUserName = registerAccountDto.UserName.ToUpper(),
-                LockoutEnabled = true
+                LockoutEnabled = true,
+                Email = registerAccountDto.Email,
+                NormalizedEmail = registerAccountDto.Email.ToUpper()
             };
             account.PasswordHash = passwordHasher.HashPassword(account, registerAccountDto.Password);
 

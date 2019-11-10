@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using E_MailApplicationsManager.Web.Models;
 using E_MailApplicationsManager.Service.Contracts;
 using System.Threading.Tasks;
+using System;
+using E_MailApplicationsManager.Service.CustomException;
+using E_MailApplicationsManager.Web.Models.Message;
 
 namespace E_MailApplicationsManager.Web.Controllers
 {
@@ -18,12 +21,21 @@ namespace E_MailApplicationsManager.Web.Controllers
         public async Task<IActionResult> Index()
         {
             await this.concreteMailService.QuickStartAsync();
-
-            if (!User.Identity.IsAuthenticated)
+            try
             {
-                return LocalRedirect("~/identity/account/login");
+                if (!User.Identity.IsAuthenticated)
+                {
+                    return LocalRedirect("~/identity/account/login");
+                }
+                return View();
             }
-            return View();
+            catch (UserExeption)
+            {
+
+                return View("Message", new MessageViewModel { Message = "Your name does not exist!" });
+            }
+
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

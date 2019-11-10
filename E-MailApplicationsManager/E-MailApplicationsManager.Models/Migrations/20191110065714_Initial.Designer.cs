@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_MailApplicationsManager.Models.Migrations
 {
     [DbContext(typeof(E_MailApplicationsManagerContext))]
-    [Migration("20191108060413_Initial")]
+    [Migration("20191110065714_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,14 +230,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "c23c3678-6194-4b7e-a928-09614190eb62",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1d23f89-c66c-42f0-a27d-86dae3c5c1cc",
+                            ConcurrencyStamp = "f3184a28-ec86-4cc4-85c2-8a9a7f36a8a4",
                             Email = "admin1@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN1@ADMIN.COM",
                             NormalizedUserName = "DIYAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBgpRzFJLcUCfndQdWpxAGUIAJ/hkLL0DQL2y2NH9E9UVat47A1HBZ9GSzlgc8LGSg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKangymmPNeigl0o/L1x8yNnCu/30Ki+YDVpIDKa7gFvvFPn8I3s4QOIIa0OnLRXZg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN",
                             TwoFactorEnabled = false,
@@ -247,14 +247,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac69c473-0d86-4009-bf01-99c3bf2f32c5",
+                            ConcurrencyStamp = "f0f07cc2-297d-40c9-b7c6-3e6f7a935c7a",
                             Email = "admin2@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN2@ADMIN.COM",
                             NormalizedUserName = "BOBI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ1A+NSNgUPQVdel8PmOCRohZp7FVSfa4aNZeACL3vizwoQMXtfF77w0C97crSqk5A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFDF8lpecUBXcwPr723Xn/tKOm9hMeKP3ODy0gH8eRfPw+A//85vDveF1nGiSG2POg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU",
                             TwoFactorEnabled = false,
@@ -399,14 +399,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         new
                         {
                             Id = "ca678235-7571-4177-984f-e9d1957b0187",
-                            ConcurrencyStamp = "435453ee-3b3b-4fd8-8e87-8e2ca06c46d6",
+                            ConcurrencyStamp = "872fec42-1f83-43b6-84a2-5a0376279176",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "ef1c4fa2-0b76-4598-aaee-c6e02803d486",
-                            ConcurrencyStamp = "d93bda29-8466-4a33-835a-843851c89db8",
+                            ConcurrencyStamp = "82914e40-c607-48bf-944a-550cd99dfae5",
                             Name = "Operator",
                             NormalizedName = "OPERATOR"
                         });
@@ -432,7 +432,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("E_MailApplicationsManager.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Emails")
                         .HasForeignKey("UserId");
                 });
 

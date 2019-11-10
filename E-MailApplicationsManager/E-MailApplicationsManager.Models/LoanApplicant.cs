@@ -15,6 +15,7 @@ namespace E_MailApplicationsManager.Models
         public bool IsApproved { get; set; } 
 
         public User User { get; set; }
+
         public string UserId { get; set; }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace E_MailApplicationsManager.Models
@@ -9,6 +10,9 @@ namespace E_MailApplicationsManager.Models
 
         public ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
 
+        public ICollection<Email> Emails { get; set; } = new List<Email>();
+
         public bool FirstLog { get; set; }
+
     }
 }
