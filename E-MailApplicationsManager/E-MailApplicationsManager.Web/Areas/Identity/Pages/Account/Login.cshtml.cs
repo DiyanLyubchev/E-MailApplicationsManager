@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using E_MailApplicationsManager.Models.Context;
 using Microsoft.EntityFrameworkCore;
+using E_MailApplicationsManager.Web.Areas.Identity.Pages.Account.Manage;
 
 namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 {
@@ -72,17 +73,19 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            if (ModelState.IsValid)
-            {
-                var login =await this.context.Users
-                    .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
+            var login = await this.context.Users
+                .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
 
+            if (ModelState.IsValid && login.UserName != null)
+            {
+              // string url = "~/identity/account/manage/changepassword";
+              //
+              // if (login.FirstLog == false)
+              // {
+              //     return LocalRedirect(url);
+              // }
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
-                if (login.FirstLog == false)
-                {
-                    return LocalRedirect("~/identity/account/manage/changepassword");
-                }
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

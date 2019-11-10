@@ -29,11 +29,46 @@ namespace E_MailApplicationsManager.Models.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EmailAttachment>().HasKey(key => key.Id);
+            // EmailAttachment
+            modelBuilder.Entity<EmailAttachment>()
+                .HasKey(key => key.Id);
+
             modelBuilder.Entity<EmailAttachment>()
                 .HasOne(email => email.Email)
                 .WithMany(attachment => attachment.EmailAttachments)
                 .HasForeignKey(id => id.EmailId);
+
+            modelBuilder.Entity<EmailAttachment>()
+                .Property(emailAttachment => emailAttachment.SizeInKB);
+
+
+            modelBuilder.Entity<EmailAttachment>()
+                 .Property(emailAttachment => emailAttachment.FileName);
+
+
+            //Email
+            modelBuilder.Entity<Email>()
+               .HasKey(key => key.Id);
+
+            modelBuilder.Entity<Email>()
+               .HasOne(emailStatus => emailStatus.Status)
+               .WithMany(email => email.Emails)
+               .HasForeignKey(id => id.EmailStatusId);
+
+            modelBuilder.Entity<Email>()
+              .HasOne(user => user.User)
+              .WithMany(email => email.Emails)
+              .HasForeignKey(id => id.UserId);
+
+            //LoanApplicant
+
+            modelBuilder.Entity<LoanApplicant>()
+             .HasOne(user => user.User)
+             .WithMany(email => email.LoanApplicant)
+             .HasForeignKey(id => id.UserId);
+
+            modelBuilder.Entity<LoanApplicant>()
+                .HasKey(key => key.Id);
 
             modelBuilder.SeedUserRoles();
             modelBuilder.SeedStatuses();

@@ -20,6 +20,7 @@ namespace E_MailApplicationsManager.UnitTests
             var username = "TestUsername";
             var password = "Tp";
             var role = "Manager";
+            var email = "TestEmail";
 
             var options = TestUtilities.GetOptions(nameof(ThrowException_IfPasswordIsLessThenFiveSymbols));
 
@@ -29,7 +30,8 @@ namespace E_MailApplicationsManager.UnitTests
                 {
                     UserName = username,
                     Password = password,
-                    Role = role
+                    Role = role,
+                    Email = email
                 };
 
                 var accountService = new UserService(actContext, null);
@@ -44,6 +46,7 @@ namespace E_MailApplicationsManager.UnitTests
             var username = "TestUsername";
             var password = "TestPassword";
             var role = "TestRole";
+            var email = "TestEmail";
 
             var options = TestUtilities.GetOptions(nameof(ThrowException_IfRoleIsInvalid));
 
@@ -53,7 +56,9 @@ namespace E_MailApplicationsManager.UnitTests
                 {
                     UserName = username,
                     Password = password,
-                    Role = role
+                    Role = role,
+                    Email = email
+
                 };
 
                 var accountService = new UserService(actContext, null);
@@ -68,6 +73,7 @@ namespace E_MailApplicationsManager.UnitTests
             var username = "Tu";
             var password = "TestPassword";
             var role = "TestRole";
+            var email = "TestEmail";
 
             var options = TestUtilities.GetOptions(nameof(ThrowException_IfUsernameIsLessThanThreeSymbols));
 
@@ -77,7 +83,8 @@ namespace E_MailApplicationsManager.UnitTests
                 {
                     UserName = username,
                     Password = password,
-                    Role = role
+                    Role = role,
+                    Email = email
                 };
 
                 var accountService = new UserService(actContext, null);
@@ -93,6 +100,7 @@ namespace E_MailApplicationsManager.UnitTests
             var username = "TestUsername";
             var password = "TestPassword";
             var role = "TestRole";
+            var email = "TestEmail";
 
             var options = TestUtilities.GetOptions(nameof(ThrowException_IfUsernameIsТaken));
 
@@ -112,7 +120,35 @@ namespace E_MailApplicationsManager.UnitTests
                 {
                     UserName = username,
                     Password = password,
-                    Role = role
+                    Role = role,
+                    Email = email
+                };
+
+                var accountService = new UserService(actContext, null);
+
+                await accountService.RegisterAccountAsync(accountDto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserExeption))]
+        public async Task ThrowException_IfEmailIsNull()
+        {
+            var username = "TestUsername";
+            var password = "TestPassword";
+            var role = "TestRole";
+            string email = null;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowException_IfEmailIsNull));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var accountDto = new RegisterAccountDto
+                {
+                    UserName = username,
+                    Password = password,
+                    Role = role,
+                    Email = email
                 };
 
                 var accountService = new UserService(actContext, null);
