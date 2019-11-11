@@ -20,9 +20,9 @@ namespace E_MailApplicationsManager.Service.Service
         }
 
 
-        public async Task<IEnumerable<Email>> SearchEamilByStatusId(string status)
+        public async Task<IEnumerable<Email>> SearchEamilByStatusId(EmailStatusIdDto status)
         {
-            int numberStatus = int.Parse(status);
+            int numberStatus = int.Parse(status.StatusId);
 
             var emailList = await this.context.Emails
                .Where(mail => mail.EmailStatusId == numberStatus)

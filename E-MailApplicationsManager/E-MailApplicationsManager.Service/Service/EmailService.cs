@@ -51,6 +51,50 @@ namespace E_MailApplicationsManager.Service.Service
             }
         }
 
+        public async Task<bool> ChangeStatusAsync(EmailStatusIdDto emailStatusId)
+        {
+            if (emailStatusId.StatusId == null || emailStatusId.GmailId == null)
+            {
+                throw new EmailExeption("Status id or Gmail id cannot be null");
+            }
+
+            int status = int.Parse(emailStatusId.StatusId);
+
+            var email =await this.context.Emails
+                .Where(gmailId => gmailId.GmailId == emailStatusId.GmailId)
+                .SingleOrDefaultAsync();
+
+            var currentUser = await this.context.Users
+               .Where(id => id.Id == emailStatusId.UserId)
+               .SingleOrDefaultAsync();
+
+            if (status == 1)
+            {
+                email.User = currentUser;
+                email.UserId = emailStatusId.UserId;
+                email.EmailStatusId = status;
+                email.SetCurrentStatus = DateTime.Now;
+                email.IsSeen = false;
+                email.Body = null;
+
+                await this.context.SaveChangesAsync();
+
+                return true;
+            }
+            else if (status == 2)
+            {
+                email.EmailStatusId = status;
+                email.SetCurrentStatus = DateTime.Now;
+                email.IsSeen = false;
+                email.Body = null;
+                await this.context.SaveChangesAsync();
+
+                return true;
+            }
+
+            return true;
+
+        }
 
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
@@ -78,9 +122,9 @@ namespace E_MailApplicationsManager.Service.Service
             var email = await this.context.Emails
                 .Include(u => u.User)
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
-            var currentUser =await this.context.Users
+            var currentUser = await this.context.Users
                 .Where(id => id.Id == emailDto.UserId)
                 .SingleOrDefaultAsync();
 
@@ -110,7 +154,7 @@ namespace E_MailApplicationsManager.Service.Service
         {
             var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
             if (email.Body == null)
             {
@@ -124,16 +168,11 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-
         public async Task<Email> FillLoanForm(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
-                .FirstOrDefaultAsync();
-
-            email.EmailStatusId = (int)EmailStatusesType.Open;
-            email.SetCurrentStatus = DateTime.Now;
-            await this.context.SaveChangesAsync();
+                .SingleOrDefaultAsync();
 
             return email;
         }
@@ -150,7 +189,7 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(emailId => emailId.GmailId == dto.GmailId)
                 .FirstOrDefaultAsync();
 
-            var currentUser = await this.context.Users  
+            var currentUser = await this.context.Users
                .Where(id => id.Id == dto.UserId)
                .SingleOrDefaultAsync();
 

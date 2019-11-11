@@ -18,5 +18,7 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<bool> SetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto);
 
         Task<Email> CheckEmailBody(EmailContentDto emailDto);
+
+        Task<bool> ChangeStatusAsync(EmailStatusIdDto emailStatusId);
     }
 }

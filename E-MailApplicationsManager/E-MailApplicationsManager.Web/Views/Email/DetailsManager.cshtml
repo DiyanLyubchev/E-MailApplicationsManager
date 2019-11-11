@@ -4,8 +4,8 @@
     ViewData["Title"] = "DetailsManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-    <h1>DetailsManager</h1>
+<img src="~/images/tbilogo.jpg" alt="Sample Photo" />
+<h1>DetailsManager</h1>
 
 <div>
     <hr />
@@ -25,7 +25,7 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Sender)
         </dt>
-        <dd class="col-sm-10">  
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Sender)
         </dd>
         <dt class="col-sm-2">
@@ -47,10 +47,16 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
     </dl>
+    <select id="change-email">
+        <option value="1">NotReviewed</option>
+        <option value="2">InvalidApplication</option>
+    </select>
+    <button class="btn btn-primary" value="@Model.GmailId" type="submit" id="change-email-status">Change</button><br />
+    <br />
     <div class="form-group row">
         <div class="col-xs-2">
             <button id="email-result" value="@Model.GmailId" class="btn btn-primary">New</button>
-            <button id="email-invalid" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
+            <button id="email-invalid-manager" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
         </div>
     </div>
 </div>

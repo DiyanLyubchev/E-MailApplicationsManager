@@ -3,28 +3,28 @@
     ViewData["Title"] = "CheckMyEmail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<img src="~/images/tbilogo.jpg" alt="Sample Photo" />
 <h1>CheckMyEmail</h1>
 <div class="row">
 
     @foreach (var email in Model.Result)
     {
-        <div class="col-8">
-            <div class="row">
-                <ul style="font-weight: bold" class="col-sm-2">GmailId:</ul>
-                <ul class="col-sm-10">@email.GmailId</ul>
-                <ul style="font-weight: bold" class="col-sm-2">Sender:</ul>
-                <ul class="col-sm-10">@email.Sender</ul>
-                <ul style="font-weight: bold" class="col-sm-2">Subject:</ul>
-                <ul class="col-sm-10">@email.Subject</ul>
-                <ul style="font-weight: bold" class="col-sm-2">DataReceived:</ul>
-                <ul class="col-sm-10">@email.DateReceived</ul>
-                <ul style="font-weight: bold" class="col-sm-2">Status:</ul>
-                <ul class="col-sm-10">@email.Status</ul>
+    <div class="col-8">
+        <div class="row">
+            <ul style="font-weight: bold" class="col-sm-2">GmailId:</ul>
+            <ul class="col-sm-10">@email.GmailId</ul>
+            <ul style="font-weight: bold" class="col-sm-2">Sender:</ul>
+            <ul class="col-sm-10">@email.Sender</ul>
+            <ul style="font-weight: bold" class="col-sm-2">Subject:</ul>
+            <ul class="col-sm-10">@email.Subject</ul>
+            <ul style="font-weight: bold" class="col-sm-2">DataReceived:</ul>
+            <ul class="col-sm-10">@email.DateReceived</ul>
+            <ul style="font-weight: bold" class="col-sm-2">Status:</ul>
+            <ul class="col-sm-10">@email.Status</ul>
 
-            </div>
         </div>
-      
+    </div>
+
     }
 </div>
 <strong>

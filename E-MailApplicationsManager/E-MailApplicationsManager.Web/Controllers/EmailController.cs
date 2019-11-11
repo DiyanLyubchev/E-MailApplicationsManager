@@ -39,7 +39,12 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string status)
         {
-            var emailStatus = await this.searchService.SearchEamilByStatusId(status);
+            var statusDto = new EmailStatusIdDto
+            {
+                StatusId = status
+            };
+
+            var emailStatus = await this.searchService.SearchEamilByStatusId(statusDto);
 
             return Json(emailStatus);
         }
@@ -175,6 +180,30 @@ namespace E_MailApplicationsManager.Web.Controllers
             var result = new EmailViewModel(email);
 
             return View(result);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangeEmailStatus(string statusData, string idData)
+        {
+            try
+            {
+                var statusdto = new EmailStatusIdDto
+                {
+                    GmailId = idData,
+                    StatusId = statusData,
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+
+                var emailStatus = await this.service.ChangeStatusAsync(statusdto);
+                return Json(emailStatus);
+            }
+            catch (EmailExeption ex)
+            {
+
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
         }
 
         [Authorize(Roles = "Manager")]
