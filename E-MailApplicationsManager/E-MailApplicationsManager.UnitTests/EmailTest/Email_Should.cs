@@ -433,5 +433,36 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             }
         }
+
+        [TestMethod]
+        public async Task TakeBody_Test()
+        {
+            var body = "TestBody";
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            firstEmail.Body = body;
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(TakeBody_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailContentDto
+                {
+                    GmailId = email.Entity.GmailId
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                var result = await sut.TakeBody(dto);
+
+                Assert.IsNotNull(result);
+            }
+        }
     }
 }

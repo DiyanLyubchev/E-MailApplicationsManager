@@ -30,7 +30,11 @@ namespace E_MailApplicationsManager.Service.Service
                 || loanApplicantDto.PhoneNumber == null)
             {
                 throw new LoanExeption("Тhe details of the loan request have not been filled in correctly");
+            }
 
+            if (loanApplicantDto.GmailId == null)
+            {
+                throw new LoanExeption($"Email with ID {loanApplicantDto.GmailId} does not exist!");
             }
 
             var user = await this.context.Users
