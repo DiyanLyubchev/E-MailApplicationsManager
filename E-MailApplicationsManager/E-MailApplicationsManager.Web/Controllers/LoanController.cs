@@ -17,11 +17,13 @@ namespace E_MailApplicationsManager.Web.Controllers
     {
         private readonly ISearchService searchService;
         private readonly ILoanService loanService;
+        private readonly IEncodeDecodeService encodeDecodeService;
 
-        public LoanController(ILoanService loanService, ISearchService searchService)
+        public LoanController(ILoanService loanService, ISearchService searchService, IEncodeDecodeService encodeDecodeService)
         {
             this.searchService = searchService;
             this.loanService = loanService;
+            this.encodeDecodeService = encodeDecodeService;
         }
 
         [HttpPost]
@@ -47,7 +49,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
 
-           return Json(new { emailId = idData });
+            return Json(new { emailId = idData });
         }
 
         [Authorize]
@@ -60,7 +62,9 @@ namespace E_MailApplicationsManager.Web.Controllers
 
             var openStatusEmails = await this.searchService.ListEmailsWithStatusOpenAsync(loanApplicantDto);
 
-            var listStatusOpenEmailsViewModel = new ListStatusOpenEmailsViewModel(openStatusEmails);
+            var loanList = this.encodeDecodeService.DecodeLoanApplicantList(openStatusEmails);
+
+            var listStatusOpenEmailsViewModel = new ListStatusOpenEmailsViewModel(loanList);
 
             return View(listStatusOpenEmailsViewModel);
         }
@@ -74,7 +78,9 @@ namespace E_MailApplicationsManager.Web.Controllers
                 return View("Message", new MessageViewModel { Message = "The email was not found!" });
             }
 
-            var result = new StatusOpenEmailsViewModel(loan);
+            var decodeLoan = this.encodeDecodeService.DecodeLoanApplicant(loan);
+
+            var result = new StatusOpenEmailsViewModel(decodeLoan);
 
             return View(result);
         }

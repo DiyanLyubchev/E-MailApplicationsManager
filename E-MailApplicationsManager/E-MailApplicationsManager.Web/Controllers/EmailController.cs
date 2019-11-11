@@ -38,6 +38,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string status)
         {
+            await this.concreteMailService.QuickStartAsync();
             var statusDto = new EmailStatusIdDto
             {
                 StatusId = status
@@ -92,9 +93,9 @@ namespace E_MailApplicationsManager.Web.Controllers
                     GmailId = id
                 };
                 var email = await this.service.CheckEmailBody(emailDto);
-                var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
+                var decodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
-                var result = new EmailBodyViewModel(id, encodeBody);
+                var result = new EmailBodyViewModel(id, decodeBody);
 
                 return View("CheckBody", result);
             }

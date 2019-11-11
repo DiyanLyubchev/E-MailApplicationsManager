@@ -90,7 +90,7 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<LoanApplicant> FindLoansByIdAsync(int id)
         {
             return await this.context.LoanApplicants
-                 .FirstOrDefaultAsync(email => email.Id == id);
+                 .FirstOrDefaultAsync(loan => loan.Id == id);
         }
 
     }

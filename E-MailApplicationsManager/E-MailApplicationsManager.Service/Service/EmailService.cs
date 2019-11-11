@@ -17,12 +17,9 @@ namespace E_MailApplicationsManager.Service.Service
     {
         private readonly E_MailApplicationsManagerContext context;
 
-        private readonly IEncodeDecodeService encodeDecodeService;
-
-        public EmailService(E_MailApplicationsManagerContext context, IEncodeDecodeService encodeDecodeService)
+        public EmailService(E_MailApplicationsManagerContext context)
         {
             this.context = context;
-            this.encodeDecodeService = encodeDecodeService;
         }
 
         public async Task AddMailAsync(EmailDto emailDto)
@@ -95,7 +92,6 @@ namespace E_MailApplicationsManager.Service.Service
             return true;
 
         }
-
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
         {
