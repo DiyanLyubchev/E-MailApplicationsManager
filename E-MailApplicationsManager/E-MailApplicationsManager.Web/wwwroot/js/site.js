@@ -26,3 +26,22 @@ $('#search-button').click(function () {
 
  
 
+// change status
+
+$('#change-email-status').click(function () {
+    const statusId = $('#change-email').val();
+    const gmailId = $('#change-email-status').val();
+
+    $.ajax({
+        url: '/Email/ChangeEmailStatus',
+        data: { statusData: statusId , idData: gmailId },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+            console.log(result);
+            window.location.href = "/email/emailinfomanager/" + result;
+        }
+    });
+});

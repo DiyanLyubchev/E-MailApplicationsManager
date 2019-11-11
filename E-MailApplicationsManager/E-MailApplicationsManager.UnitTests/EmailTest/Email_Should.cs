@@ -172,9 +172,12 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
         [ExpectedException(typeof(EmailExeption))]
         public async Task ThrowExeptionWhenCurrentEmailHaveBody_Test()
         {
-            string body = null;
+            var body = "TestBody";
+            var dtoBody = "TestDtoBody";
+
 
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.Body = body;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCurrentEmailHaveBody_Test));
 
@@ -189,7 +192,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var emailDto = new EmailContentDto
                 {
-                    Body = body,
+                    Body = dtoBody,
                     GmailId = firstEmail.GmailId
                 };
 
@@ -201,11 +204,11 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
         [TestMethod]
         [ExpectedException(typeof(EmailExeption))]
-        public async Task ThrowExeptionWhenEmailDtoIsNull_Test()
+        public async Task ThrowExeptionWhenEmailDtoIsNull_AddBodyToCurrentEmailAsync_Test()
         {
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
-            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCurrentEmailHaveBody_Test));
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDtoIsNull_AddBodyToCurrentEmailAsync_Test));
 
             var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
 
@@ -341,5 +344,94 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             }
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenStatusNull_ChangeStatus_Test()
+        {
+            string status = null;
+
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenStatusNull_ChangeStatus_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailStatusIdDto
+                {
+                    StatusId = status
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                await sut.ChangeStatusAsync(dto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenGmailIdIsNull_ChangeStatus_Test()
+        {
+            var status = "2";
+            string gmailId = null;
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsNull_ChangeStatus_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailStatusIdDto
+                {
+                    StatusId = status,
+                    GmailId = gmailId
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                await sut.ChangeStatusAsync(dto);
+            }
+        }
+
+        [TestMethod]
+        public async Task ChangeStatus_Test()
+        {
+            var status = "2";
+
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ChangeStatus_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailStatusIdDto
+                {
+                    StatusId = status,
+                    GmailId = email.Entity.GmailId
+                };
+
+                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                var result = await sut.ChangeStatusAsync(dto);
+
+                Assert.IsTrue(result);
+
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             }
 
         }
-    
+
         [TestMethod]
         public async Task GetAllEmail_Test()
         {
@@ -57,7 +57,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new SearchService(actContext);
 
-                var result =await sut.GetAllEmailsAsync();
+                var result = await sut.GetAllEmailsAsync();
 
                 Assert.IsNotNull(result);
             }
@@ -89,7 +89,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new SearchService(actContext);
 
-                var result =await sut.GetAllUserWorkingOnEmail(emailContentDto);
+                var result = await sut.GetAllUserWorkingOnEmail(emailContentDto);
 
                 Assert.IsNotNull(result);
             }
@@ -111,13 +111,18 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 await actContext.SaveChangesAsync();
 
+                var statusDto = new EmailStatusIdDto
+                {
+                    StatusId = status
+                };
+
                 var sut = new SearchService(actContext);
 
-                var result =await sut.SearchEamilByStatusId(status);
+                var result = await sut.SearchEamilByStatusId(statusDto);
 
                 Assert.IsNotNull(result);
             }
         }
-       
+
     }
 }

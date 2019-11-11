@@ -6,17 +6,19 @@ $('#send-button').click(function () {
     const addPhoneNumber = $('#phone-number').val();
     const gmailId = $('#send-button').val();
 
+
     $.ajax({
         url: '/Loan/Loanform',
-        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId },
+        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId }.serialize(),
         type: 'POST',
         dataType: 'json',
         traditional: true,
         cache: false,
         success: function (result) {
             console.log(result);
-            window.location.href = "/email/emailinfo/" + result;
+            window.location.href = "/home/index/" + result;
         }
     });
 });
+
 

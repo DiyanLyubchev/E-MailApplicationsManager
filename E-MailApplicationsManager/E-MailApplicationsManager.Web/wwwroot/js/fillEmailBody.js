@@ -43,3 +43,26 @@ $('#email-invalid').click(function () {
         }
     });
 });
+
+
+
+$('#email-invalid-manager').click(function () {
+
+    const emailinvalid = $('#email-invalid-manager').val();
+
+    $(this).css('background-color', 'red');
+    clicked = false;
+
+    $.ajax({
+        url: '/Email/FillEmailBody',
+        data: { setInvalidEmail: emailinvalid },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+            console.log(result);
+            window.location.href = "/email/emailinfomanager/" + result;
+        }
+    });
+});
