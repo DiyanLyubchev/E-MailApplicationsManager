@@ -46,13 +46,4 @@ $('#change-email-status').click(function () {
     });
 });
 
-//refresh page
 
-$(document).ready(function () {
-
-    setInterval('refreshPage()', 12 * 5000);
-});
-
-function refreshPage() {
-    location.reload();
-}

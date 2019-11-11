@@ -1,11 +1,11 @@
 ﻿//fill loan form
 
-$('#send-button').click(function () {
+$('#send-button').on('click', function () {
+
     const addName = $('#fullname').val();
     const addEGN = $('#egn').val();
     const addPhoneNumber = $('#phone-number').val();
     const gmailId = $('#send-button').val();
-
 
     $.ajax({
         url: '/Loan/Loanform',
@@ -16,7 +16,7 @@ $('#send-button').click(function () {
         cache: false,
         success: function (result) {
             console.log(result);
-            window.location.href = "/home/index/" + result;
+            window.location.href = "/home/index/" + result.emailId;           
         }
     });
 
