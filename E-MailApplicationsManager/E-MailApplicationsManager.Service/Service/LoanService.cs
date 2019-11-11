@@ -6,6 +6,8 @@ using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
+using E_MailApplicationsManager.Models.Common;
 
 namespace E_MailApplicationsManager.Service.Service
 {
@@ -20,7 +22,6 @@ namespace E_MailApplicationsManager.Service.Service
             this.context = context;
             this.encodeDecodeService = encodeDecodeService;
         }
-
 
         public async Task<LoanApplicant> FillInFormForLoan(LoanApplicantDto loanApplicantDto)
         {
@@ -46,9 +47,15 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(egn => egn.EGN == encodeEGN)
                 .FirstOrDefaultAsync();
 
+            var email = await this.context.Emails
+                .Where(gmailId => gmailId.GmailId == loanApplicantDto.GmailId)
+                .SingleOrDefaultAsync();
+
+            var loan = new LoanApplicant();
+
             if (loanApplicant == null)
             {
-                var loan = new LoanApplicant
+                 loan = new LoanApplicant
                 {
                     Name = encodeName,
                     EGN = encodeEGN,
@@ -58,12 +65,15 @@ namespace E_MailApplicationsManager.Service.Service
                     GmailId = loanApplicantDto.GmailId
                 };
 
+                email.SetCurrentStatus = DateTime.Now;
+                email.EmailStatusId = (int)EmailStatusesType.Open;
+
                 await this.context.LoanApplicants.AddAsync(loan);
                 await this.context.SaveChangesAsync();
                 return loan;
             }
 
-            return null;
+            return loan;
         }
     }
 }

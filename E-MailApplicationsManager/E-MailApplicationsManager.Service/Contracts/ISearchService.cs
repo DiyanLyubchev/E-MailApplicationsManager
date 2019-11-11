@@ -9,7 +9,7 @@ namespace E_MailApplicationsManager.Service.Contracts
     {
         Task<Email> FindEmailAsync(int id);
 
-        Task<IEnumerable<Email>> SearchEamilByStatusId(string name);
+        Task<IEnumerable<Email>> SearchEamilByStatusId(EmailStatusIdDto status);
 
         Task<IEnumerable<Email>> GetAllEmailsAsync();
 

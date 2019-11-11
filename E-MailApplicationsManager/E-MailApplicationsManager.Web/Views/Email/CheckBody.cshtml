@@ -3,7 +3,7 @@
     ViewData["Title"] = "CheckBody";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<img src="~/images/tbilogo.jpg" alt="Sample Photo" />
 <h1>Check Email Body</h1>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,10 +18,13 @@
         </div>
         <form asp-controller="Email" asp-action="FillEmailForm" asp-route-id="@Model.GmailId" method="get">
             <div class="form-group row">
-                    <button id="email-open" value="@Model.GmailId" class="btn btn-primary">Open</button>
+                <button id="email-open" value="@Model.GmailId" class="btn btn-primary">Next</button>
             </div>
         </form>
-        <button id="email-invalid" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <form>
+            <button id="email-invalid" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
+        </form>
     </div>
 </body>
 </html>
