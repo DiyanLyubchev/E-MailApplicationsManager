@@ -1,0 +1,22 @@
+﻿@model ListStatusOpenEmailsViewModel
+@{
+    ViewData["Title"] = "OpenStatusEmails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<img src="~/images/tbilogo.jpg" alt="Sample Photo" />
+<h1>Open Status Emails</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1 class="text-center">Welcome!</h1>
+    <hr />
+    <div>
+        @foreach (var email in Model.Emails)
+        {
+            <a asp-controller="Email" asp-action="ListOpenStatusEmails" asp-route-id="@email.Id"><p>@email.Name </p> </a>
+        }
+    </div>
+</body>
+</html>

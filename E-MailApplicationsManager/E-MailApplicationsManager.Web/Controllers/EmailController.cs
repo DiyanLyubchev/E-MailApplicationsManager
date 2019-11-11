@@ -214,7 +214,6 @@ namespace E_MailApplicationsManager.Web.Controllers
             var libraryViewModel = new EmailListViewModel(emails);
 
             return View(libraryViewModel);
-        }
-
+        }       
     }
 }

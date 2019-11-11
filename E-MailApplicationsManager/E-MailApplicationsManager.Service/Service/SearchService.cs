@@ -71,18 +71,27 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<IEnumerable<LoanApplicant>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto)
         {
-            var userId = await this.context.Users
-                .FirstOrDefaultAsync(uId => uId.Id == loanApplicantDto.UserId);
+            
+            var gmailId = await this.context.Emails
+                .Include(user => user.User)
+                .Where(id => id.UserId == loanApplicantDto.UserId)
+                .FirstOrDefaultAsync();
 
-            var loan = await this.context.LoanApplicants
-                .Include(u => u.User)
-                .Include(eMail => eMail.Emails)
-                .Where(currentUser => currentUser.UserId == loanApplicantDto.UserId
-                && currentUser.GmailId == loanApplicantDto.GmailId
-                && currentUser.Emails.EmailStatusId == (int)EmailStatusesType.Open)
-                .ToListAsync();
+            var loanList = await this.context.LoanApplicants
+             .Include(u => u.User)
+             .Include(eMail => eMail.Emails)
+             .Where(currentUser => currentUser.UserId == loanApplicantDto.UserId
+              && currentUser.Emails.EmailStatusId == (int)EmailStatusesType.Open)
+             .ToListAsync();
 
-            return loan;
+            return loanList;
         }
+
+        public async Task<LoanApplicant> FindLoansByIdAsync(int id)
+        {
+            return await this.context.LoanApplicants
+                 .FirstOrDefaultAsync(email => email.Id == id);
+        }
+
     }
 }

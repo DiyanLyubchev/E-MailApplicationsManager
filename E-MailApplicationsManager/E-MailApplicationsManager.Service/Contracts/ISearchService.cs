@@ -15,8 +15,10 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<IEnumerable<Email>> GetAllUserWorkingOnEmail(EmailContentDto userIdDto);
 
-        //Task<IEnumerable<Email>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto);
+        Task<IEnumerable<LoanApplicant>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto);
 
         Task<IEnumerable<Email>> GetAllEmailsForManagerAsync();
+
+        Task<LoanApplicant> FindLoansByIdAsync(int id);
     }
 }
