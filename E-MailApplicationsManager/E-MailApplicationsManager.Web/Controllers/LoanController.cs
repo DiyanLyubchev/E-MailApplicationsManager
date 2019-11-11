@@ -37,7 +37,6 @@ namespace E_MailApplicationsManager.Web.Controllers
             }
             catch (LoanExeption ex)
             {
-
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
 
