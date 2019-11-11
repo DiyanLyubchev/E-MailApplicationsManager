@@ -34,5 +34,7 @@ namespace E_MailApplicationsManager.Models
         public User User { get; set; }
 
         public string UserId { get; set; }
+
+        public LoanApplicant LoanApplicant { get; set; }
     }
 }

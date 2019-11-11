@@ -41,7 +41,7 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<IEnumerable<Email>> GetAllEmailsAsync()
         {
             return await this.context.Emails
-                .Where(email => email.IsSeen == false 
+                .Where(email => email.IsSeen == false
                 && email.EmailStatusId != (int)EmailStatusesType.InvalidApplication)
                 .OrderBy(email => email.DateReceived)
                 .ToListAsync();
@@ -69,19 +69,20 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-        public async Task<IEnumerable<Email>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto)
+        public async Task<IEnumerable<LoanApplicant>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto)
         {
             var userId = await this.context.Users
                 .FirstOrDefaultAsync(uId => uId.Id == loanApplicantDto.UserId);
 
-            var email = await this.context.Emails
+            var loan = await this.context.LoanApplicants
                 .Include(u => u.User)
+                .Include(eMail => eMail.Emails)
                 .Where(currentUser => currentUser.UserId == loanApplicantDto.UserId
-                && currentUser.EmailStatusId != (int)EmailStatusesType.Open)
-                .Select(emails => emails)
+                && currentUser.GmailId == loanApplicantDto.GmailId
+                && currentUser.Emails.EmailStatusId == (int)EmailStatusesType.Open)
                 .ToListAsync();
 
-            return email;
+            return loan;
         }
     }
 }

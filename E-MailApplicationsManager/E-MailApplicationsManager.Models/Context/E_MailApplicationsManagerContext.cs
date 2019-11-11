@@ -61,14 +61,15 @@ namespace E_MailApplicationsManager.Models.Context
               .HasForeignKey(id => id.UserId);
 
             //LoanApplicant
+            modelBuilder.Entity<LoanApplicant>()
+                .HasKey(key => key.Id);
 
             modelBuilder.Entity<LoanApplicant>()
              .HasOne(user => user.User)
              .WithMany(email => email.LoanApplicant)
              .HasForeignKey(id => id.UserId);
 
-            modelBuilder.Entity<LoanApplicant>()
-                .HasKey(key => key.Id);
+            
 
             modelBuilder.SeedUserRoles();
             modelBuilder.SeedStatuses();
