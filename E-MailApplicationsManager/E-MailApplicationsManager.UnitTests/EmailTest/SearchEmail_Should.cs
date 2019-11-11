@@ -124,5 +124,29 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             }
         }
 
+        [TestMethod]
+        public async Task GetAllEmailsForManagerAsync_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var secondEmail = EmailGeneratorUtil.GenerateEmailSecond();
+
+            var options = TestUtilities.GetOptions(nameof(GetAllEmailsForManagerAsync_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.Emails.AddAsync(secondEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = await sut.GetAllEmailsForManagerAsync();
+
+                Assert.IsNotNull(result);
+            }
+        }
     }
 }

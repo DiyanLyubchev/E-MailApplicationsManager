@@ -155,7 +155,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 {
                     GmailId = id
                 };
-                var email = await this.service.FillLoanForm(emailDto);
+                var email = await this.service.TakeBody(emailDto);
                 var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
                 var result = new EmailBodyViewModel(id, encodeBody);
