@@ -168,7 +168,7 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-        public async Task<Email> FillLoanForm(EmailContentDto emailDto)
+        public async Task<Email> TakeBody(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)

@@ -94,6 +94,35 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(LoanExeption))]
+        public async Task ThrowExeptionWhenGmailIdIsNullInFormForLoan_Test()
+        {
+            var name = "TestName";
+            var egn = "TestEgn";
+            var phoneNumber = "TestPhoneNumber";
+            string gmailId = null;
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsNullInFormForLoan_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var loanDto = new LoanApplicantDto
+                {
+                    Name = name,
+                    EGN = egn,
+                    PhoneNumber = phoneNumber,
+                    GmailId = gmailId
+                };
+
+                var sut = new LoanService(actContext, mockEncodeDecodeService);
+
+                await sut.FillInFormForLoan(loanDto);
+            }
+        }
+
+        [TestMethod]
         public async Task FillInFormForLoan_Test()
         {
             var name = "TestName";
