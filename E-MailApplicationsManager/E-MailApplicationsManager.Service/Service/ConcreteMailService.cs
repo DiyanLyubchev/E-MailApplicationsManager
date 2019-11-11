@@ -40,12 +40,12 @@ namespace E_MailApplicationsManager.Service.Service
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
+                    new FileDataStore(credPath, true));
             }
 
             // Create Gmail API service.
@@ -62,7 +62,7 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.LabelIds = "INBOX";    // take data only from inbox
             allListMails.IncludeSpamTrash = false;  // not take data from spam
 
-            var emails = allListMails.ExecuteAsync().Result;
+            var emails = await allListMails.ExecuteAsync();
 
             string subjectOfEmail = null;
             string dateOfEmail = null;
@@ -73,7 +73,7 @@ namespace E_MailApplicationsManager.Service.Service
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
 
-                var responseMail = requestMail.ExecuteAsync().Result;
+                var responseMail = await requestMail.ExecuteAsync();
 
                 var mailAttach = responseMail.Payload.Parts[0];
 
@@ -157,12 +157,12 @@ namespace E_MailApplicationsManager.Service.Service
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
                 string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                credential =await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
+                    new FileDataStore(credPath, true));
             }
 
             var service = new GmailService(new BaseClientService.Initializer()
@@ -177,14 +177,14 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.LabelIds = "INBOX";
             allListMails.IncludeSpamTrash = false;
 
-            var emails = allListMails.ExecuteAsync().Result;
+            var emails =await allListMails.ExecuteAsync();
 
             var email = new Email();
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
 
-                var responseMail = requestMail.ExecuteAsync().Result;
+                var responseMail =await requestMail.ExecuteAsync();
 
                 var mailAttach = responseMail.Payload.Parts[0];
 

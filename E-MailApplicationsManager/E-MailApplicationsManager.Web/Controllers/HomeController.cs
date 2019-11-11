@@ -11,16 +11,9 @@ namespace E_MailApplicationsManager.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConcreteMailService concreteMailService;
 
-        public HomeController(IConcreteMailService concreteMailService)
+        public IActionResult Index()
         {
-            this.concreteMailService = concreteMailService;
-        }
-  
-        public async Task<IActionResult> Index()
-        {
-            await this.concreteMailService.QuickStartAsync();
             try
             {
                 if (!User.Identity.IsAuthenticated)
@@ -35,8 +28,8 @@ namespace E_MailApplicationsManager.Web.Controllers
                 return View("Message", new MessageViewModel { Message = "Your name does not exist!" });
             }
 
-
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

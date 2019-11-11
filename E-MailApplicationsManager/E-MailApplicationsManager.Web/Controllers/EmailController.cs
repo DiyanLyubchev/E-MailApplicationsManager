@@ -17,8 +17,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         private readonly IEmailService service;
         private readonly IConcreteMailService concreteMailService;
         private readonly ISearchService searchService;
-        private readonly IEncodeDecodeService encodeDecodeService;
-
+        private readonly IEncodeDecodeService encodeDecodeService;      
 
         public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService,
             IEncodeDecodeService encodeDecodeService)
@@ -122,6 +121,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> EmailInfo()
         {
+            await this.concreteMailService.QuickStartAsync();
             var emails = await this.searchService.GetAllEmailsAsync();
 
             var libraryViewModel = new EmailListViewModel(emails);

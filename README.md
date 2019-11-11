@@ -35,6 +35,9 @@ Managers are able to add new Operators to the database and can change loan statu
 - [MOQ 4.13.1](https://www.nuget.org/packages/moq/)
 - [Microsoft Entity Framework Core InMemory](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory)
 
+## Trello
+https://trello.com/b/OadfVpWi
+
 ## Authors
 
 <table>

@@ -47,36 +47,34 @@ namespace E_MailApplicationsManager.Service.Service
             var encodeEGN = this.encodeDecodeService.Base64Encode(loanApplicantDto.EGN);
             var encodePhoneNumber = this.encodeDecodeService.Base64Encode(loanApplicantDto.PhoneNumber);
 
-            var loanApplicant = await this.context.LoanApplicants
-                .Where(egn => egn.EGN == encodeEGN)
-                .FirstOrDefaultAsync();
+            //var loanApplicant = await this.context.LoanApplicants
+            //    .Where(egn => egn.EGN == encodeEGN)
+            //    .FirstOrDefaultAsync();
 
             var email = await this.context.Emails
                 .Where(gmailId => gmailId.GmailId == loanApplicantDto.GmailId)
                 .SingleOrDefaultAsync();
 
-            var loan = new LoanApplicant();
+            //if (loanApplicant != null)
+            //{
+            //    throw new LoanExeption("Тhe details of the loan request alredy exist");
+            //}
 
-            if (loanApplicant == null)
+            var loan = new LoanApplicant
             {
-                 loan = new LoanApplicant
-                {
-                    Name = encodeName,
-                    EGN = encodeEGN,
-                    PhoneNumber = encodePhoneNumber,
-                    UserId = loanApplicantDto.UserId,
-                    User = user,
-                    GmailId = loanApplicantDto.GmailId
-                };
+                Name = encodeName,
+                EGN = encodeEGN,
+                PhoneNumber = encodePhoneNumber,
+                UserId = loanApplicantDto.UserId,
+                User = user,
+                GmailId = loanApplicantDto.GmailId
+            };
 
-                email.SetCurrentStatus = DateTime.Now;
-                email.EmailStatusId = (int)EmailStatusesType.Open;
+            email.SetCurrentStatus = DateTime.Now;
+            email.EmailStatusId = (int)EmailStatusesType.Open;
 
-                await this.context.LoanApplicants.AddAsync(loan);
-                await this.context.SaveChangesAsync();
-                return loan;
-            }
-
+            await this.context.LoanApplicants.AddAsync(loan);
+            await this.context.SaveChangesAsync();
             return loan;
         }
     }
