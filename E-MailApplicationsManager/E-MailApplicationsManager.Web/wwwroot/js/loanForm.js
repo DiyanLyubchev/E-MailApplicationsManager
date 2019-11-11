@@ -9,7 +9,7 @@ $('#send-button').click(function () {
 
     $.ajax({
         url: '/Loan/Loanform',
-        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId }.serialize(),
+        data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId },
         type: 'POST',
         dataType: 'json',
         traditional: true,
@@ -19,6 +19,7 @@ $('#send-button').click(function () {
             window.location.href = "/home/index/" + result;
         }
     });
+
 });
 
 

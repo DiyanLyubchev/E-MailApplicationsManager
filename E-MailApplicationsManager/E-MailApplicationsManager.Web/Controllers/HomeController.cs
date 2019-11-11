@@ -35,8 +35,8 @@ namespace E_MailApplicationsManager.Web.Controllers
                 return View("Message", new MessageViewModel { Message = "Your name does not exist!" });
             }
 
-
         }
+ 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
