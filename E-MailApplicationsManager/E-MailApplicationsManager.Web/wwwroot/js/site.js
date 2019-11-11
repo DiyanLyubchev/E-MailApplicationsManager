@@ -24,7 +24,7 @@ $('#search-button').click(function () {
     $.get('/email/search?status=' + searchText, serverResponseHandler);
 });
 
- 
+
 
 // change status
 
@@ -34,7 +34,7 @@ $('#change-email-status').click(function () {
 
     $.ajax({
         url: '/Email/ChangeEmailStatus',
-        data: { statusData: statusId , idData: gmailId },
+        data: { statusData: statusId, idData: gmailId },
         type: 'POST',
         dataType: 'json',
         traditional: true,
@@ -45,3 +45,14 @@ $('#change-email-status').click(function () {
         }
     });
 });
+
+//refresh page
+
+$(document).ready(function () {
+
+    setInterval('refreshPage()', 12 * 5000);
+});
+
+function refreshPage() {
+    location.reload();
+}

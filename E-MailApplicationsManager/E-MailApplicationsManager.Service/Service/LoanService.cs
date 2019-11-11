@@ -51,28 +51,26 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(gmailId => gmailId.GmailId == loanApplicantDto.GmailId)
                 .SingleOrDefaultAsync();
 
-            var loan = new LoanApplicant();
-
-            if (loanApplicant == null)
+            if (loanApplicant != null)
             {
-                 loan = new LoanApplicant
-                {
-                    Name = encodeName,
-                    EGN = encodeEGN,
-                    PhoneNumber = encodePhoneNumber,
-                    UserId = loanApplicantDto.UserId,
-                    User = user,
-                    GmailId = loanApplicantDto.GmailId
-                };
-
-                email.SetCurrentStatus = DateTime.Now;
-                email.EmailStatusId = (int)EmailStatusesType.Open;
-
-                await this.context.LoanApplicants.AddAsync(loan);
-                await this.context.SaveChangesAsync();
-                return loan;
+                throw new LoanExeption("Тhe details of the loan request alredy exist");
             }
 
+            var loan = new LoanApplicant
+            {
+                Name = encodeName,
+                EGN = encodeEGN,
+                PhoneNumber = encodePhoneNumber,
+                UserId = loanApplicantDto.UserId,
+                User = user,
+                GmailId = loanApplicantDto.GmailId
+            };
+
+            email.SetCurrentStatus = DateTime.Now;
+            email.EmailStatusId = (int)EmailStatusesType.Open;
+
+            await this.context.LoanApplicants.AddAsync(loan);
+            await this.context.SaveChangesAsync();
             return loan;
         }
     }
