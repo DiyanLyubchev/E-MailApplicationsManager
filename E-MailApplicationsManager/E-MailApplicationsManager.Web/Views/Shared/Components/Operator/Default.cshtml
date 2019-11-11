@@ -2,14 +2,16 @@
 
 @if (Model)
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Home">Search</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="EmailInfo">Received Email List</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="CheckMyEmail">Working On Email</a>
-    </li>
+    <ul class="menu cf">
+        <li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Home">Search</a>
+        </li>        
+        <li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="EmailInfo">Received Email List</a>
+        </li>
+        <li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="CheckMyEmail">Working On Emails</a>
+        </li>
+    </ul>
 }
 
