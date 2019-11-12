@@ -4,6 +4,8 @@
     ViewData["Title"] = "DetailsManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link href="~/css/dropdown.css" rel="stylesheet" />
 <img src="~/images/tbilogo.jpg" alt="Sample Photo" />
 <h1>DetailsManager</h1>
 
@@ -47,24 +49,37 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
     </dl>
-    <select id="change-email">
-        <option value="1">NotReviewed</option>
-        <option value="2">InvalidApplication</option>
-    </select>
-    <button class="btn btn-primary" value="@Model.GmailId" type="submit" id="change-email-status">Change</button><br />
-    <br />
-    <div class="form-group row">
-        <div class="col-xs-2">
-            <button id="email-result" value="@Model.GmailId" class="btn btn-primary">New</button>
-            <button id="email-invalid-manager" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
+    <div class="col">
+        <div class="col-6">
+            <div class="form-group row">
+                <div class="select">
+                    <select id="change-email" name="slct">
+                        <option selected disabled>Choose an option</option>
+                        <option value="1">Not Reviewed</option>
+                        <option value="2">Invalid Application</option>
+                    </select>
+                </div>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <button style="background-color:#34495e" class="btn btn-primary" value="@Model.GmailId" type="submit" id="change-email-status">Change</button>
+                
+                <div class="form-group row">
+                    <div class="col-xs-2">
+                        <br />                        
+                        <br />
+                        <br />
+                        <button id="email-result" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">New</button>
+                        <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">InvalidApplication</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <br />
+                <strong>
+                    <a class="goback" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
+                </strong>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <br />
-    <string>
-        <a class="goback" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
-    </string>
 </div>
 
 

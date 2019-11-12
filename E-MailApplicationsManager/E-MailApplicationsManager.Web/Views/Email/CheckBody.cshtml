@@ -18,12 +18,12 @@
         </div>
         <form asp-controller="Email" asp-action="FillEmailForm" asp-route-id="@Model.GmailId" method="get">
             <div class="form-group row">
-                <button id="email-open" value="@Model.GmailId" class="btn btn-primary">Next</button>
+                <button style="background-color:#34495e" id="email-open" value="@Model.GmailId" class="btn btn-primary">Next</button>
             </div>
         </form>
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <form>
-            <button id="email-invalid" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
+            <button style="background-color:#34495e" id="email-invalid" value="@Model.GmailId" class="btn btn-primary">InvalidApplication</button>
         </form>
     </div>
 </body>
