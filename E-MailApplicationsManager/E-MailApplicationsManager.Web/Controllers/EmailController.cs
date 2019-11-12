@@ -38,12 +38,13 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string status)
         {
+            await this.concreteMailService.QuickStartAsync();
             var statusDto = new EmailStatusIdDto
             {
                 StatusId = status
             };
 
-            var emailStatus = await this.searchService.SearchEamilByStatusId(statusDto);
+            var emailStatus = await this.searchService.SearchEamilByStatusIdAsync(statusDto);
 
             return Json(emailStatus);
         }
@@ -67,7 +68,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                         GmailId = setInvalidEmail,
                         UserId = userId,
                     };
-                    await this.service.SetEmailStatusInvalidApplication(dto);
+                    await this.service.SetEmailStatusInvalidApplicationAsync(dto);
 
                     return Json(new { emailId = emailData });
                 }
@@ -91,10 +92,10 @@ namespace E_MailApplicationsManager.Web.Controllers
                 {
                     GmailId = id
                 };
-                var email = await this.service.CheckEmailBody(emailDto);
-                var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
+                var email = await this.service.CheckEmailBodyAsync(emailDto);
+                var decodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
-                var result = new EmailBodyViewModel(id, encodeBody);
+                var result = new EmailBodyViewModel(id, decodeBody);
 
                 return View("CheckBody", result);
             }
@@ -137,7 +138,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
             };
 
-            var emails = (await this.searchService.GetAllUserWorkingOnEmail(baseDto))
+            var emails = (await this.searchService.GetAllUserWorkingOnEmailAsync(baseDto))
               .Select(email => new EmailViewModel(email));
 
             var results = new SearchEmailViewModel(emails);
@@ -155,7 +156,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 {
                     GmailId = id
                 };
-                var email = await this.service.TakeBody(emailDto);
+                var email = await this.service.TakeBodyAsync(emailDto);
                 var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
                 var result = new EmailBodyViewModel(id, encodeBody);

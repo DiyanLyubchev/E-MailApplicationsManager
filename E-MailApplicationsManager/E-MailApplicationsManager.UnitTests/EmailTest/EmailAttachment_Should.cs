@@ -1,14 +1,9 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
-using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.UnitTests.EmailTest
@@ -22,8 +17,6 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var gmailId = "TestGmailId";
             var FileName = "TestFileName";
             double fileSize = 876.77;
-
-            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
 
             var options = TestUtilities.GetOptions(nameof(AddAttachment_Test));
 
@@ -45,7 +38,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     SizeInKB = fileSize
                 };
 
-                var sut = new EmailService(actContext, mockEncodeDecodeService);
+                var sut = new EmailService(actContext);
                 var result = sut.AddAttachmentAsync(ettachmentDto);
 
                 Assert.IsNotNull(result);

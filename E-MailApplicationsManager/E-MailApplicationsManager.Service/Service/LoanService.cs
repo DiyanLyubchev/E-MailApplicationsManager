@@ -23,7 +23,7 @@ namespace E_MailApplicationsManager.Service.Service
             this.encodeDecodeService = encodeDecodeService;
         }
 
-        public async Task<LoanApplicant> FillInFormForLoan(LoanApplicantDto loanApplicantDto)
+        public async Task<LoanApplicant> FillInFormForLoanAsync(LoanApplicantDto loanApplicantDto)
         {
             if (loanApplicantDto.Name == null ||
                 loanApplicantDto.EGN == null
@@ -47,18 +47,10 @@ namespace E_MailApplicationsManager.Service.Service
             var encodeEGN = this.encodeDecodeService.Base64Encode(loanApplicantDto.EGN);
             var encodePhoneNumber = this.encodeDecodeService.Base64Encode(loanApplicantDto.PhoneNumber);
 
-            //var loanApplicant = await this.context.LoanApplicants
-            //    .Where(egn => egn.EGN == encodeEGN)
-            //    .FirstOrDefaultAsync();
 
             var email = await this.context.Emails
                 .Where(gmailId => gmailId.GmailId == loanApplicantDto.GmailId)
                 .SingleOrDefaultAsync();
-
-            //if (loanApplicant != null)
-            //{
-            //    throw new LoanExeption("Тhe details of the loan request alredy exist");
-            //}
 
             var loan = new LoanApplicant
             {
@@ -67,6 +59,7 @@ namespace E_MailApplicationsManager.Service.Service
                 PhoneNumber = encodePhoneNumber,
                 UserId = loanApplicantDto.UserId,
                 User = user,
+                Emails = email,
                 GmailId = loanApplicantDto.GmailId
             };
 
@@ -76,6 +69,43 @@ namespace E_MailApplicationsManager.Service.Service
             await this.context.LoanApplicants.AddAsync(loan);
             await this.context.SaveChangesAsync();
             return loan;
+        }
+
+        public async Task<bool> ApproveLoanAsync(ApproveLoanDto approveLoanDto)
+        {
+
+            if (approveLoanDto.GmailId == null || approveLoanDto.IsApprove == null)
+            {
+                throw new LoanExeption($"Тhe details of the loan request are invalid");
+            }
+
+            int expectedResult = int.Parse(approveLoanDto.IsApprove);
+
+            var loan = await this.context.LoanApplicants
+                .Where(gmailId => gmailId.GmailId == approveLoanDto.GmailId)
+                .FirstOrDefaultAsync();
+
+            var email = await this.context.Emails
+            .Where(gmailId => gmailId.GmailId == approveLoanDto.GmailId)
+            .FirstOrDefaultAsync();
+
+            if (expectedResult == 0)
+            {
+                loan.IsApproved = false;
+            }
+
+            if (expectedResult == 1)
+            {
+                loan.IsApproved = true;
+            }
+
+            email.SetCurrentStatus = DateTime.Now;
+            email.EmailStatusId = (int)EmailStatusesType.Closed;
+            email.SetTerminalState = DateTime.Now;
+
+           await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

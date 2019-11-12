@@ -20,7 +20,7 @@ namespace E_MailApplicationsManager.Service.Service
         }
 
 
-        public async Task<IEnumerable<Email>> SearchEamilByStatusId(EmailStatusIdDto status)
+        public async Task<IEnumerable<Email>> SearchEamilByStatusIdAsync(EmailStatusIdDto status)
         {
             int numberStatus = int.Parse(status.StatusId);
 
@@ -50,11 +50,12 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<IEnumerable<Email>> GetAllEmailsForManagerAsync()
         {
             return await this.context.Emails
+                .Where(email => email.EmailStatusId != (int)EmailStatusesType.Closed)
                 .OrderBy(email => email.DateReceived)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Email>> GetAllUserWorkingOnEmail(EmailContentDto userIdDto)
+        public async Task<IEnumerable<Email>> GetAllUserWorkingOnEmailAsync(EmailContentDto userIdDto)
         {
             var userId = await this.context.Users
                 .FirstOrDefaultAsync(uId => uId.Id == userIdDto.UserId);
@@ -90,7 +91,7 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<LoanApplicant> FindLoansByIdAsync(int id)
         {
             return await this.context.LoanApplicants
-                 .FirstOrDefaultAsync(email => email.Id == id);
+                 .FirstOrDefaultAsync(loan => loan.Id == id);
         }
 
     }
