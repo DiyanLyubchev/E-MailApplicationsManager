@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Models.Model;
 using System.ComponentModel.DataAnnotations;
 
 namespace E_MailApplicationsManager.Web.Models.Emails

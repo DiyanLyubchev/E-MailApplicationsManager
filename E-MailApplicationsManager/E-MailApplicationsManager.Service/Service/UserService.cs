@@ -1,5 +1,6 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
@@ -77,6 +78,32 @@ namespace E_MailApplicationsManager.Service.Service
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
+        }
+
+        public async Task<bool> ChangePasswordAsync(ChangePasswordDto changePasswordDto)
+        {
+            if (changePasswordDto.OldPassword == null ||
+                changePasswordDto.NewPassword == null)
+            {
+                throw new UserExeption("Invalid password");
+            }
+
+            var user = await this.context.Users
+                .Where(userPaswword => userPaswword.Id == changePasswordDto.UserId)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new UserExeption("Incorect password");
+            }
+            var passwordHasher = new PasswordHasher<User>();
+
+            user.PasswordHash = user.PasswordHash = passwordHasher.HashPassword(user, changePasswordDto.NewPassword);
+            user.FirstLog = true;
+
+            await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

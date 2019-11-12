@@ -1,6 +1,7 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;

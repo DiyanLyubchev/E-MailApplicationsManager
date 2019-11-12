@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Models.Model;
 using System.Collections.Generic;
 
 namespace E_MailApplicationsManager.Web.Models.Emails

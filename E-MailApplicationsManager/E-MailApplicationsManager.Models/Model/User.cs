@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace E_MailApplicationsManager.Models
+namespace E_MailApplicationsManager.Models.Model
 {
     public class User : IdentityUser
     {

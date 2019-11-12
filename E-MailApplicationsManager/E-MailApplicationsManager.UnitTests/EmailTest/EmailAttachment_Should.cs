@@ -1,5 +1,6 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

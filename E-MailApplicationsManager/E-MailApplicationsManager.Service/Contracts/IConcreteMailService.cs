@@ -1,4 +1,4 @@
-﻿using E_MailApplicationsManager.Models;
+﻿using E_MailApplicationsManager.Models.Model;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Contracts

@@ -1,7 +1,7 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace E_MailApplicationsManager.Models
+namespace E_MailApplicationsManager.Models.Model
 {
     public class LoanApplicant : BaseIdEntity
     {

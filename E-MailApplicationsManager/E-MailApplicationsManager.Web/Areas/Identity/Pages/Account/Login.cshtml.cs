@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using E_MailApplicationsManager.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using E_MailApplicationsManager.Web.Areas.Identity.Pages.Account.Manage;
+using E_MailApplicationsManager.Models.Model;
 
 namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 {
@@ -68,31 +69,30 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
         }
-        
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
             var login = await this.context.Users
-                .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
+                  .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
 
             if (login == null)
             {
                 return LocalRedirect("~/identity/account/login");
             }
 
-            if (ModelState.IsValid && login.UserName != null)
+            if (ModelState.IsValid && login != null)
             {
-                //string url = "~/identity/account/manage/changepassword";
-
-                //if (login.FirstLog == false)
-                //{
-                //    return LocalRedirect(url);
-                //}
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager
+                    .PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
                 if (result.Succeeded)
                 {
+                    if (login.FirstLog == false)
+                    {
+                        return RedirectToAction("ChangeAccountPassword", "Account");
+                    }
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
