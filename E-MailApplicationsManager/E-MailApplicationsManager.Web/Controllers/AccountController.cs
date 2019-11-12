@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Models;
+using E_MailApplicationsManager.Web.Models.Account;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +55,38 @@ namespace E_MailApplicationsManager.Web.Controllers
 
                 IsSuccess = true
             });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangeAccountPassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangeAccountPassword(ChangePasswordViewModel viewModel)
+        {
+            try
+            {
+                var passwordDto = new ChangePasswordDto
+                {
+                    OldPassword = viewModel.OldPassword,
+                    NewPassword = viewModel.NewPassword,
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+
+                await this.service.ChangePasswordAsync(passwordDto);
+
+            }
+            catch (UserExeption ex)
+            {
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
+
+            return View();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models;
+using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Google.Apis.Auth.OAuth2;

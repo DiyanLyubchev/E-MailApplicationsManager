@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System;
 using E_MailApplicationsManager.Models.Common;
+using E_MailApplicationsManager.Models.Model;
 
 namespace E_MailApplicationsManager.Service.Service
 {

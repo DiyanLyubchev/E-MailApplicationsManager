@@ -1,7 +1,7 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
 using System.Collections.Generic;
 
-namespace E_MailApplicationsManager.Models
+namespace E_MailApplicationsManager.Models.Model
 {
     public class EmailStatus : BaseIdEntity
     {

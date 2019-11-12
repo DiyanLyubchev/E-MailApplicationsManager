@@ -1,4 +1,4 @@
-﻿using E_MailApplicationsManager.Models;
+﻿using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Models.Seed;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
