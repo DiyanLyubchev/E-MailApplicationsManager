@@ -18,6 +18,9 @@ namespace E_MailApplicationsManager.Service.Service
 
         private readonly IEncodeDecodeService encodeDecodeService;
 
+        private const int rejectLoan = 0;
+        private const int approveLoan = 1;
+
         public LoanService(E_MailApplicationsManagerContext context, IEncodeDecodeService encodeDecodeService)
         {
             this.context = context;
@@ -90,12 +93,12 @@ namespace E_MailApplicationsManager.Service.Service
             .Where(gmailId => gmailId.GmailId == approveLoanDto.GmailId)
             .FirstOrDefaultAsync();
 
-            if (expectedResult == 0)
+            if (expectedResult == rejectLoan)
             {
                 loan.IsApproved = false;
             }
 
-            if (expectedResult == 1)
+            if (expectedResult == approveLoan)
             {
                 loan.IsApproved = true;
             }
