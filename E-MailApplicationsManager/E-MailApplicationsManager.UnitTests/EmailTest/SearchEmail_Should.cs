@@ -89,7 +89,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new SearchService(actContext);
 
-                var result = await sut.GetAllUserWorkingOnEmail(emailContentDto);
+                var result = await sut.GetAllUserWorkingOnEmailAsync(emailContentDto);
 
                 Assert.IsNotNull(result);
             }
@@ -118,7 +118,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
                 var sut = new SearchService(actContext);
 
-                var result = await sut.SearchEamilByStatusId(statusDto);
+                var result = await sut.SearchEamilByStatusIdAsync(statusDto);
 
                 Assert.IsNotNull(result);
             }

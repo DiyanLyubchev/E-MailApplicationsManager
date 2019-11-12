@@ -6,6 +6,8 @@ namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface ILoanService
     {
-        Task<LoanApplicant> FillInFormForLoan(LoanApplicantDto loanApplicantDto);
+        Task<LoanApplicant> FillInFormForLoanAsync(LoanApplicantDto loanApplicantDto);
+
+        Task<bool> ApproveLoanAsync(ApproveLoanDto approveLoanDto);
     }
 }

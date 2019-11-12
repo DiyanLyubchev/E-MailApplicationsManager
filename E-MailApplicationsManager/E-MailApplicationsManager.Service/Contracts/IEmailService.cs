@@ -13,11 +13,11 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO);
 
-        Task<Email> TakeBody(EmailContentDto emailDto);
+        Task<Email> TakeBodyAsync(EmailContentDto emailDto);
 
-        Task<bool> SetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto);
+        Task<bool> SetEmailStatusInvalidApplicationAsync(StatusInvalidApplicationDto dto);
 
-        Task<Email> CheckEmailBody(EmailContentDto emailDto);
+        Task<Email> CheckEmailBodyAsync(EmailContentDto emailDto);
 
         Task<bool> ChangeStatusAsync(EmailStatusIdDto emailStatusId);
     }

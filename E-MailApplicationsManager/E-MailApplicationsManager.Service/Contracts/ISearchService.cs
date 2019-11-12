@@ -9,11 +9,11 @@ namespace E_MailApplicationsManager.Service.Contracts
     {
         Task<Email> FindEmailAsync(int id);
 
-        Task<IEnumerable<Email>> SearchEamilByStatusId(EmailStatusIdDto status);
+        Task<IEnumerable<Email>> SearchEamilByStatusIdAsync(EmailStatusIdDto status);
 
         Task<IEnumerable<Email>> GetAllEmailsAsync();
 
-        Task<IEnumerable<Email>> GetAllUserWorkingOnEmail(EmailContentDto userIdDto);
+        Task<IEnumerable<Email>> GetAllUserWorkingOnEmailAsync(EmailContentDto userIdDto);
 
         Task<IEnumerable<LoanApplicant>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto);
 

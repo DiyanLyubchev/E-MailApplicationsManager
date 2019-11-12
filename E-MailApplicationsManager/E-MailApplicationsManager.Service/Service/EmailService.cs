@@ -146,7 +146,7 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-        public async Task<Email> CheckEmailBody(EmailContentDto emailDto)
+        public async Task<Email> CheckEmailBodyAsync(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
@@ -164,7 +164,7 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-        public async Task<Email> TakeBody(EmailContentDto emailDto)
+        public async Task<Email> TakeBodyAsync(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
@@ -173,7 +173,7 @@ namespace E_MailApplicationsManager.Service.Service
             return email;
         }
 
-        public async Task<bool> SetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto)
+        public async Task<bool> SetEmailStatusInvalidApplicationAsync(StatusInvalidApplicationDto dto)
         {
             if (dto.GmailId == null)
             {

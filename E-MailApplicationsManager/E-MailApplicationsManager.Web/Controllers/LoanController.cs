@@ -41,7 +41,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
 
-                await this.loanService.FillInFormForLoan(loanDto);
+                await this.loanService.FillInFormForLoanAsync(loanDto);
             }
             catch (LoanExeption ex)
             {
@@ -83,6 +83,44 @@ namespace E_MailApplicationsManager.Web.Controllers
             var result = new StatusOpenEmailsViewModel(decodeLoan);
 
             return View(result);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ApproveLoan(string approveData, string rejectData)
+        {
+            string[] expectedResult = null;
+            try
+            {
+                if (approveData != null)
+                {
+                    expectedResult = approveData.Split(' ');
+                    var approveDto = new ApproveLoanDto
+                    {
+                        IsApprove = expectedResult[0],
+                        GmailId = expectedResult[1]
+                    };
+
+                    await this.loanService.ApproveLoanAsync(approveDto);
+                }
+                else if (rejectData != null)
+                {
+                    expectedResult = rejectData.Split(' ');
+                    var approveDto = new ApproveLoanDto
+                    {
+                        IsApprove = expectedResult[0],
+                        GmailId = expectedResult[1]
+                    };
+
+                    await this.loanService.ApproveLoanAsync(approveDto);
+                }
+            }
+            catch (LoanExeption ex)
+            {
+                return View("Message", new MessageViewModel { Message = ex.Message });
+            }
+
+            return Json(new { emailId = expectedResult[1] });
         }
     }
 }
