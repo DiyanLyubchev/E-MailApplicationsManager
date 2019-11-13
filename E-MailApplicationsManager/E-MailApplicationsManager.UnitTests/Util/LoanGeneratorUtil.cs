@@ -14,10 +14,12 @@ namespace E_MailApplicationsManager.UnitTests
             var name = "TestName";
             var egn = "TestEgn";
             var phoneNumber = "TestPhoneNumber";
+            var id = 1;
             var userId = "c23c3678-6194-4b7e-a928-09614190eb62";
 
             var loan = new LoanApplicant
             {
+                Id = id,
                 Name = name,
                 EGN = egn,
                 PhoneNumber = phoneNumber,

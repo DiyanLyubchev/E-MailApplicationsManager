@@ -153,7 +153,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
             var result = new StatusCloseEmailViewModel(decodeLoan);
             result.EmployeeName = nameEmployee;
-            result.Date = date;
+            result.TerminalDate = date;
 
             return View(result);
         }
