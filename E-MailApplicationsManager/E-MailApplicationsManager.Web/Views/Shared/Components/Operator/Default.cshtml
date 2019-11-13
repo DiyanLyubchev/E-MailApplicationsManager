@@ -2,22 +2,19 @@
 
 @if (Model)
 {
-<ul class="menu cf">
-    <li>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeAccountPassword">Change Password</a>
-    </li>
-    <li>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Home">Search</a>
-    </li>
-    <li>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="EmailInfo">Received Email List</a>
-    </li>
-    <li>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="CheckMyEmail">Working On Emails</a>
-    </li>
-    <li>
-        <a class="nav-link text-white" asp-area="" asp-controller="Loan" asp-action="ListOpenStatusEmails">Status Open</a>
-    </li>
-</ul>
+    <ul class="menu cf">
+        <li>
+            <a class="nav-link text-white" asp-area="" asp-controller="Email" asp-action="Home">Search</a>
+        </li>
+        <li>
+            <a class="nav-link text-white" asp-area="" asp-controller="Email" asp-action="EmailInfo">Received Email List</a>
+        </li>
+        <li>
+            <a class="nav-link text-white" asp-area="" asp-controller="Email" asp-action="CheckMyEmail">Working On Emails</a>
+        </li>
+        <li>
+            <a class="nav-link text-white" asp-area="" asp-controller="Loan" asp-action="ListOpenStatusEmails">Status Open</a>
+        </li>
+    </ul>
 }
 

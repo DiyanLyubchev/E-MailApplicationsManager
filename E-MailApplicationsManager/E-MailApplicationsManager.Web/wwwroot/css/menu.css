@@ -48,7 +48,7 @@
     }
 
     .menu li:hover {
-        background: #e74c3c;
+        background: #ff6a00;
     }
 
     .menu > li > a {
@@ -67,7 +67,7 @@
 }
 
     .submenu li {
-        background-color: #34495e;
+        background-color: #ff6a00;
         position: relative;
         overflow: hidden;
     }
