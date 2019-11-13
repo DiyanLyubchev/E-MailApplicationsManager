@@ -47,3 +47,13 @@ $('#change-email-status').click(function () {
 });
 
 
+// refresh page 
+
+setInterval(function ()
+{
+    $.ajax({
+        type : 'Get',
+        url:'/Email/Home',
+    })
+}, 60000);
+

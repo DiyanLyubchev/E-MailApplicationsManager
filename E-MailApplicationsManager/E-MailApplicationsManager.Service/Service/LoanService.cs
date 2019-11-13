@@ -93,21 +93,27 @@ namespace E_MailApplicationsManager.Service.Service
             .Where(gmailId => gmailId.GmailId == approveLoanDto.GmailId)
             .FirstOrDefaultAsync();
 
+            var user = await this.context.Users
+                .Where(id => id.Id == approveLoanDto.UserId)
+                .SingleOrDefaultAsync();
+
             if (expectedResult == rejectLoan)
             {
                 loan.IsApproved = false;
+                loan.User = user;
             }
 
             if (expectedResult == approveLoan)
             {
                 loan.IsApproved = true;
+                loan.User = user;
             }
 
             email.SetCurrentStatus = DateTime.Now;
             email.EmailStatusId = (int)EmailStatusesType.Closed;
             email.SetTerminalState = DateTime.Now;
 
-           await this.context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return true;
         }

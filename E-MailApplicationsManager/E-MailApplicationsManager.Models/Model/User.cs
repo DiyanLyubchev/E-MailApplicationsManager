@@ -14,5 +14,7 @@ namespace E_MailApplicationsManager.Models.Model
 
         public bool FirstLog { get; set; }
 
+        public DateTime? LastLog { get; set; }
+
     }
 }

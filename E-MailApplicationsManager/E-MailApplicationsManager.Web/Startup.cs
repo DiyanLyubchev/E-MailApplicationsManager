@@ -73,6 +73,7 @@ namespace E_MailApplicationsManager.Web
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IEncodeDecodeService, EncodeDecodeService>();
             services.AddScoped<ILoanService, LoanService>();
+            services.AddScoped<ILogService, LogService>(); 
 
             services.AddDbContext<E_MailApplicationsManagerContext>(options =>
              options.UseSqlServer(

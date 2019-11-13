@@ -98,7 +98,8 @@ namespace E_MailApplicationsManager.Web.Controllers
                     var approveDto = new ApproveLoanDto
                     {
                         IsApprove = expectedResult[0],
-                        GmailId = expectedResult[1]
+                        GmailId = expectedResult[1],
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                     };
 
                     await this.loanService.ApproveLoanAsync(approveDto);
@@ -109,7 +110,8 @@ namespace E_MailApplicationsManager.Web.Controllers
                     var approveDto = new ApproveLoanDto
                     {
                         IsApprove = expectedResult[0],
-                        GmailId = expectedResult[1]
+                        GmailId = expectedResult[1],
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                     };
 
                     await this.loanService.ApproveLoanAsync(approveDto);
