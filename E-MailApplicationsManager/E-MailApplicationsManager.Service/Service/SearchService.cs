@@ -5,6 +5,7 @@ using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -73,12 +74,6 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<IEnumerable<LoanApplicant>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto)
         {
-            
-            var gmailId = await this.context.Emails
-                .Include(user => user.User)
-                .Where(id => id.UserId == loanApplicantDto.UserId)
-                .FirstOrDefaultAsync();
-
             var loanList = await this.context.LoanApplicants
              .Include(u => u.User)
              .Include(eMail => eMail.Emails)
@@ -95,5 +90,36 @@ namespace E_MailApplicationsManager.Service.Service
                  .FirstOrDefaultAsync(loan => loan.Id == id);
         }
 
+        public async Task<IEnumerable<LoanApplicant>> GetAllFinishLoanApplicantAsync()
+        {
+            var loanList = await this.context.LoanApplicants
+             .Include(u => u.User)
+             .Include(eMail => eMail.Emails)
+             .Where(finishLoan => finishLoan.Emails.EmailStatusId == (int)EmailStatusesType.Closed)
+             .ToListAsync();
+
+            return loanList;
+        }
+
+        public async Task<string> FindByIdAndOfEmployeeAsync(int id)
+        {
+            var eName = await this.context.LoanApplicants
+                .Include(user => user.User)
+                .Where(loan => loan.Id == id)
+                .Select(name => name.User.UserName)
+                .FirstOrDefaultAsync();
+
+            return eName;
+        }
+        public async Task<DateTime?> FindByIdDateOfTerminalAsync(int id)
+        {
+            var dateTerminal = await this.context.LoanApplicants
+                .Include(email => email.Emails)
+                .Where(loan => loan.Id == id)
+                .Select(date => date.Emails.SetTerminalState)
+                .FirstOrDefaultAsync();
+
+            return dateTerminal;
+        }
     }
 }

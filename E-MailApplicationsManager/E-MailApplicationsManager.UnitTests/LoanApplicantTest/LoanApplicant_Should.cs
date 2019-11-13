@@ -222,7 +222,7 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var email = await actContext.LoanApplicants
+                var loan = await actContext.LoanApplicants
                     .AddAsync(
                     new LoanApplicant
                     {

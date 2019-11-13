@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_MailApplicationsManager.Models.Model
@@ -23,5 +24,6 @@ namespace E_MailApplicationsManager.Models.Model
         public int? EmailId { get; set; }
 
         public virtual Email Emails { get; set; }
+
     }
 }

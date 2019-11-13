@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Model;
@@ -21,5 +22,11 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<IEnumerable<Email>> GetAllEmailsForManagerAsync();
 
         Task<LoanApplicant> FindLoansByIdAsync(int id);
+
+        Task<IEnumerable<LoanApplicant>> GetAllFinishLoanApplicantAsync();
+
+        Task<string> FindByIdAndOfEmployeeAsync(int id);
+
+        Task<DateTime?> FindByIdDateOfTerminalAsync(int id);
     }
 }

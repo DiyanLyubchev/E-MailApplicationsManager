@@ -42,7 +42,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstLog = table.Column<bool>(nullable: false)
+                    FirstLog = table.Column<bool>(nullable: false),
+                    LastLog = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -292,17 +293,17 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "a26436b9-e97e-4835-ad36-cbc06668ef54", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "44d3c05b-a1f6-48ad-8f91-d1a04320433a", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "84480876-e309-449a-92af-5ea33074ba83", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "29fce371-9d0e-4ba6-9ed8-30a7876caae2", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LastLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "72e13b27-7f46-428c-b7a2-55fa843f6e5e", "admin1@admin.com", false, true, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEGItv2lfR0rNWVgxKjbGq9xQpD5ydtWIDRnBGzn2wiLdp0nW8aPMWEtWwOQyC7VDOQ==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "189ee84d-4197-4d24-af0f-471f409bd930", "admin2@admin.com", false, true, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEFtjxuQWY8jvVSyBCctfDg8R0qlghWo47qEqlKeCd6mz3dsrQKe8aDLhWkSJ0D9NFg==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "b517b337-c6ca-4163-b7d1-8229cd299d13", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEHI5CjQ/0ekKR9yCWOib1gTC+FMhi3PQZnEHxOak4qhrMK5aNCrXyl+CJ61sTcGttw==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "169b560a-6175-4c54-9bf2-df695f5a9294", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEJ6zNxUwPgAT8CJ27LxhpSsBr6hIotCTHV3aqM09V6VqUQIkTm2lA3J1gbTIctt4AQ==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
                 });
 
             migrationBuilder.InsertData(

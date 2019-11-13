@@ -18,6 +18,9 @@ namespace E_MailApplicationsManager.Service.Service
 
         private readonly IEncodeDecodeService encodeDecodeService;
 
+        private const int rejectLoan = 0;
+        private const int approveLoan = 1;
+
         public LoanService(E_MailApplicationsManagerContext context, IEncodeDecodeService encodeDecodeService)
         {
             this.context = context;
@@ -90,21 +93,27 @@ namespace E_MailApplicationsManager.Service.Service
             .Where(gmailId => gmailId.GmailId == approveLoanDto.GmailId)
             .FirstOrDefaultAsync();
 
-            if (expectedResult == 0)
+            var user = await this.context.Users
+                .Where(id => id.Id == approveLoanDto.UserId)
+                .SingleOrDefaultAsync();
+
+            if (expectedResult == rejectLoan)
             {
                 loan.IsApproved = false;
+                loan.User = user;
             }
 
-            if (expectedResult == 1)
+            if (expectedResult == approveLoan)
             {
                 loan.IsApproved = true;
+                loan.User = user;
             }
 
             email.SetCurrentStatus = DateTime.Now;
             email.EmailStatusId = (int)EmailStatusesType.Closed;
             email.SetTerminalState = DateTime.Now;
 
-           await this.context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return true;
         }

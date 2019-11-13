@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Service;
 using E_MailApplicationsManager.Models.Model;
+using E_MailApplicationsManager.Service.Аuxiliary;
 
 namespace E_MailApplicationsManager.Web
 {
@@ -73,6 +74,7 @@ namespace E_MailApplicationsManager.Web
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IEncodeDecodeService, EncodeDecodeService>();
             services.AddScoped<ILoanService, LoanService>();
+            services.AddScoped<ILogService, LogService>();
 
             services.AddDbContext<E_MailApplicationsManagerContext>(options =>
              options.UseSqlServer(

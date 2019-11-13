@@ -13,6 +13,8 @@ using E_MailApplicationsManager.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using E_MailApplicationsManager.Web.Areas.Identity.Pages.Account.Manage;
 using E_MailApplicationsManager.Models.Model;
+using System;
+using E_MailApplicationsManager.Service.Service;
 
 namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 {
@@ -21,13 +23,16 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly E_MailApplicationsManagerContext context;
+        private readonly UserManager<User> _userManager;
+        private readonly ILogService _logService;
 
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, E_MailApplicationsManagerContext context)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger,
+            UserManager<User> userManager, ILogService logService)
         {
             _signInManager = signInManager;
             _logger = logger;
-            this.context = context;
+            _userManager = userManager;
+            _logService = logService;
         }
 
         [BindProperty]
@@ -73,8 +78,9 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            var login = await this.context.Users
-                  .FirstOrDefaultAsync(u => u.UserName == Input.UserName);
+            var login = await _userManager
+                .FindByNameAsync(Input.UserName);
+
 
             if (login == null)
             {
@@ -93,11 +99,13 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
                         return RedirectToAction("ChangeAccountPassword", "Account");
                     }
 
+                    await _logService.SaveLastLoginUser(login);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
+
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
                 if (result.IsLockedOut)

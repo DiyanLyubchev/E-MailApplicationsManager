@@ -7,6 +7,7 @@ using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Models.Emails;
+using E_MailApplicationsManager.Web.Models.Loan;
 using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -98,7 +99,8 @@ namespace E_MailApplicationsManager.Web.Controllers
                     var approveDto = new ApproveLoanDto
                     {
                         IsApprove = expectedResult[0],
-                        GmailId = expectedResult[1]
+                        GmailId = expectedResult[1],
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                     };
 
                     await this.loanService.ApproveLoanAsync(approveDto);
@@ -109,7 +111,8 @@ namespace E_MailApplicationsManager.Web.Controllers
                     var approveDto = new ApproveLoanDto
                     {
                         IsApprove = expectedResult[0],
-                        GmailId = expectedResult[1]
+                        GmailId = expectedResult[1],
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                     };
 
                     await this.loanService.ApproveLoanAsync(approveDto);
@@ -121,6 +124,38 @@ namespace E_MailApplicationsManager.Web.Controllers
             }
 
             return Json(new { emailId = expectedResult[1] });
+        }
+
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> GetAllFinishLoan()
+        {
+            var closeStatusEmails = await this.searchService.GetAllFinishLoanApplicantAsync();
+
+            var loanList = this.encodeDecodeService.DecodeLoanApplicantList(closeStatusEmails);
+
+            var listStatusCloseEmailsViewModel = new ListStatusCloseEmailViewModel(loanList);
+
+            return View(listStatusCloseEmailsViewModel);
+        }
+
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> FinishLoanDetails(int id)
+        {
+            var loan = await this.searchService.FindLoansByIdAsync(id);
+            var nameEmployee = await this.searchService.FindByIdAndOfEmployeeAsync(id);
+            var date = await this.searchService.FindByIdDateOfTerminalAsync(id);
+            if (loan == null)
+            {
+                return View("Message", new MessageViewModel { Message = "The email was not found!" });
+            }
+
+            var decodeLoan = this.encodeDecodeService.DecodeLoanApplicant(loan);
+
+            var result = new StatusCloseEmailViewModel(decodeLoan);
+            result.EmployeeName = nameEmployee;
+            result.TerminalDate = date;
+
+            return View(result);
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
@@ -17,7 +21,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         private readonly IEmailService service;
         private readonly IConcreteMailService concreteMailService;
         private readonly ISearchService searchService;
-        private readonly IEncodeDecodeService encodeDecodeService;      
+        private readonly IEncodeDecodeService encodeDecodeService;
 
         public EmailController(IEmailService service, IConcreteMailService concreteMailService, ISearchService searchService,
             IEncodeDecodeService encodeDecodeService)
@@ -30,15 +34,16 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [Authorize]
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
+            await this.concreteMailService.QuickStartAsync();
+
             return View();
         }
 
         [Authorize]
         public async Task<IActionResult> Search([FromQuery]string status)
         {
-            await this.concreteMailService.QuickStartAsync();
             var statusDto = new EmailStatusIdDto
             {
                 StatusId = status
@@ -215,6 +220,6 @@ namespace E_MailApplicationsManager.Web.Controllers
             var libraryViewModel = new EmailListViewModel(emails);
 
             return View(libraryViewModel);
-        }       
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.AuditLog", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.AuditLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.Email", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.Email", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,7 +85,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                     b.ToTable("Emails");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.EmailAttachment", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.EmailAttachment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +106,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                     b.ToTable("EmailAttachments");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.EmailStatus", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.EmailStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,7 +146,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                         });
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.LoanApplicant", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.LoanApplicant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                     b.ToTable("LoanApplicants");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.User", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -193,6 +193,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<bool>("FirstLog");
+
+                    b.Property<DateTime?>("LastLog");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -234,14 +236,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "c23c3678-6194-4b7e-a928-09614190eb62",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "72e13b27-7f46-428c-b7a2-55fa843f6e5e",
+                            ConcurrencyStamp = "b517b337-c6ca-4163-b7d1-8229cd299d13",
                             Email = "admin1@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN1@ADMIN.COM",
                             NormalizedUserName = "DIYAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGItv2lfR0rNWVgxKjbGq9xQpD5ydtWIDRnBGzn2wiLdp0nW8aPMWEtWwOQyC7VDOQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHI5CjQ/0ekKR9yCWOib1gTC+FMhi3PQZnEHxOak4qhrMK5aNCrXyl+CJ61sTcGttw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN",
                             TwoFactorEnabled = false,
@@ -251,14 +253,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "189ee84d-4197-4d24-af0f-471f409bd930",
+                            ConcurrencyStamp = "169b560a-6175-4c54-9bf2-df695f5a9294",
                             Email = "admin2@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN2@ADMIN.COM",
                             NormalizedUserName = "BOBI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFtjxuQWY8jvVSyBCctfDg8R0qlghWo47qEqlKeCd6mz3dsrQKe8aDLhWkSJ0D9NFg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ6zNxUwPgAT8CJ27LxhpSsBr6hIotCTHV3aqM09V6VqUQIkTm2lA3J1gbTIctt4AQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU",
                             TwoFactorEnabled = false,
@@ -393,7 +395,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.RoleUser", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.RoleUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
 
@@ -403,57 +405,57 @@ namespace E_MailApplicationsManager.Models.Migrations
                         new
                         {
                             Id = "ca678235-7571-4177-984f-e9d1957b0187",
-                            ConcurrencyStamp = "a26436b9-e97e-4835-ad36-cbc06668ef54",
+                            ConcurrencyStamp = "84480876-e309-449a-92af-5ea33074ba83",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "ef1c4fa2-0b76-4598-aaee-c6e02803d486",
-                            ConcurrencyStamp = "44d3c05b-a1f6-48ad-8f91-d1a04320433a",
+                            ConcurrencyStamp = "29fce371-9d0e-4ba6-9ed8-30a7876caae2",
                             Name = "Operator",
                             NormalizedName = "OPERATOR"
                         });
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.AuditLog", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.AuditLog", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.Email", "Email")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.Email", "Email")
                         .WithMany()
                         .HasForeignKey("EmailId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("E_MailApplicationsManager.Models.User", "User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User", "User")
                         .WithMany("AuditLogs")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.Email", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.Email", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.EmailStatus", "Status")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.EmailStatus", "Status")
                         .WithMany("Emails")
                         .HasForeignKey("EmailStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("E_MailApplicationsManager.Models.User", "User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User", "User")
                         .WithMany("Emails")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.EmailAttachment", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.EmailAttachment", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.Email", "Email")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.Email", "Email")
                         .WithMany("EmailAttachments")
                         .HasForeignKey("EmailId");
                 });
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.LoanApplicant", b =>
+            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.LoanApplicant", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.Email", "Emails")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.Email", "Emails")
                         .WithOne("LoanApplicant")
-                        .HasForeignKey("E_MailApplicationsManager.Models.LoanApplicant", "EmailId");
+                        .HasForeignKey("E_MailApplicationsManager.Models.Model.LoanApplicant", "EmailId");
 
-                    b.HasOne("E_MailApplicationsManager.Models.User", "User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User", "User")
                         .WithMany("LoanApplicant")
                         .HasForeignKey("UserId");
                 });
@@ -468,7 +470,7 @@ namespace E_MailApplicationsManager.Models.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -476,7 +478,7 @@ namespace E_MailApplicationsManager.Models.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -489,7 +491,7 @@ namespace E_MailApplicationsManager.Models.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("E_MailApplicationsManager.Models.User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -497,7 +499,7 @@ namespace E_MailApplicationsManager.Models.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("E_MailApplicationsManager.Models.User")
+                    b.HasOne("E_MailApplicationsManager.Models.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

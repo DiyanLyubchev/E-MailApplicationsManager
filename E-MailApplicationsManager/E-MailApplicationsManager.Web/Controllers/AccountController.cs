@@ -51,7 +51,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
             return View("Message", new MessageViewModel
             {
-                Message = $"The following username {viewModel.UserName} successfully registered",
+                Message = $"Successful registration",
 
                 IsSuccess = true
             });
@@ -67,6 +67,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeAccountPassword(ChangePasswordViewModel viewModel)
         {
             try

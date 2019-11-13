@@ -1,0 +1,24 @@
+﻿@model E_MailApplicationsManager.Web.Models.Loan.ListStatusCloseEmailViewModel
+@{
+    ViewData["Title"] = "GetAllFinishLoan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<img src="~/images/tbilogo.jpg" alt="Sample Photo" />
+<h1>Finish Loan Applicant</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1 class="text-center">Welcome!</h1>
+    <hr />
+    <div>
+        @foreach (var loan in Model.Emails)
+        {
+            <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName </p> </a>
+        }
+    </div>
+</body>
+</html>
