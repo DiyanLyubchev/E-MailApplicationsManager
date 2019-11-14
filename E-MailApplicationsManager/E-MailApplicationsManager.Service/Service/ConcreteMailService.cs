@@ -50,8 +50,17 @@ namespace E_MailApplicationsManager.Service.Service
 
             var flow = new AuthorizationCodeFlow(initializer);
 
-            var response = JsonConvert.DeserializeObject<TokenResponse>(
-                File.ReadAllText("token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user"));
+            //var response = JsonConvert.DeserializeObject<TokenResponse>(
+            // File.ReadAllText("token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user"));
+
+            var response = new TokenResponse
+            {
+                AccessToken = "ya29.ImCwB6p_2yvreIqxuMXKDdlVfZMOfTFoIUPzLTV-bL5o6Un1hMXbkxRh67nnT8-LE3-hhi5fZN0eRNLaa1WDLrSKQURG5n_7VD1BErTcZHrho4Rkj7O7KAOYVkE0nE9JOXk",
+                TokenType = "Bearer",
+                ExpiresInSeconds = 3600,
+                RefreshToken = "1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4",
+                Scope = "https://www.googleapis.com/auth/gmail.readonly"
+            };
 
             UserCredential credential = new UserCredential(flow, "user", response);
 
