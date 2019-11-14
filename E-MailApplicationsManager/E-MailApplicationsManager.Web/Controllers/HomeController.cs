@@ -1,29 +1,17 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using E_MailApplicationsManager.Web.Models;
-using E_MailApplicationsManager.Service.CustomException;
-using E_MailApplicationsManager.Web.Models.Message;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_MailApplicationsManager.Web.Controllers
 {
     public class HomeController : Controller
     {
-
         public IActionResult Index()
         {
-            try
+            if (!User.Identity.IsAuthenticated)
             {
-                if (!User.Identity.IsAuthenticated)
-                {
-                    return LocalRedirect("~/identity/account/login");
-                }
-                return View();
+                return LocalRedirect("~/identity/account/login");
             }
-            catch (UserExeption)
-            {
-
-                return View("Message", new MessageViewModel { Message = "Your name does not exist!" });
-            }
+            return View();
         }
 
     }
