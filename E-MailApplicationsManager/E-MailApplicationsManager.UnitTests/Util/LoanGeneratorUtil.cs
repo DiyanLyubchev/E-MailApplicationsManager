@@ -16,6 +16,7 @@ namespace E_MailApplicationsManager.UnitTests
             var phoneNumber = "TestPhoneNumber";
             var id = 1;
             var userId = "c23c3678-6194-4b7e-a928-09614190eb62";
+            bool isApprove = true;
 
             var loan = new LoanApplicant
             {
@@ -24,7 +25,8 @@ namespace E_MailApplicationsManager.UnitTests
                 EGN = egn,
                 PhoneNumber = phoneNumber,
                 UserId = userId,
-                GmailId = gmailId
+                GmailId = gmailId,
+                IsApproved = isApprove
             };
 
             return loan;

@@ -25,8 +25,10 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<IEnumerable<LoanApplicant>> GetAllFinishLoanApplicantAsync();
 
-        Task<string> FindByIdAndOfEmployeeAsync(int id);
+        Task<string> FindByIdNameOfEmployeeAsync(int id);
 
         Task<DateTime?> FindByIdDateOfTerminalAsync(int id);
+
+        Task<string> FindByIDIsApproveOrNotAsync(int id);
     }
 }
