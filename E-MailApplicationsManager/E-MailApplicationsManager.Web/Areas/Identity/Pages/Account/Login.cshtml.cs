@@ -81,24 +81,23 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
             var login = await _userManager
                 .FindByNameAsync(Input.UserName);
 
-
             if (login == null)
             {
                 return LocalRedirect("~/identity/account/login");
             }
 
-            if (ModelState.IsValid && login != null)
+            if (login.FirstLog == false)
+            {
+                return RedirectToAction("ChangeAccountPassword", "Account");
+            }
+
+            if (ModelState.IsValid && login != null && login.FirstLog == true)
             {
                 var result = await _signInManager
                     .PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
                 if (result.Succeeded)
                 {
-                    if (login.FirstLog == false)
-                    {
-                        return RedirectToAction("ChangeAccountPassword", "Account");
-                    }
-
                     await _logService.SaveLastLoginUser(login);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
