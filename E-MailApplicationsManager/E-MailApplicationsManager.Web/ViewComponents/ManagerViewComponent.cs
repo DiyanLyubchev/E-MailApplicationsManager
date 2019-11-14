@@ -21,9 +21,7 @@ namespace E_MailApplicationsManager.Web.ViewComponents
 
             var currentUser = await this.service.GetUserAsync(userID);
 
-            bool exists = currentUser != null;
-
-            return View(exists);
+            return View(currentUser);
         }
     }
 }
