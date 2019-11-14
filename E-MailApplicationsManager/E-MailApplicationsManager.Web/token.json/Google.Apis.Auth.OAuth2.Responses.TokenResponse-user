@@ -1,1 +1,5 @@
+<<<<<<< WorkingOnChangeEmailStatus
 {"access_token":"ya29.ImCwByZvpJNJUnyVCNlvYlyv5h86tBJfI3HH0oRWpvjNykM2YM8bVYFQvVRW3TFHyL4UTTGu9N1_ZbIP_JLZGOjjWAAJ4pX6Qk0c1yumGkmVXc61fx62wczti38USHEuK90","token_type":"Bearer","expires_in":3600,"refresh_token":"1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4","scope":"https://www.googleapis.com/auth/gmail.readonly","Issued":"2019-11-14T18:57:05.508+02:00","IssuedUtc":"2019-11-14T16:57:05.508Z"}
+=======
+{"access_token":"ya29.ImCwB6p_2yvreIqxuMXKDdlVfZMOfTFoIUPzLTV-bL5o6Un1hMXbkxRh67nnT8-LE3-hhi5fZN0eRNLaa1WDLrSKQURG5n_7VD1BErTcZHrho4Rkj7O7KAOYVkE0nE9JOXk","token_type":"Bearer","expires_in":3600,"refresh_token":"1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4","scope":"https://www.googleapis.com/auth/gmail.readonly","Issued":"2019-11-14T09:37:48.012+02:00","IssuedUtc":"2019-11-14T07:37:48.012Z"}
+>>>>>>> fixed
