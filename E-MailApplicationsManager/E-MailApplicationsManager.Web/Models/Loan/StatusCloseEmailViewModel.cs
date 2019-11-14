@@ -33,5 +33,8 @@ namespace E_MailApplicationsManager.Web.Models.Loan
         public string EmployeeName { get; set; }
 
         public DateTime? TerminalDate { get; set; }
+
+        [Required]
+        public string Status { get; set; }
     }
 }

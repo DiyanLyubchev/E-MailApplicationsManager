@@ -142,8 +142,10 @@ namespace E_MailApplicationsManager.Web.Controllers
         public async Task<IActionResult> FinishLoanDetails(int id)
         {
             var loan = await this.searchService.FindLoansByIdAsync(id);
-            var nameEmployee = await this.searchService.FindByIdAndOfEmployeeAsync(id);
+            var nameEmployee = await this.searchService.FindByIdNameOfEmployeeAsync(id);
             var date = await this.searchService.FindByIdDateOfTerminalAsync(id);
+            var resultOfLoanApplicant = await this.searchService.FindByIDIsApproveOrNotAsync(id);
+
             if (loan == null)
             {
                 return View("Message", new MessageViewModel { Message = "The email was not found!" });
@@ -154,6 +156,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             var result = new StatusCloseEmailViewModel(decodeLoan);
             result.EmployeeName = nameEmployee;
             result.TerminalDate = date;
+            result.Status = resultOfLoanApplicant;
 
             return View(result);
         }

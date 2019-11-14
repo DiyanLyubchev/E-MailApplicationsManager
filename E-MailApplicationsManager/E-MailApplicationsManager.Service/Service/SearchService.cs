@@ -101,7 +101,7 @@ namespace E_MailApplicationsManager.Service.Service
             return loanList;
         }
 
-        public async Task<string> FindByIdAndOfEmployeeAsync(int id)
+        public async Task<string> FindByIdNameOfEmployeeAsync(int id)
         {
             var eName = await this.context.LoanApplicants
                 .Include(user => user.User)
@@ -111,6 +111,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             return eName;
         }
+
         public async Task<DateTime?> FindByIdDateOfTerminalAsync(int id)
         {
             var dateTerminal = await this.context.LoanApplicants
@@ -121,5 +122,28 @@ namespace E_MailApplicationsManager.Service.Service
 
             return dateTerminal;
         }
+
+        public async Task<string> FindByIDIsApproveOrNotAsync(int id)
+        {
+            var loanApplicant = await this.context.LoanApplicants
+                .Where(loan => loan.Id == id)
+                .Select(name => name.IsApproved)
+                .FirstOrDefaultAsync();
+
+            string result = null; 
+
+            if (loanApplicant == false)
+            {
+                result = "Reject";
+            }
+
+            if (loanApplicant == true)
+            {
+                result = "Approve";
+            }
+
+            return result;
+        }
+
     }
 }

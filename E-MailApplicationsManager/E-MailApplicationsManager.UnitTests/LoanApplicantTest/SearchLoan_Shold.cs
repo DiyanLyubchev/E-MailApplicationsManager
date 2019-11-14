@@ -12,12 +12,12 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
     public class SearchLoan_Shold
     {
         [TestMethod]
-        public async Task FindByIdAndOfEmployeeAsync_Test()
+        public async Task FindByIdNameOfEmployeeAsync_Test()
         {
             var id = 1;
             var loanUtil = LoanGeneratorUtil.GenerateLoan();
 
-            var options = TestUtilities.GetOptions(nameof(FindByIdAndOfEmployeeAsync_Test));
+            var options = TestUtilities.GetOptions(nameof(FindByIdNameOfEmployeeAsync_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
@@ -31,7 +31,7 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
             using (var assertContext = new E_MailApplicationsManagerContext(options))
             {
                 var sut = new SearchService(assertContext);
-                var result = sut.FindByIdAndOfEmployeeAsync(id);
+                var result = sut.FindByIdNameOfEmployeeAsync(id);
 
                 Assert.IsNotNull(result);
             }
@@ -57,7 +57,33 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
             using (var assertContext = new E_MailApplicationsManagerContext(options))
             {
                 var sut = new SearchService(assertContext);
-                var result = sut.FindByIdAndOfEmployeeAsync(id);
+                var result = sut.FindByIdDateOfTerminalAsync(id);
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [TestMethod]
+        public async Task FindByIdStatusOfLoanAsync_Test()
+        {
+            var id = 1;
+            var loanUtil = LoanGeneratorUtil.GenerateLoan();
+
+            var options = TestUtilities.GetOptions(nameof(FindByIdStatusOfLoanAsync_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var loan = await actContext.LoanApplicants
+                    .AddAsync(loanUtil);
+
+                await actContext.SaveChangesAsync();
+
+            }
+
+            using (var assertContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new SearchService(assertContext);
+                var result = sut.FindByIDIsApproveOrNotAsync(id);
 
                 Assert.IsNotNull(result);
             }
