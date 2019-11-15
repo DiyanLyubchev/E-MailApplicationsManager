@@ -1,13 +1,10 @@
-﻿using E_MailApplicationsManager.Models;
-using E_MailApplicationsManager.Models.Context;
+﻿using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 

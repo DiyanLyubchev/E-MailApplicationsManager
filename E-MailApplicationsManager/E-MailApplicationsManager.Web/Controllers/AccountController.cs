@@ -65,7 +65,6 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeAccountPassword(ChangePasswordViewModel viewModel)
         {
             try

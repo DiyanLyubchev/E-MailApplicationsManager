@@ -1,5 +1,4 @@
-﻿using E_MailApplicationsManager.Models;
-using E_MailApplicationsManager.Models.Common;
+﻿using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
@@ -45,7 +44,7 @@ namespace E_MailApplicationsManager.Service.Service
             return await this.context.Emails
                 .Where(email => email.IsSeen == false
                 && email.EmailStatusId != (int)EmailStatusesType.InvalidApplication)
-                .OrderBy(email => email.DateReceived)
+                .OrderBy(email => email.InitialRegistrationInData)
                 .ToListAsync();
         }
 

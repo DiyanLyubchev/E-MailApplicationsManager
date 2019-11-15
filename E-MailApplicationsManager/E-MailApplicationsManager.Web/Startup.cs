@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Service;
 using E_MailApplicationsManager.Models.Model;
-using E_MailApplicationsManager.Service.Аuxiliary;
 
 namespace E_MailApplicationsManager.Web
 {
@@ -80,6 +79,9 @@ namespace E_MailApplicationsManager.Web
              options.UseSqlServer(
                  Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddHostedService<HostedEmailService>();
+           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
@@ -90,6 +92,7 @@ namespace E_MailApplicationsManager.Web
                     .AddEntityFrameworkStores<E_MailApplicationsManagerContext>()
                     .AddDefaultTokenProviders();
 
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,7 +109,7 @@ namespace E_MailApplicationsManager.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

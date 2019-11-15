@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using E_MailApplicationsManager.Service.Service;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace E_MailApplicationsManager.Web
