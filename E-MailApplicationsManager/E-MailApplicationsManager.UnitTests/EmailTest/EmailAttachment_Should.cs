@@ -3,7 +3,9 @@ using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +20,8 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var gmailId = "TestGmailId";
             var FileName = "TestFileName";
             double fileSize = 876.77;
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(AddAttachment_Test));
 
@@ -39,7 +43,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     SizeInKB = fileSize
                 };
 
-                var sut = new EmailService(actContext);
+                var sut = new EmailService(actContext, loggerMock);
                 var result = sut.AddAttachmentAsync(ettachmentDto);
 
                 Assert.IsNotNull(result);

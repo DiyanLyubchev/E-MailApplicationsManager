@@ -13,5 +13,7 @@ namespace E_MailApplicationsManager.Service.Dto
         public string Email { get; set; }
 
         public string Role { get; set; }
+
+        public string CurrentUserId { get; set; }
     }
 }

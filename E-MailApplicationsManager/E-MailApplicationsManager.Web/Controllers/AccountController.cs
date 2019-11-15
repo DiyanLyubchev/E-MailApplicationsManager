@@ -35,6 +35,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             {
                 var registerAccountDto = new RegisterAccountDto
                 {
+                    CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                     UserName = viewModel.UserName,
                     Password = viewModel.Password,
                     Email = viewModel.Email,

@@ -149,5 +149,78 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 Assert.IsNotNull(result);
             }
         }
+
+        [TestMethod]
+        public async Task ListEmailsWithStatusOpenAsync_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.EmailStatusId = (int)EmailStatusesType.Open;
+
+            var userId = firstEmail.UserId;
+
+            var loanApplicantDto = new LoanApplicantDto
+            {                
+                UserId = userId,
+            };
+
+            var options = TestUtilities.GetOptions(nameof(ListEmailsWithStatusOpenAsync_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = await sut.ListEmailsWithStatusOpenAsync(loanApplicantDto);
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [TestMethod]
+        public async Task FindLoansByIdAsync_Test()
+        {
+            var id = 2;
+
+            var options = TestUtilities.GetOptions(nameof(FindLoansByIdAsync_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.LoanApplicants.AddAsync(new LoanApplicant { Id = id });
+                await actContext.SaveChangesAsync();
+            }
+
+            using (var assertContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new SearchService(assertContext);
+                var findEmail = await sut.FindLoansByIdAsync(id);
+
+                Assert.IsNotNull(findEmail);
+            }
+        }
+
+        [TestMethod]
+        public async Task GetAllFinishLoanApplicantAsync_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.EmailStatusId = (int)EmailStatusesType.Closed;
+
+            var options = TestUtilities.GetOptions(nameof(GetAllFinishLoanApplicantAsync_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = await sut.GetAllFinishLoanApplicantAsync();
+
+                Assert.IsNotNull(result);
+            }
+        }
     }
 }
