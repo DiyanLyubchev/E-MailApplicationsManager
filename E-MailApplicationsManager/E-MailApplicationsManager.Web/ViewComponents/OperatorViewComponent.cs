@@ -11,9 +11,7 @@ namespace E_MailApplicationsManager.Web.ViewComponents
 
         public OperatorViewComponent(IUserService service)
         {
-
             this.service = service;
-
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

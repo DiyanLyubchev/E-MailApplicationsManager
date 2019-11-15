@@ -3,9 +3,12 @@ using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Gmail.v1;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,21 +36,47 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task QuickStartAsync()
         {
-            UserCredential credential;
+            //UserCredential credential
+            var initializer = new AuthorizationCodeFlow.Initializer(
+                "https://accounts.google.com/o/oauth2/auth",
+                "https://oauth2.googleapis.com/token"
+            );
 
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            initializer.ClientSecrets = new ClientSecrets()
             {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true));
-            }
+                ClientId = "875122856531-seovncbdh73orubtvnceo3n8r91qiul5.apps.googleusercontent.com",
+                ClientSecret = "bLW-SX94OC48pS1d2D0o3Hil"
+            };
+
+            var flow = new AuthorizationCodeFlow(initializer);
+
+            //var response = JsonConvert.DeserializeObject<TokenResponse>(
+            // File.ReadAllText("token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user"));
+
+            var response = new TokenResponse
+            {
+                AccessToken = "ya29.ImCwB6p_2yvreIqxuMXKDdlVfZMOfTFoIUPzLTV-bL5o6Un1hMXbkxRh67nnT8-LE3-hhi5fZN0eRNLaa1WDLrSKQURG5n_7VD1BErTcZHrho4Rkj7O7KAOYVkE0nE9JOXk",
+                TokenType = "Bearer",
+                ExpiresInSeconds = 3600,
+                RefreshToken = "1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4",
+                Scope = "https://www.googleapis.com/auth/gmail.readonly"
+            };
+
+            UserCredential credential = new UserCredential(flow, "user", response);
+
+            //using (var stream =
+            //    new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            //{
+            //    // The file token.json stores the user's access and refresh tokens, and is created
+            //    // automatically when the authorization flow completes for the first time.
+            //    string credPath = "token.json";
+            //    credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+            //        GoogleClientSecrets.Load(stream).Secrets,
+            //        Scopes,
+            //        "user",
+            //        CancellationToken.None,
+            //        new FileDataStore(credPath, true));
+            //}
 
             // Create Gmail API service.
             var service = new GmailService(new BaseClientService.Initializer()
@@ -158,7 +187,7 @@ namespace E_MailApplicationsManager.Service.Service
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
                 string credPath = "token.json";
-                credential =await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
@@ -178,14 +207,14 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.LabelIds = "INBOX";
             allListMails.IncludeSpamTrash = false;
 
-            var emails =await allListMails.ExecuteAsync();
+            var emails = await allListMails.ExecuteAsync();
 
             var email = new Email();
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
 
-                var responseMail =await requestMail.ExecuteAsync();
+                var responseMail = await requestMail.ExecuteAsync();
 
                 var mailAttach = responseMail.Payload.Parts[0];
 
@@ -209,7 +238,7 @@ namespace E_MailApplicationsManager.Service.Service
                 }
             }
             return email;
-            
+
         }
     }
 }

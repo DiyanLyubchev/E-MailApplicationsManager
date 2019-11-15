@@ -63,7 +63,6 @@ namespace E_MailApplicationsManager.Web.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeAccountPassword(ChangePasswordViewModel viewModel)

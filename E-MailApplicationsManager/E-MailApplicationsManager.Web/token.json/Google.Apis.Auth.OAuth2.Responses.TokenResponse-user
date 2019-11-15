@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"access_token":"ya29.ImCxBxmqyv2buWRBc30arhWay9daJsIKR2K6nm5u3VtHMT5UfLj3MhSrzSGZVas2XgkXcQEpqMAL8W2vlAhjXZzJmGi0mazUILtscZ8L2UpKcxnLSMX-WTZSAslQUCo3kok","token_type":"Bearer","expires_in":3600,"refresh_token":"1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4","scope":"https://www.googleapis.com/auth/gmail.readonly","Issued":"2019-11-15T09:31:41.876+02:00","IssuedUtc":"2019-11-15T07:31:41.876Z"}
+=======
+{"access_token":"ya29.ImCwB_TNGTOTtFFJGwN2NU3_VxbD1Iqe0uolfNc4n26tKUZCrgKzy1mfwLrz9UF-dFVPhe99pGNT_1EC9EyFMBG26IaJavjmjKAEUjlrdyQONiyRpofr7p2DTdbfiJkdEaY","token_type":"Bearer","expires_in":3600,"refresh_token":"1//037j6Gem6Ff7jCgYIARAAGAMSNwF-L9IrMVOGR6luFPUKZCOwh6KXZXdXE_90GOMtNiH4BGN9EeV8jdrHiwZmpEA4910H2v9EdT4","scope":"https://www.googleapis.com/auth/gmail.readonly","Issued":"2019-11-14T11:56:43.053+02:00","IssuedUtc":"2019-11-14T09:56:43.053Z"}
+>>>>>>> master
