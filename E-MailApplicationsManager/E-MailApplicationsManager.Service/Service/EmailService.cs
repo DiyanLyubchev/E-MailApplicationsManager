@@ -190,9 +190,11 @@ namespace E_MailApplicationsManager.Service.Service
                .Where(id => id.Id == dto.UserId)
                .SingleOrDefaultAsync();
 
+            email.Body = null;
             email.User = currentUser;
             email.UserId = dto.UserId;
             email.EmailStatusId = (int)EmailStatusesType.InvalidApplication;
+            
             await this.context.SaveChangesAsync();
 
             return true;
