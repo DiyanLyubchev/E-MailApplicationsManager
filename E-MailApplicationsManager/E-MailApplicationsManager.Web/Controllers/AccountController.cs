@@ -58,7 +58,6 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult ChangeAccountPassword()
         {
             return View();
@@ -66,7 +65,6 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeAccountPassword(ChangePasswordViewModel viewModel)
         {
@@ -87,7 +85,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 return View("Message", new MessageViewModel { Message = ex.Message });
             }
 
-            return View();
+            return RedirectToAction("Index","Home");
         }
 
     }

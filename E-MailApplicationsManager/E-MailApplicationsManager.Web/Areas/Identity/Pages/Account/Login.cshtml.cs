@@ -86,15 +86,15 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
                 return LocalRedirect("~/identity/account/login");
             }
 
-            if (login.FirstLog == false)
-            {
-                return RedirectToAction("ChangeAccountPassword", "Account");
-            }
-
-            if (ModelState.IsValid && login != null && login.FirstLog == true)
+            if (ModelState.IsValid && login != null)
             {
                 var result = await _signInManager
                     .PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+
+                if (login.FirstLog == false)
+                {
+                    return RedirectToAction("ChangeAccountPassword", "Account");
+                }
 
                 if (result.Succeeded)
                 {

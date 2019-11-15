@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_MailApplicationsManager.Models.Migrations
 {
     [DbContext(typeof(E_MailApplicationsManagerContext))]
-    [Migration("20191114162419_Initial")]
+    [Migration("20191115072952_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,14 +238,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "c23c3678-6194-4b7e-a928-09614190eb62",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c60cfef7-f8cf-43f2-a3e7-293966db61cb",
+                            ConcurrencyStamp = "6ca88e4d-c6a1-4077-92c4-29e11846b55f",
                             Email = "admin1@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN1@ADMIN.COM",
                             NormalizedUserName = "DIYAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECopSqzlAlkxx3RDhLhAotudHZVznOR057/+tSznK1dAtmFWiqrPJAuZv9jHfWg0pw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDrjcxDewBXGI59wMnjXcVXOVs/MhAJwHCBGticDUorr0ak7uYiGmsHaRS5IpP8Ytw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN",
                             TwoFactorEnabled = false,
@@ -255,14 +255,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4af8a395-e666-486b-9ca8-f92c019a20c8",
+                            ConcurrencyStamp = "612f679c-07e1-4a96-9d31-c278aac499cc",
                             Email = "admin2@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN2@ADMIN.COM",
                             NormalizedUserName = "BOBI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEKGR+1hIcHT33b1Ua+lKWI90vzji26Y+qMPB8a5WexJlO6njXcRTwg7yz7sxA+RDA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIzugAK6imXd33jc2eaZjNfh+g6JcDHTCt4QnYqOdDAYifGTy5I3MXq3CaJM9I/+pg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU",
                             TwoFactorEnabled = false,
@@ -407,14 +407,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         new
                         {
                             Id = "ca678235-7571-4177-984f-e9d1957b0187",
-                            ConcurrencyStamp = "49860bcb-fa02-4c31-80e2-508070a30a36",
+                            ConcurrencyStamp = "4f3eeb9e-84cc-4e65-b894-8d9162fedf23",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "ef1c4fa2-0b76-4598-aaee-c6e02803d486",
-                            ConcurrencyStamp = "8e065ac8-6ea2-4d5b-97c8-ba79a048ecf1",
+                            ConcurrencyStamp = "4cc5068f-e5d9-4960-ac13-955b4770f6a4",
                             Name = "Operator",
                             NormalizedName = "OPERATOR"
                         });

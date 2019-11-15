@@ -16,7 +16,7 @@ $('#send-button').on('click', function () {
         cache: false,
         success: function (result) {
             console.log(result);
-            window.location.href = "/home/index/" + result.emailId;           
+            window.location.href = "/home/index/" + result.emailId;
         }
     });
 
@@ -46,7 +46,7 @@ $('#email-result').click(function () {
     });
 });
 
-   
+
 // Approve Loan 
 
 $('#loan-approve').click(function () {
@@ -93,3 +93,24 @@ $('#loan-reject').click(function () {
         }
     });
 });
+
+//take user id 
+
+//$('#user-id').on('click', function () {
+//    const userId = $('#user-id').val();
+
+//    console.log(userId);
+
+//    $.ajax({
+//        url: '/Account/ChangeAccountPassword',
+//        data: { idUserData: userId },
+//        type: 'POST',
+//        dataType: 'json',
+//        traditional: true,
+//        cache: false,
+//        success: function (result) {
+//            console.log(result);
+//            window.location.href = "/home/index/" + result.idUserData;
+//        }
+//    });
+//});
