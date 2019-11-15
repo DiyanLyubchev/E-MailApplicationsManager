@@ -22,6 +22,8 @@ namespace E_MailApplicationsManager.Web.ViewComponents
 
             var currentUser = await this.service.GetUserAsync(userID);
 
+            bool isChangedPass = currentUser.FirstLog == true;
+
             return View(currentUser);
         }
     }

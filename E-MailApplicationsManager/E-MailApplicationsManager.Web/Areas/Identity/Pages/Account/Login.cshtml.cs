@@ -91,11 +91,6 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
                 var result = await _signInManager
                     .PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
-                if (login.FirstLog == false)
-                {
-                    return RedirectToAction("ChangeAccountPassword", "Account");
-                }
-
                 if (result.Succeeded)
                 {
                     await _logService.SaveLastLoginUser(login);
