@@ -1,5 +1,4 @@
-﻿using E_MailApplicationsManager.Models;
-using E_MailApplicationsManager.Models.Common;
+﻿using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
@@ -7,9 +6,7 @@ using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Service.Service
@@ -40,6 +37,7 @@ namespace E_MailApplicationsManager.Service.Service
                 {
                     GmailId = emailDto.GmailId,
                     Sender = emailDto.Sender,
+                    InitialRegistrationInData = DateTime.Now,
                     DateReceived = emailDto.DateReceived,
                     Subject = emailDto.Subject,
                 };
@@ -58,7 +56,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             int status = int.Parse(emailStatusId.StatusId);
 
-            var email =await this.context.Emails
+            var email = await this.context.Emails
                 .Where(gmailId => gmailId.GmailId == emailStatusId.GmailId)
                 .SingleOrDefaultAsync();
 
@@ -138,7 +136,6 @@ namespace E_MailApplicationsManager.Service.Service
             if (email.Body == null)
             {
                 email.Body = emailDto.Body;
-                email.InitialRegistrationInData = DateTime.Now;
                 email.User = currentUser;
                 email.UserId = emailDto.UserId;
                 email.IsSeen = true;

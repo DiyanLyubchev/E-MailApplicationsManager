@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
@@ -34,10 +30,8 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> Home()
+        public IActionResult Home()
         {
-            await this.concreteMailService.QuickStartAsync();
-
             return View();
         }
 

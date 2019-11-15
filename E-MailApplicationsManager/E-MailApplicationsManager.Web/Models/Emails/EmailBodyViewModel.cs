@@ -1,6 +1,4 @@
-﻿using E_MailApplicationsManager.Models;
-
-namespace E_MailApplicationsManager.Web.Models.Emails
+﻿namespace E_MailApplicationsManager.Web.Models.Emails
 {
     public class EmailBodyViewModel
     {

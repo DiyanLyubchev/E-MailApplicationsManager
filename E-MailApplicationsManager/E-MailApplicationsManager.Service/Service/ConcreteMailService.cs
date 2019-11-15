@@ -4,6 +4,7 @@ using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Gmail.v1;
+using Google.Apis.Gmail.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
@@ -28,7 +29,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/gmail-dotnet-quickstart.json
-        static string[] Scopes = { GmailService.Scope.GmailReadonly };
+        static string[] Scopes = { GmailService.Scope.GmailModify };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
         public async Task QuickStartAsync()
@@ -60,10 +61,15 @@ namespace E_MailApplicationsManager.Service.Service
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
 
             var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
-            allListMails.LabelIds = "INBOX";    // take data only from inbox
+            allListMails.LabelIds = "UNREAD";    // take data only from inbox
             allListMails.IncludeSpamTrash = false;  // not take data from spam
 
             var emails = await allListMails.ExecuteAsync();
+
+            if (emails.Messages == null)
+            {
+                return; 
+            }
 
             string subjectOfEmail = null;
             string dateOfEmail = null;
@@ -78,6 +84,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                 var mailAttach = responseMail.Payload.Parts[0];
 
+
                 if (mailAttach.MimeType == "text/plain")
                 {
                     gmailId = responseMail.Id;
@@ -87,11 +94,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                     dateOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(date => date.Name == "Date").Value;
-                    //Mon, 4 Nov 2019 01:43:12 +0000 (GMT)
-                    //var convertDate = DateTime.ParseExact(dateOfEmail,
-                    //    "ddd, d MMM yyyy HH:mm:ss К (GMT)",
-                    //    CultureInfo.InvariantCulture);
-
+                   
                     senderOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(sender => sender.Name == "From").Value;
 
@@ -104,6 +107,9 @@ namespace E_MailApplicationsManager.Service.Service
                     };
 
                     await this.emailService.AddMailAsync(emailDto);
+
+                    var changeEmailStatus = new ModifyMessageRequest {  RemoveLabelIds = new List<string> {"UNREAD"} };
+                    await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
                 }
                 else
                 {
@@ -145,6 +151,9 @@ namespace E_MailApplicationsManager.Service.Service
                             DateReceived = dateOfEmail,
                         };
                         await this.emailService.AddMailAsync(emailDto);
+
+                        var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
+                        await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
                     }
                 }
             }

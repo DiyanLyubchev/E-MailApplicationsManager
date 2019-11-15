@@ -85,7 +85,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
             {
                 return LocalRedirect("~/identity/account/login");
             }
-
+          
             if (ModelState.IsValid && login != null)
             {
                 var result = await _signInManager
