@@ -95,6 +95,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             {
                 var emailDto = new EmailContentDto
                 {
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                     GmailId = id
                 };
                 var email = await this.service.CheckEmailBodyAsync(emailDto);

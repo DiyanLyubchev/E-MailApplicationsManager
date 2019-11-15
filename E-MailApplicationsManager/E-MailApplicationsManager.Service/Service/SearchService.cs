@@ -15,12 +15,10 @@ namespace E_MailApplicationsManager.Service.Service
 {
     public class SearchService : ISearchService
     {
-        private readonly ILogger<SearchService> logger;
         private readonly E_MailApplicationsManagerContext context;
 
-        public SearchService(E_MailApplicationsManagerContext context, ILogger<SearchService> logger)
+        public SearchService(E_MailApplicationsManagerContext context)
         {
-            this.logger = logger;
             this.context = context;
         }
 
@@ -34,7 +32,6 @@ namespace E_MailApplicationsManager.Service.Service
                .Select(email => email)
                .ToListAsync();
 
-            logger.LogInformation("Search successfull.");
             return emailList;
         }
 

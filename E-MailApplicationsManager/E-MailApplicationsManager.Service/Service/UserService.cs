@@ -15,13 +15,15 @@ namespace E_MailApplicationsManager.Service.Service
 {
     public class UserService : IUserService
     {
+        private readonly ILogger<UserService> logger;
         private readonly E_MailApplicationsManagerContext context;
         private readonly UserManager<User> userManager;
 
-        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager)
+        public UserService(E_MailApplicationsManagerContext context, UserManager<User> userManager, ILogger<UserService> logger)
         {
             this.context = context;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         public async Task RegisterAccountAsync(RegisterAccountDto registerAccountDto)
@@ -70,6 +72,13 @@ namespace E_MailApplicationsManager.Service.Service
 
             await this.userManager.CreateAsync(account);
             await this.userManager.AddToRoleAsync(account, registerAccountDto.Role);
+
+            var currentUser = await this.context.Users
+                .Where(userId => userId.Id == registerAccountDto.CurrentUserId)
+                .Select(uName => uName.UserName)
+                .SingleOrDefaultAsync();
+
+            logger.LogInformation($"New user {registerAccountDto.UserName} registered by {currentUser}");
         }
 
         public async Task<User> GetUserAsync(string userId)

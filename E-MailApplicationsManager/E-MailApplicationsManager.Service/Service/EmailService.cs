@@ -6,6 +6,7 @@ using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace E_MailApplicationsManager.Service.Service
 {
     public class EmailService : IEmailService
     {
+        private readonly ILogger<EmailService> logger;
         private readonly E_MailApplicationsManagerContext context;
 
-        public EmailService(E_MailApplicationsManagerContext context)
+        public EmailService(E_MailApplicationsManagerContext context, ILogger<EmailService> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public async Task AddMailAsync(EmailDto emailDto)
@@ -90,6 +93,7 @@ namespace E_MailApplicationsManager.Service.Service
                 return true;
             }
 
+            logger.LogInformation($"Status successfully updated by {currentUser.UserName}.");
             return true;
 
         }
@@ -158,10 +162,17 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption("Email body is empty");
             }
 
+            var currentUser = await this.context.Users
+                .Where(userId => userId.Id == emailDto.UserId)
+                .Select(user => user.UserName)
+                .SingleOrDefaultAsync();
+
             email.EmailStatusId = (int)EmailStatusesType.New;
             email.SetCurrentStatus = DateTime.Now;
             await this.context.SaveChangesAsync();
 
+            logger.LogInformation($"Changed email status to New by {currentUser}");
+            logger.LogError($"{currentUser} failed to update status.");
             return email;
         }
 
@@ -195,6 +206,7 @@ namespace E_MailApplicationsManager.Service.Service
             email.EmailStatusId = (int)EmailStatusesType.InvalidApplication;
             await this.context.SaveChangesAsync();
 
+            logger.LogInformation($"Changed email status to Invalid Application by {currentUser.UserName}");
             return true;
         }
     }
