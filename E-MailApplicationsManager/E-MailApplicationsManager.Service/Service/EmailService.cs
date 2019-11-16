@@ -206,5 +206,7 @@ namespace E_MailApplicationsManager.Service.Service
             logger.LogInformation($"Changed email status to Invalid Application by {currentUser.UserName}");
             return true;
         }
+
+       
     }
 }

@@ -30,8 +30,9 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [Authorize]
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
+           await this.concreteMailService.QuickStartAsync();
             return View();
         }
 

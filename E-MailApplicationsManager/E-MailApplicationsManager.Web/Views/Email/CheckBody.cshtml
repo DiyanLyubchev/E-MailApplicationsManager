@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-6">
             <ul style="font-weight: bold" class="col-sm-2">Text:</ul>
-            <ul class="col-sm-10">@Model.Body</ul>
+            <ul class="col-sm-10">@Model.Body</ul> @*@Html.Raw(Model.Body)*@
         </div>
         <form asp-controller="Email" asp-action="FillEmailForm" asp-route-id="@Model.GmailId" method="get">
             <div class="form-group row">
