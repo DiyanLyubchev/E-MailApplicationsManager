@@ -47,13 +47,43 @@ $('#change-email-status').click(function () {
 });
 
 
-// refresh page 
+// refresh button for new emails
 
-setInterval(function ()
-{
+$('#refresh-email').click(function () {
+    const refresh = $('#refresh-email').val();
+
+    $(this).css('#refresh-email', 'red').val();
+    clicked = false;
+
     $.ajax({
-        type : 'Get',
-        url:'/Email/Home',
-    })
-}, 60000);
+        url: '/Email/RefreshEmails',
+        data: { refreshData: refresh},
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+           
+        }
+    });
+});
 
+
+//Countinue to work with email status 3
+
+$('#continue-with-email').on('click', function () {
+    const currentEmail = $('#continue-with-email').val();
+
+    $.ajax({
+        url: '/Email/ContinueWithEmmail',
+        data: { currentEmailId: currentEmail },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+            console.log(result);
+            window.location.href = "/email/fillemailform/" + result.emailId;
+        }
+    });
+});

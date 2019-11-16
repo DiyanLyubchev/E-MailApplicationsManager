@@ -23,7 +23,7 @@ namespace E_MailApplicationsManager.Service.Service
             this.logger = logger;
         }
 
-        public async Task AddMailAsync(EmailDto emailDto)
+        public async Task<Email> AddMailAsync(EmailDto emailDto)
         {
             if (emailDto.DateReceived == null ||
                 emailDto.Sender == null || emailDto.Subject == null)
@@ -47,7 +47,10 @@ namespace E_MailApplicationsManager.Service.Service
 
                 await this.context.Emails.AddAsync(email);
                 await this.context.SaveChangesAsync();
+
+                return email;
             }
+            return null;
         }
 
         public async Task<bool> ChangeStatusAsync(EmailStatusIdDto emailStatusId)

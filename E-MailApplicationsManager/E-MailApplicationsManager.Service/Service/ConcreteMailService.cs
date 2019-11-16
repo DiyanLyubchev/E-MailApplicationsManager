@@ -174,7 +174,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             if (mailAttach.MimeType == "text/plain")
             {
-                string body = currentEmail.Payload.Parts[1].Body.Data;
+                string body = currentEmail.Payload.Parts[0].Body.Data;
 
                 var codedBody = this.encodeDecodeService.ReplaceSign(body);
 

@@ -11,12 +11,15 @@
     <title></title>
 </head>
 <body>
+    <button type="submit" style="background-color:#34495e" class="btn btn-primary" id="refresh-email" value="click">Refresh</button>
     <hr />
     <div>
         @foreach (var email in Model.Emails)
         {
             <a asp-controller="Email" asp-action="Details" asp-route-id="@email.Id"><p>@email.DateReceived </p>  </a>
         }
+
+     
     </div>
 </body>
 </html>

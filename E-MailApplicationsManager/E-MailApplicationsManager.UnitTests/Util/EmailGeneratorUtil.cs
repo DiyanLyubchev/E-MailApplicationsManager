@@ -24,7 +24,6 @@ namespace E_MailApplicationsManager.UnitTests
                 DateReceived = dateReceived,
                 IsSeen = false,
                 UserId = userId
-
             };
 
             return email;

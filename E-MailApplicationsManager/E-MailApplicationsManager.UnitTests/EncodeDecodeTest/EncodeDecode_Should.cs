@@ -2,10 +2,7 @@
 using E_MailApplicationsManager.Service.Service;
 using E_MailApplicationsManager.UnitTests.Util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace E_MailApplicationsManager.UnitTests.EncodeDecodeTest
 {
@@ -62,5 +59,15 @@ namespace E_MailApplicationsManager.UnitTests.EncodeDecodeTest
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void ReplaseSign_Test()
+        {
+            var test = "++4O__";
+
+            var sut = new EncodeDecodeService();
+            var result = sut.ReplaceSign(test);
+
+            Assert.IsNotNull("--40//",result);
+        }
     }
 }

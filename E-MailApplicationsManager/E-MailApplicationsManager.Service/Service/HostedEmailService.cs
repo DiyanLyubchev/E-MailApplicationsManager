@@ -19,7 +19,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         public  Task StartAsync(CancellationToken cancellationToken)
         {
-            this.timer = new Timer(GetEmails, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(6));
+            this.timer = new Timer(GetEmails, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60));
 
             return Task.CompletedTask;
         }
