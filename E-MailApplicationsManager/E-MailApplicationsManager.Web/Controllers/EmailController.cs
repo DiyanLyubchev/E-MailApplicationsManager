@@ -32,7 +32,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Home()
         {
-           await this.concreteMailService.QuickStartAsync();
+            await this.concreteMailService.QuickStartAsync();
             return View();
         }
 
@@ -216,6 +216,25 @@ namespace E_MailApplicationsManager.Web.Controllers
             var libraryViewModel = new EmailListViewModel(emails);
 
             return View(libraryViewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RefreshEmails(string refreshData)
+        {
+            if (refreshData == "click")
+            {
+               await this.concreteMailService.QuickStartAsync();
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult ContinueWithEmmail(string currentEmailId)
+        {
+            return Json(new { emailId = currentEmailId });
         }
     }
 }

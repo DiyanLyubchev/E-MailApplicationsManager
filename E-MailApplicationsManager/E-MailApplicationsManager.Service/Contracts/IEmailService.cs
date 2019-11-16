@@ -6,7 +6,7 @@ namespace E_MailApplicationsManager.Service.Contracts
 {
     public interface IEmailService
     {
-        Task AddMailAsync(EmailDto emailDto);
+        Task<Email> AddMailAsync(EmailDto emailDto);
 
         Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto);
 
