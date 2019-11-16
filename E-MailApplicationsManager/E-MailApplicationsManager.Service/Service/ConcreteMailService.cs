@@ -1,18 +1,13 @@
-﻿using E_MailApplicationsManager.Models;
-using E_MailApplicationsManager.Models.Model;
+﻿using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
-using E_MailApplicationsManager.Service.Dto;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Gmail.v1;
 using Google.Apis.Gmail.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,11 +15,13 @@ namespace E_MailApplicationsManager.Service.Service
 {
     public class ConcreteMailService : IConcreteMailService
     {
-        private readonly IEmailService emailService;
-
-        public ConcreteMailService(IEmailService emailService)
+      
+        private readonly IEncodeDecodeService encodeDecodeService;
+        private readonly IMapperService mapper;
+        public ConcreteMailService(IEncodeDecodeService encodeDecodeService, IMapperService mapper)
         {
-            this.emailService = emailService;
+            this.encodeDecodeService = encodeDecodeService;
+            this.mapper = mapper;
         }
 
         // If modifying these scopes, delete your previously saved credentials
@@ -68,7 +65,7 @@ namespace E_MailApplicationsManager.Service.Service
 
             if (emails.Messages == null)
             {
-                return; 
+                return;
             }
 
             string subjectOfEmail = null;
@@ -94,21 +91,13 @@ namespace E_MailApplicationsManager.Service.Service
 
                     dateOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(date => date.Name == "Date").Value;
-                   
+
                     senderOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(sender => sender.Name == "From").Value;
 
-                    var emailDto = new EmailDto
-                    {
-                        GmailId = gmailId,
-                        Subject = subjectOfEmail,
-                        Sender = senderOfEmail,
-                        DateReceived = dateOfEmail,
-                    };
+                   await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
 
-                    await this.emailService.AddMailAsync(emailDto);
-
-                    var changeEmailStatus = new ModifyMessageRequest {  RemoveLabelIds = new List<string> {"UNREAD"} };
+                    var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
                     await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
                 }
                 else
@@ -134,23 +123,11 @@ namespace E_MailApplicationsManager.Service.Service
                             string fileName = attachment.Filename;
                             double fileSize = double.Parse(attachment.Body.Size.ToString());
                             fileSize /= 1024;
-                            var attachmentDto = new EmailAttachmentDTO
-                            {
-                                GmailId = gmailId,
-                                FileName = fileName,
-                                SizeInKB = fileSize
-                            };
 
-                            await this.emailService.AddAttachmentAsync(attachmentDto);
+                            await this.mapper.MappGmailAttachmentIntoEmailAttachment(gmailId, fileName, fileSize);
                         }
-                        var emailDto = new EmailDto
-                        {
-                            GmailId = gmailId,
-                            Subject = subjectOfEmail,
-                            Sender = senderOfEmail,
-                            DateReceived = dateOfEmail,
-                        };
-                        await this.emailService.AddMailAsync(emailDto);
+
+                        await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
 
                         var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
                         await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
@@ -167,7 +144,7 @@ namespace E_MailApplicationsManager.Service.Service
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
                 string credPath = "token.json";
-                credential =await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
@@ -187,38 +164,33 @@ namespace E_MailApplicationsManager.Service.Service
             allListMails.LabelIds = "INBOX";
             allListMails.IncludeSpamTrash = false;
 
-            var emails =await allListMails.ExecuteAsync();
+            var emails = await allListMails.ExecuteAsync();
+
+            var foundEmail = emails.Messages.Where(m => m.Id == id).FirstOrDefault();
+            var currentEmail = await (service.Users.Messages.Get("bobidiyantelerik@gmail.com", foundEmail.Id)).ExecuteAsync();
 
             var email = new Email();
-            foreach (var currentEmail in emails.Messages)
+            var mailAttach = currentEmail.Payload.Parts[0];
+
+            if (mailAttach.MimeType == "text/plain")
             {
-                var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
+                string body = currentEmail.Payload.Parts[1].Body.Data;
 
-                var responseMail =await requestMail.ExecuteAsync();
+                var codedBody = this.encodeDecodeService.ReplaceSign(body);
 
-                var mailAttach = responseMail.Payload.Parts[0];
-
-                if (mailAttach.MimeType == "text/plain" && responseMail.Id == id)
-                {
-
-                    string body = responseMail.Payload.Parts[0].Body.Data;
-                    string codedBody = body.Replace("-", "+");
-                    codedBody = codedBody.Replace("_", "/");
-
-                    var emailDto = new EmailContentDto
-                    {
-                        GmailId = id,
-                        Body = codedBody,
-                        UserId = userId
-
-                    };
-
-                    email = await this.emailService.AddBodyToCurrentEmailAsync(emailDto);
-                    break;
-                }
+                email = await this.mapper.MappGmailBodyIntoEmailBody(id, codedBody, userId);
             }
+            else
+            {
+                string body = currentEmail.Payload.Parts[0].Parts[0].Body.Data;
+
+                var codedBody = this.encodeDecodeService.ReplaceSign(body);
+
+                email = await this.mapper.MappGmailBodyIntoEmailBody(id, codedBody, userId);
+            }
+
             return email;
-            
+
         }
     }
 }

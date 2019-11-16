@@ -68,6 +68,7 @@ namespace E_MailApplicationsManager.Web
                 options.SlidingExpiration = true;
             });
 
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IConcreteMailService, ConcreteMailService>();
@@ -75,13 +76,13 @@ namespace E_MailApplicationsManager.Web
             services.AddScoped<IEncodeDecodeService, EncodeDecodeService>();
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IMapperService, MapperService>();
 
             services.AddDbContext<E_MailApplicationsManagerContext>(options =>
              options.UseSqlServer(
                  Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddHostedService<HostedEmailService>();
-           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

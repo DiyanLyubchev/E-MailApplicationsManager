@@ -49,5 +49,13 @@ namespace E_MailApplicationsManager.Service.Service
             }
             return loan;
         }
+
+        public string ReplaceSign(string body)
+        {
+            string codedBody = body.Replace("-", "+");
+            codedBody = codedBody.Replace("_", "/");
+
+            return codedBody;
+        }
     }
 }
