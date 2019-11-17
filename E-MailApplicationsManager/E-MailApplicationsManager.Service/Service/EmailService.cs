@@ -96,7 +96,6 @@ namespace E_MailApplicationsManager.Service.Service
 
             logger.LogInformation($"Status successfully updated by {currentUser.UserName}.");
             return true;
-
         }
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
@@ -172,7 +171,6 @@ namespace E_MailApplicationsManager.Service.Service
             await this.context.SaveChangesAsync();
 
             logger.LogInformation($"Changed email status to New by {currentUser}");
-            logger.LogError($"{currentUser} failed to update status.");
             return email;
         }
 

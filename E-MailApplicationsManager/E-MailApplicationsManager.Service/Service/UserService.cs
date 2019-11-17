@@ -95,8 +95,6 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new UserExeption("Invalid password");
             }
 
-           // var jason = new Json
-
             var user = await this.context.Users
                 .Where(userPaswword => userPaswword.Id == changePasswordDto.UserId)
                 .FirstOrDefaultAsync();
