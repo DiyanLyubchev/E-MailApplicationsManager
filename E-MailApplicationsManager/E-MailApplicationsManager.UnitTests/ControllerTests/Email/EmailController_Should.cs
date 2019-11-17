@@ -133,7 +133,6 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
-       
 
         [TestMethod]
         public async Task RefreshEmails_Test()
@@ -161,7 +160,33 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
             var result = await controller.RefreshEmails(refreshData);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
 
+        [TestMethod]
+        public async Task CheckMyEmail_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = await controller.CheckMyEmail();
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         //[TestMethod]
