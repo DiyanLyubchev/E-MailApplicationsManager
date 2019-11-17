@@ -52,8 +52,7 @@ $('#change-email-status').click(function () {
 $('#refresh-email').click(function () {
     const refresh = $('#refresh-email').val();
 
-    $(this).css('#refresh-email', 'red').val();
-    clicked = false;
+    $('#refresh-email').hide('fast');
 
     $.ajax({
         url: '/Email/RefreshEmails',
@@ -66,6 +65,10 @@ $('#refresh-email').click(function () {
            
         }
     });
+});
+
+$('#refresh-email').on('click', function () {
+    $('#refresh-email').css('background', 'red');
 });
 
 
@@ -86,4 +89,8 @@ $('#continue-with-email').on('click', function () {
             window.location.href = "/email/fillemailform/" + result.emailId;
         }
     });
+});
+
+$('#continue-with-email').on('click', function () {
+    $('#continue-with-email').css('background', 'red');
 });

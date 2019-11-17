@@ -30,9 +30,8 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> Home()
+        public  IActionResult Home()
         {
-            await this.concreteMailService.QuickStartAsync();
             return View();
         }
 
@@ -123,7 +122,6 @@ namespace E_MailApplicationsManager.Web.Controllers
         [Authorize]
         public async Task<IActionResult> EmailInfo()
         {
-            await this.concreteMailService.QuickStartAsync();
             var emails = await this.searchService.GetAllEmailsAsync();
 
             var libraryViewModel = new EmailListViewModel(emails);
