@@ -64,12 +64,15 @@
                 
                 <div class="form-group row">
                     <div class="col-xs-2">
-                        <br />                        
                         <br />
                         <br />
-                        <button id="email-result" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">New</button>
-                        <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">InvalidApplication</button>
-                    </div>
+                        <br />
+                        @if (Model.Status == 1)
+                        {
+                            <button id="email-result" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">New</button>
+                        }
+                            <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">InvalidApplication</button>
+                        </div>
                 </div>
             </div>
             <div>
