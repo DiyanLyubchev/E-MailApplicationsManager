@@ -1,4 +1,5 @@
 ﻿using E_MailApplicationsManager.Models.Context;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
@@ -24,13 +25,14 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = new String('T', 51);
             var gmailId = "TestGmailId";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSenderIsWithMaxLanght_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var emailDto = new EmailDto
                 {
@@ -52,13 +54,14 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "Test";
             var gmailId = "TestGmailId";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSenderIsWithMinLanght_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var emailDto = new EmailDto
                 {
@@ -81,13 +84,14 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "TestSender";
             var gmailId = new String('T', 101);
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsWithMaxLanght_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var emailDto = new EmailDto
                 {
@@ -110,13 +114,14 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "TestSender";
             var gmailId = "Test";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsWithMinLanght_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var emailDto = new EmailDto
                 {
@@ -139,6 +144,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "TestSender";
             var gmailId = "TestGamilId";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDontHaveSubject_Test));
@@ -153,7 +159,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     DateReceived = dateReceived
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddMailAsync(emailDto);
             }
@@ -168,13 +174,14 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "TestSender";
             var gmailId = "TestGamilId";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSubjectIsWithMinLanght_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var emailDto = new EmailDto
                 {
@@ -198,13 +205,14 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "TestSender";
             var gmailId = "TestGamilId";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSubjectIsWithMinLanght_Test));
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var emailDto = new EmailDto
                 {
@@ -227,6 +235,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var dateReceived = "TestDate";
             string sender = null;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDontHaveSender_Test));
@@ -241,7 +250,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     DateReceived = dateReceived
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddMailAsync(emailDto);
             }
@@ -255,6 +264,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var sender = "TestSender";
             var gmailId = "TestGamilId";
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDontHaveDateReceived_Test));
@@ -269,7 +279,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     DateReceived = dateReceived
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddMailAsync(emailDto);
             }
@@ -280,6 +290,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
         {
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(AddEmail_Test));
@@ -298,7 +309,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 var result = sut.AddMailAsync(emailDto);
 
@@ -318,6 +329,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(AddBodyToCurrentEmail_Test));
@@ -334,7 +346,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddBodyToCurrentEmailAsync(emailDto);
             }
@@ -359,6 +371,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
             firstEmail.Body = body;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCurrentEmailHaveBody_Test));
@@ -376,7 +389,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddBodyToCurrentEmailAsync(emailDto);
             }
@@ -388,6 +401,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
         {
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDtoIsNull_AddBodyToCurrentEmailAsync_Test));
@@ -405,7 +419,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddBodyToCurrentEmailAsync(emailDto);
             }
@@ -418,6 +432,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             var body = new String('T', 1001);
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailBodyIsToLong_AddBodyToCurrentEmailAsync_Test));
@@ -435,7 +450,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
 
                 await sut.AddBodyToCurrentEmailAsync(emailDto);
             }
@@ -448,6 +463,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var userID = "TestID";
             string gmailId = null;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExceptionWhenGmailIdIsNullSetEmailStatusInvalidApplication_Test));
@@ -460,7 +476,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     UserId = userID
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 await sut.SetEmailStatusInvalidApplicationAsync(dto);
             }
         }
@@ -472,6 +488,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(SetEmailStatusInvalidApplication_Test));
@@ -488,7 +505,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     UserId = currentUser.Entity.Id
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 var result = await sut.SetEmailStatusInvalidApplicationAsync(dto);
 
                 Assert.IsTrue(result);
@@ -502,6 +519,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
             firstEmail.Body = body;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(CheckEmailBody_Test));
@@ -517,7 +535,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId,
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 var result = await sut.CheckEmailBodyAsync(dto);
 
                 Assert.AreEqual(result.Body, firstEmail.Body);
@@ -534,6 +552,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
             firstEmail.Body = body;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenCheckEmailBodyIsNull_Test));
@@ -549,7 +568,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = firstEmail.GmailId,
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 await sut.CheckEmailBodyAsync(dto);
             }
         }
@@ -562,6 +581,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenStatusNull_ChangeStatus_Test));
@@ -577,7 +597,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     StatusId = status
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 await sut.ChangeStatusAsync(dto);
             }
         }
@@ -591,6 +611,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsNull_ChangeStatus_Test));
@@ -607,7 +628,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = gmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 await sut.ChangeStatusAsync(dto);
             }
         }
@@ -619,6 +640,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(ChangeStatus_Test));
@@ -635,7 +657,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = email.Entity.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 var result = await sut.ChangeStatusAsync(dto);
 
                 Assert.IsTrue(result);
@@ -652,6 +674,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
             firstEmail.Body = body;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(TakeBody_Test));
@@ -667,7 +690,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     GmailId = email.Entity.GmailId
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 var result = await sut.TakeBodyAsync(dto);
 
                 Assert.IsNotNull(result);

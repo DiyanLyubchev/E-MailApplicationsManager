@@ -1,6 +1,7 @@
 ﻿using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
+using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var FileName = "TestFileName";
             double fileSize = 876.77;
 
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
             var options = TestUtilities.GetOptions(nameof(AddAttachment_Test));
@@ -43,7 +45,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                     SizeInKB = fileSize
                 };
 
-                var sut = new EmailService(actContext, loggerMock);
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
                 var result = sut.AddAttachmentAsync(ettachmentDto);
 
                 Assert.IsNotNull(result);

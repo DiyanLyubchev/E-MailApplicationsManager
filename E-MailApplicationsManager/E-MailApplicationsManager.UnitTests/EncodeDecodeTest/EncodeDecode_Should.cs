@@ -30,34 +30,34 @@ namespace E_MailApplicationsManager.UnitTests.EncodeDecodeTest
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void DecodeLoanApplicant_Test()
-        {
-            var loanEncode = LoanAplicantEncodeUtil.GenerateLoanApplicantEncode();
+        //[TestMethod]
+        //public void DecodeLoanApplicant_Test()
+        //{
+        //    var loanEncode = LoanAplicantEncodeUtil.GenerateLoanApplicantEncode();
 
-            var sut = new EncodeDecodeService();
-            var result = sut.DecodeLoanApplicant(loanEncode);
+        //    var sut = new EncodeDecodeService();
+        //    var result = sut.DecodeLoanApplicant(loanEncode);
 
-            Assert.IsNotNull(result);
-        }
-        [TestMethod]
-        public void DecodeLoanApplicantList_Test()
-        {
-            var listLoan = new List<LoanApplicant>();
+        //    Assert.IsNotNull(result);
+        //}
+        //[TestMethod]
+        //public void DecodeLoanApplicantList_Test()
+        //{
+        //    var listLoan = new List<LoanApplicant>();
 
-            var loanEncode = LoanAplicantEncodeUtil.GenerateLoanApplicantEncode();
+        //    var loanEncode = LoanAplicantEncodeUtil.GenerateLoanApplicantEncode();
 
-            for (int i = 0; i < 2; i++)
-            {
-                listLoan.Add(loanEncode);
-            }
+        //    for (int i = 0; i < 2; i++)
+        //    {
+        //        listLoan.Add(loanEncode);
+        //    }
 
-            var sut = new EncodeDecodeService();
+        //    var sut = new EncodeDecodeService();
 
-            var result = sut.DecodeLoanApplicantList(listLoan);
+        //    var result = sut.DecodeLoanApplicantList(listLoan);
 
-            Assert.IsNotNull(result);
-        }
+        //    Assert.IsNotNull(result);
+        //}
 
         [TestMethod]
         public void ReplaseSign_Test()
