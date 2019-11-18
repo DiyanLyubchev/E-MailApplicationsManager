@@ -1,17 +1,25 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_MailApplicationsManager.Models.Model
 {
     public class LoanApplicant : BaseIdEntity
     {
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(50, MinimumLength = 8)]
         public string PhoneNumber { get; set; }
 
+        [Required]
         public string EGN { get; set; }
 
+        [Required]
+        [StringLength(100, MinimumLength = 5)]
         public string GmailId { get; set; }
 
         public bool IsApproved { get; set; } 
