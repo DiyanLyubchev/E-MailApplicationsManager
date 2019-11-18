@@ -62,7 +62,8 @@ $('#refresh-email').click(function () {
         traditional: true,
         cache: false,
         success: function (result) {
-           
+            console.log(result);
+            window.location.href = "/email/emailinfomanager/" + result.refresh;
         }
     });
 });

@@ -225,7 +225,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                await this.concreteMailService.QuickStartAsync();
             }
 
-            return View();
+            return Json(new { refresh = refreshData });
         }
 
         [HttpPost]
