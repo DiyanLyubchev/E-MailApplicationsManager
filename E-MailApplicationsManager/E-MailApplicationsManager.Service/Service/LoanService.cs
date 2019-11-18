@@ -46,9 +46,9 @@ namespace E_MailApplicationsManager.Service.Service
                 .FirstOrDefaultAsync();
 
 
-            var encodeName = this.encodeDecodeService.Base64Encode(loanApplicantDto.Name);
-            var encodeEGN = this.encodeDecodeService.Base64Encode(loanApplicantDto.EGN);
-            var encodePhoneNumber = this.encodeDecodeService.Base64Encode(loanApplicantDto.PhoneNumber);
+            var encodeName = this.encodeDecodeService.Encrypt(loanApplicantDto.Name);
+            var encodeEGN = this.encodeDecodeService.Encrypt(loanApplicantDto.EGN);
+            var encodePhoneNumber = this.encodeDecodeService.Encrypt(loanApplicantDto.PhoneNumber);
 
 
             var email = await this.context.Emails

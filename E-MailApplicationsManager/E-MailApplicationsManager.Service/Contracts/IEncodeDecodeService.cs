@@ -15,5 +15,9 @@ namespace E_MailApplicationsManager.Service.Contracts
         LoanApplicant DecodeLoanApplicant(LoanApplicant loanApplicant);
 
         IEnumerable<LoanApplicant> DecodeLoanApplicantList(IEnumerable<LoanApplicant> loanApplicant);
+
+        string Encrypt(string clearText);
+
+        string Decrypt(string cipherText);
     }
 }

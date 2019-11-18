@@ -16,11 +16,16 @@ namespace E_MailApplicationsManager.Service.Service
     {
         private readonly ILogger<EmailService> logger;
         private readonly E_MailApplicationsManagerContext context;
+        private readonly IEncodeDecodeService encodeDecodeService;
 
-        public EmailService(E_MailApplicationsManagerContext context, ILogger<EmailService> logger)
+
+
+        public EmailService(E_MailApplicationsManagerContext context, ILogger<EmailService> logger,
+            IEncodeDecodeService encodeDecodeService)
         {
             this.context = context;
             this.logger = logger;
+            this.encodeDecodeService = encodeDecodeService;
         }
 
         public async Task<Email> AddMailAsync(EmailDto emailDto)
@@ -159,9 +164,13 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption($"Email with the following id {emailDto.GmailId} contains body");
             }
 
+            var encodeBody = this.encodeDecodeService.Base64Decode(emailDto.Body);
+         
+            var encriptBody = this.encodeDecodeService.Encrypt(encodeBody);
+
             if (email.Body == null)
             {
-                email.Body = emailDto.Body;
+                email.Body = encriptBody;
                 email.User = currentUser;
                 email.UserId = emailDto.UserId;
                 email.IsSeen = true;
@@ -228,6 +237,6 @@ namespace E_MailApplicationsManager.Service.Service
             return true;
         }
 
-       
+
     }
 }
