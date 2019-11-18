@@ -8,8 +8,6 @@ namespace E_MailApplicationsManager.Models.Model
     {
         public ICollection<LoanApplicant> LoanApplicant { get; set; } = new List<LoanApplicant>();
 
-        public ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
-
         public ICollection<Email> Emails { get; set; } = new List<Email>();
 
         public bool FirstLog { get; set; }

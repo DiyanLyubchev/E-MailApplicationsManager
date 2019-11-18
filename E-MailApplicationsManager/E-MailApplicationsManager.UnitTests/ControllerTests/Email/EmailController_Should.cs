@@ -1,8 +1,5 @@
-using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
-using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Web.Controllers;
-using E_MailApplicationsManager.Web.Models.Emails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -189,49 +186,201 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        //[TestMethod]
-        //public async Task CheckBody_Test()
-        //{
-        //    var emailServiceMock = new Mock<IEmailService>().Object;
-        //    var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
-        //    var searchServiceMock = new Mock<ISearchService>().Object;
-        //    var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+        [TestMethod]
+        public async Task EmailInfoManager_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
 
-        //    var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
-        //    firstEmail.Body = "TestBody";
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
 
-        //    var defaultContext = new DefaultHttpContext()
-        //    {
-        //        User = new ClaimsPrincipal()
-        //    };
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
 
-        //    var options = TestUtilities.GetOptions(nameof(CheckBody_Test));
+            var result = await controller.EmailInfoManager();
 
-        //    using (var actContext = new E_MailApplicationsManagerContext(options))
-        //    {
-        //        var email = await actContext.Emails.AddAsync(firstEmail);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
 
-        //        await actContext.SaveChangesAsync();
-        //    }
+        [TestMethod]
+        public async Task ChangeEmailStatus_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
 
-        //    var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
-        //    searchServiceMock, encodeDecodeServiceMock)
-        //    {
-        //        ControllerContext = new ControllerContext()
-        //        {
-        //            HttpContext = defaultContext
-        //        }
-        //    };
+            string emailData = "TestGmailId";
+            var setInvalidEmail = "1";
 
-        //    var result = await controller.CheckBody(firstEmail.GmailId);
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
 
-        //    var actual = new EmailBodyViewModel(firstEmail.GmailId, firstEmail.Body);
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
 
-        //    Assert.IsInstanceOfType(result, typeof(ViewResult));
-        //}
+            var result = await controller.ChangeEmailStatus(emailData, setInvalidEmail);
+
+            Assert.IsInstanceOfType(result, typeof(JsonResult));
+        }
+
+        [TestMethod]
+        public async Task DetailsManager_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var id = 1;
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = await controller.DetailsManager(id);
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public async Task Details_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var id = 1;
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = await controller.Details(id);
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public async Task EmailInfo_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = await controller.EmailInfo();
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public async Task CheckBody_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var id = "TestGmailId";
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = await controller.CheckBody(id);
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
     }
 }
+//[HttpGet]
+//[Authorize]
+//public async Task<IActionResult> CheckBody(string id)
+//{
+//    try
+//    {
+//        var emailDto = new EmailContentDto
+//        {
+//            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+//            GmailId = id
+//        };
+//        var email = await this.service.CheckEmailBodyAsync(emailDto);
+//        var decodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
+//        var result = new EmailBodyViewModel(id, decodeBody);
+
+//        return View("CheckBody", result);
+//    }
+//    catch (EmailExeption ex)
+//    {
+//        return View("Message", new MessageViewModel { Message = ex.Message });
+//    }
+//}
 
 
 

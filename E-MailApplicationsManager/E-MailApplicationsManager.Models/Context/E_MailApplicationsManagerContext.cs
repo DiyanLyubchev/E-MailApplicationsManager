@@ -25,8 +25,6 @@ namespace E_MailApplicationsManager.Models.Context
 
         public DbSet<RoleUser> RoleUsers { get; set; }
 
-        public DbSet<AuditLog> AuditLogs { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // EmailAttachment

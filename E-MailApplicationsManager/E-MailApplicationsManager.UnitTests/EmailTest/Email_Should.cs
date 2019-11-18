@@ -1,12 +1,11 @@
-﻿using E_MailApplicationsManager.Models;
-using E_MailApplicationsManager.Models.Context;
-using E_MailApplicationsManager.Service.Contracts;
+﻿using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +14,122 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
     [TestClass]
     public class Email_Should
     {
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenSenderIsWithMaxLanght_Test()
+        {
+            var subject = "TestSubject";
+            var dateReceived = "TestDate";
+            var sender = new String('T', 51);
+            var gmailId = "TestGmailId";
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSenderIsWithMaxLanght_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new EmailService(actContext, loggerMock);
+
+                var emailDto = new EmailDto
+                {
+                    GmailId = gmailId,
+                    Subject = subject,
+                    Sender = sender,
+                    DateReceived = dateReceived
+                };
+
+                await sut.AddMailAsync(emailDto);
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenSenderIsWithMinLanght_Test()
+        {
+            var subject = "TestSubject";
+            var dateReceived = "TestDate";
+            var sender = "Test";
+            var gmailId = "TestGmailId";
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSenderIsWithMinLanght_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new EmailService(actContext, loggerMock);
+
+                var emailDto = new EmailDto
+                {
+                    GmailId = gmailId,
+                    Subject = subject,
+                    Sender = sender,
+                    DateReceived = dateReceived
+                };
+
+                await sut.AddMailAsync(emailDto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenGmailIdIsWithMaxLanght_Test()
+        {
+            var subject = "TestSubject";
+            var dateReceived = "TestDate";
+            var sender = "TestSender";
+            var gmailId = new String('T', 101);
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsWithMaxLanght_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new EmailService(actContext, loggerMock);
+
+                var emailDto = new EmailDto
+                {
+                    GmailId = gmailId,
+                    Subject = subject,
+                    Sender = sender,
+                    DateReceived = dateReceived
+                };
+
+                await sut.AddMailAsync(emailDto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenGmailIdIsWithMinLanght_Test()
+        {
+            var subject = "TestSubject";
+            var dateReceived = "TestDate";
+            var sender = "TestSender";
+            var gmailId = "Test";
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenGmailIdIsWithMinLanght_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new EmailService(actContext, loggerMock);
+
+                var emailDto = new EmailDto
+                {
+                    GmailId = gmailId,
+                    Subject = subject,
+                    Sender = sender,
+                    DateReceived = dateReceived
+                };
+
+                await sut.AddMailAsync(emailDto);
+            }
+        }
+
         [TestMethod]
         [ExpectedException(typeof(EmailExeption))]
         public async Task ThrowExeptionWhenEmailDontHaveSubject_Test()
@@ -22,6 +137,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             string subject = null;
             var dateReceived = "TestDate";
             var sender = "TestSender";
+            var gmailId = "TestGamilId";
 
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
@@ -31,6 +147,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             {
                 var emailDto = new EmailDto
                 {
+                     GmailId = gmailId,
                     Subject = subject,
                     Sender = sender,
                     DateReceived = dateReceived
@@ -44,8 +161,68 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
 
         [TestMethod]
         [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenSubjectIsWithMaxLanght_Test()
+        {
+            var subject = new String('T' , 101);
+            var dateReceived = "TestDate";
+            var sender = "TestSender";
+            var gmailId = "TestGamilId";
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSubjectIsWithMinLanght_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new EmailService(actContext, loggerMock);
+
+                var emailDto = new EmailDto
+                {
+                    GmailId = gmailId,
+                    Subject = subject,
+                    Sender = sender,
+                    DateReceived = dateReceived
+                };
+
+                await sut.AddMailAsync(emailDto);
+            }
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenSubjectIsWithMinLanght_Test()
+        {
+            string subject = "ab";
+            var dateReceived = "TestDate";
+            var sender = "TestSender";
+            var gmailId = "TestGamilId";
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenSubjectIsWithMinLanght_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var sut = new EmailService(actContext, loggerMock);
+
+                var emailDto = new EmailDto
+                {
+                    GmailId = gmailId,
+                    Subject = subject,
+                    Sender = sender,
+                    DateReceived = dateReceived
+                };
+
+                await sut.AddMailAsync(emailDto);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
         public async Task ThrowExeptionWhenEmailDontHaveSender_Test()
         {
+            var gmailId = "TestGamilId";
             var subject = "TestSubject";
             var dateReceived = "TestDate";
             string sender = null;
@@ -58,6 +235,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             {
                 var emailDto = new EmailDto
                 {
+                    GmailId = gmailId,
                     Subject = subject,
                     Sender = sender,
                     DateReceived = dateReceived
@@ -75,6 +253,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             var subject = "TestSubject";
             string dateReceived = null;
             var sender = "TestSender";
+            var gmailId = "TestGamilId";
 
             var loggerMock = new Mock<ILogger<EmailService>>().Object;
 
@@ -84,6 +263,7 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
             {
                 var emailDto = new EmailDto
                 {
+                    GmailId = gmailId,
                     Subject = subject,
                     Sender = sender,
                     DateReceived = dateReceived
@@ -222,6 +402,36 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 var emailDto = new EmailContentDto
                 {
                     Body = null,
+                    GmailId = firstEmail.GmailId
+                };
+
+                var sut = new EmailService(actContext, loggerMock);
+
+                await sut.AddBodyToCurrentEmailAsync(emailDto);
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenEmailBodyIsToLong_AddBodyToCurrentEmailAsync_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            var body = new String('T', 1001);
+
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailBodyIsToLong_AddBodyToCurrentEmailAsync_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+
+                await actContext.SaveChangesAsync();
+
+                var emailDto = new EmailContentDto
+                {
+                    Body = body,
                     GmailId = firstEmail.GmailId
                 };
 

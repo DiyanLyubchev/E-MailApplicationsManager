@@ -31,6 +31,21 @@ namespace E_MailApplicationsManager.Service.Service
                 throw new EmailExeption("Email does not exist!");
             }
 
+            if (emailDto.GmailId.Length < 5 || emailDto.GmailId.Length > 100)
+            {
+                throw new EmailExeption("GmailId Range is not correct!");
+            }
+
+            if (emailDto.Subject.Length < 3 || emailDto.Subject.Length > 100)
+            {
+                throw new EmailExeption("Subject Range is not correct!");
+            }
+
+            if (emailDto.Sender.Length < 5 || emailDto.Sender.Length > 50)
+            {
+                throw new EmailExeption("Sender Range is not correct!");
+            }
+
             var gmailId = await this.context.Emails
                 .FirstOrDefaultAsync(id => id.GmailId == emailDto.GmailId);
 
@@ -132,6 +147,11 @@ namespace E_MailApplicationsManager.Service.Service
             if (emailDto.Body == null)
             {
                 throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
+            }
+
+            if (emailDto.Body.Length > 1000)
+            {
+                throw new EmailExeption($"Body of email is to long!");
             }
 
             if (email.Body != null)

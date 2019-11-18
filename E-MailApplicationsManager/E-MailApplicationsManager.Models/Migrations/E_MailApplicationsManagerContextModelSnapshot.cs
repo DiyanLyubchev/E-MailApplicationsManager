@@ -19,60 +19,39 @@ namespace E_MailApplicationsManager.Models.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.AuditLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<int>("EmailId");
-
-                    b.Property<string>("InfoLog");
-
-                    b.Property<string>("InfoLogOut");
-
-                    b.Property<string>("LastStatusInfo");
-
-                    b.Property<string>("NewStatusInfo");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmailId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AuditLogs");
-                });
-
             modelBuilder.Entity("E_MailApplicationsManager.Models.Model.Email", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Body");
+                    b.Property<string>("Body")
+                        .HasMaxLength(1000);
 
-                    b.Property<string>("DateReceived");
+                    b.Property<string>("DateReceived")
+                        .IsRequired();
 
                     b.Property<int>("EmailStatusId");
 
-                    b.Property<string>("GmailId");
+                    b.Property<string>("GmailId")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<DateTime?>("InitialRegistrationInData");
 
                     b.Property<bool>("IsSeen");
 
-                    b.Property<string>("Sender");
+                    b.Property<string>("Sender")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<DateTime?>("SetCurrentStatus");
 
                     b.Property<DateTime?>("SetTerminalState");
 
-                    b.Property<string>("Subject");
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("UserId");
 
@@ -93,9 +72,13 @@ namespace E_MailApplicationsManager.Models.Migrations
 
                     b.Property<int?>("EmailId");
 
-                    b.Property<string>("FileName");
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<string>("GmailId");
+                    b.Property<string>("GmailId")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<double?>("SizeInKB");
 
@@ -152,17 +135,24 @@ namespace E_MailApplicationsManager.Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("EGN");
+                    b.Property<string>("EGN")
+                        .IsRequired();
 
                     b.Property<int?>("EmailId");
 
-                    b.Property<string>("GmailId");
+                    b.Property<string>("GmailId")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<bool>("IsApproved");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("UserId");
 
@@ -236,14 +226,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "c23c3678-6194-4b7e-a928-09614190eb62",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "59147b15-116f-4973-8242-27700083cc9d",
+                            ConcurrencyStamp = "1fb7e7f2-6ad7-412a-90bc-d5241e5e26e9",
                             Email = "admin1@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN1@ADMIN.COM",
                             NormalizedUserName = "DIYAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGsZhxwfVQMcNONCWyiI3hZRZ+gDARXQX5h0SpTFdg05WLvuhgxs/6WLfQZlQ/t2+g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPnzMyVRV0U2XT7rpkbMh3u2FASVnsd95MJmm9nB0TKv9cuJwcKf8QU94qVr0/e/Pw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN",
                             TwoFactorEnabled = false,
@@ -253,14 +243,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                         {
                             Id = "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "12a29fc7-fc5a-427f-914a-4cebcc915d2d",
+                            ConcurrencyStamp = "4961376c-bc9a-41d4-a4d6-6826a5eac9c0",
                             Email = "admin2@admin.com",
                             EmailConfirmed = false,
                             FirstLog = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN2@ADMIN.COM",
                             NormalizedUserName = "BOBI",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPeF9s2arPF4rg7C0+RBLjOOm6D1h4EhV3A2/NnP8orCdDwKkSJHsJV6x4sTrIFWyQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIFUcmHjKy1ECy8zR6KJzwfXS1tZBAeCJ/dAMhAnVaNsdS02D9pwKOyTYJ9w+Sbv5Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU",
                             TwoFactorEnabled = false,
@@ -405,29 +395,17 @@ namespace E_MailApplicationsManager.Models.Migrations
                         new
                         {
                             Id = "ca678235-7571-4177-984f-e9d1957b0187",
-                            ConcurrencyStamp = "d5d2b0c5-abfb-4a95-ac61-fadcbac99aab",
+                            ConcurrencyStamp = "8943150d-ee28-4887-b3c8-048d42a06ca7",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "ef1c4fa2-0b76-4598-aaee-c6e02803d486",
-                            ConcurrencyStamp = "c9f6d900-0c46-457e-b998-1bc8f911cdde",
+                            ConcurrencyStamp = "e03b8846-3375-4824-a22e-d0352d3b7787",
                             Name = "Operator",
                             NormalizedName = "OPERATOR"
                         });
-                });
-
-            modelBuilder.Entity("E_MailApplicationsManager.Models.Model.AuditLog", b =>
-                {
-                    b.HasOne("E_MailApplicationsManager.Models.Model.Email", "Email")
-                        .WithMany()
-                        .HasForeignKey("EmailId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("E_MailApplicationsManager.Models.Model.User", "User")
-                        .WithMany("AuditLogs")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("E_MailApplicationsManager.Models.Model.Email", b =>

@@ -2,19 +2,29 @@
 using E_MailApplicationsManager.Models.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_MailApplicationsManager.Models.Model
 {
     public class Email : BaseIdEntity
     {
+        [Required]
+        [StringLength(100, MinimumLength = 5)]
         public string GmailId { get; set; }
 
+        [Required]
+        [StringLength(100, MinimumLength = 3)]
         public string Subject { get; set; }
 
+       
+        [StringLength(1000)]
         public string Body { get; set; }
 
+        [Required]
+        [StringLength(50, MinimumLength = 5)]
         public string Sender { get; set; }
 
+        [Required]
         public string DateReceived { get; set; }
 
         public DateTime? InitialRegistrationInData { get; set; }

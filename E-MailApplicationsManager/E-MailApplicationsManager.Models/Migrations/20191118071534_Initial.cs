@@ -175,11 +175,11 @@ namespace E_MailApplicationsManager.Models.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GmailId = table.Column<string>(nullable: true),
-                    Subject = table.Column<string>(nullable: true),
-                    Body = table.Column<string>(nullable: true),
-                    Sender = table.Column<string>(nullable: true),
-                    DateReceived = table.Column<string>(nullable: true),
+                    GmailId = table.Column<string>(maxLength: 100, nullable: false),
+                    Subject = table.Column<string>(maxLength: 100, nullable: false),
+                    Body = table.Column<string>(maxLength: 1000, nullable: true),
+                    Sender = table.Column<string>(maxLength: 100, nullable: false),
+                    DateReceived = table.Column<string>(nullable: false),
                     InitialRegistrationInData = table.Column<DateTime>(nullable: true),
                     SetCurrentStatus = table.Column<DateTime>(nullable: true),
                     SetTerminalState = table.Column<DateTime>(nullable: true),
@@ -205,45 +205,14 @@ namespace E_MailApplicationsManager.Models.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuditLogs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(nullable: false),
-                    InfoLog = table.Column<string>(nullable: true),
-                    InfoLogOut = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                    EmailId = table.Column<int>(nullable: false),
-                    LastStatusInfo = table.Column<string>(nullable: true),
-                    NewStatusInfo = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditLogs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AuditLogs_Emails_EmailId",
-                        column: x => x.EmailId,
-                        principalTable: "Emails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AuditLogs_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EmailAttachments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EmailId = table.Column<int>(nullable: true),
-                    GmailId = table.Column<string>(nullable: true),
-                    FileName = table.Column<string>(nullable: true),
+                    GmailId = table.Column<string>(maxLength: 100, nullable: false),
+                    FileName = table.Column<string>(maxLength: 100, nullable: false),
                     SizeInKB = table.Column<double>(nullable: true)
                 },
                 constraints: table =>
@@ -263,10 +232,10 @@ namespace E_MailApplicationsManager.Models.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    EGN = table.Column<string>(nullable: true),
-                    GmailId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 50, nullable: false),
+                    EGN = table.Column<string>(nullable: false),
+                    GmailId = table.Column<string>(maxLength: 100, nullable: false),
                     IsApproved = table.Column<bool>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     EmailId = table.Column<int>(nullable: true)
@@ -293,8 +262,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "d5d2b0c5-abfb-4a95-ac61-fadcbac99aab", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "c9f6d900-0c46-457e-b998-1bc8f911cdde", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "8943150d-ee28-4887-b3c8-048d42a06ca7", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "e03b8846-3375-4824-a22e-d0352d3b7787", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -302,8 +271,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LastLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "59147b15-116f-4973-8242-27700083cc9d", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEGsZhxwfVQMcNONCWyiI3hZRZ+gDARXQX5h0SpTFdg05WLvuhgxs/6WLfQZlQ/t2+g==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "12a29fc7-fc5a-427f-914a-4cebcc915d2d", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEPeF9s2arPF4rg7C0+RBLjOOm6D1h4EhV3A2/NnP8orCdDwKkSJHsJV6x4sTrIFWyQ==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "1fb7e7f2-6ad7-412a-90bc-d5241e5e26e9", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEPnzMyVRV0U2XT7rpkbMh3u2FASVnsd95MJmm9nB0TKv9cuJwcKf8QU94qVr0/e/Pw==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "4961376c-bc9a-41d4-a4d6-6826a5eac9c0", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEIFUcmHjKy1ECy8zR6KJzwfXS1tZBAeCJ/dAMhAnVaNsdS02D9pwKOyTYJ9w+Sbv5Q==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
                 });
 
             migrationBuilder.InsertData(
@@ -368,16 +337,6 @@ namespace E_MailApplicationsManager.Models.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuditLogs_EmailId",
-                table: "AuditLogs",
-                column: "EmailId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuditLogs_UserId",
-                table: "AuditLogs",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EmailAttachments_EmailId",
                 table: "EmailAttachments",
                 column: "EmailId");
@@ -421,9 +380,6 @@ namespace E_MailApplicationsManager.Models.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "AuditLogs");
 
             migrationBuilder.DropTable(
                 name: "EmailAttachments");
