@@ -1,5 +1,4 @@
-﻿using E_MailApplicationsManager.Service.Service;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
