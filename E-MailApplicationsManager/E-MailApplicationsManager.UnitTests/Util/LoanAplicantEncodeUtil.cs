@@ -9,9 +9,9 @@ namespace E_MailApplicationsManager.UnitTests.Util
     {
         public static LoanApplicant GenerateLoanApplicantEncode()
         {
-            var name = "RXZnZW5pIEV2Z2VuaWV2";
-            var phoneNumber = "MDk4OS8yNTUtMzQ1";
-            var egn = "MDk4OS8yNTUtMzQ1";
+            var name = "CWH8UP++GqTltbMfA8MSxcCoU5GBP37sx9t0XlXPhsA=";
+            var phoneNumber = "AVQDF1p2qex5Ci7o4hYP4xTkH/hkZ8HUYaOBZsNF3dY=";
+            var egn = "GUc/E+NAzZ/zl/4tRAxDP60AvFOdAAXYZ41L8/ANRtQ=";
             var gmailId = "TestGmailId";
 
             var encodeLoan = new LoanApplicant
