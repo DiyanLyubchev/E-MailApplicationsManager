@@ -1,4 +1,6 @@
+using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
+using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -327,60 +329,9 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
-
-        [TestMethod]
-        public async Task CheckBody_Test()
-        {
-            var emailServiceMock = new Mock<IEmailService>().Object;
-            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
-            var searchServiceMock = new Mock<ISearchService>().Object;
-            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
-
-            var id = "TestGmailId";
-
-            var defaultContext = new DefaultHttpContext()
-            {
-                User = new ClaimsPrincipal()
-            };
-
-            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
-                searchServiceMock, encodeDecodeServiceMock)
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = defaultContext
-                }
-            };
-
-            var result = await controller.CheckBody(id);
-
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
-        }
     }
 }
-//[HttpGet]
-//[Authorize]
-//public async Task<IActionResult> CheckBody(string id)
-//{
-//    try
-//    {
-//        var emailDto = new EmailContentDto
-//        {
-//            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-//            GmailId = id
-//        };
-//        var email = await this.service.CheckEmailBodyAsync(emailDto);
-//        var decodeBody = this.encodeDecodeService.Base64Decode(email.Body);
 
-//        var result = new EmailBodyViewModel(id, decodeBody);
-
-//        return View("CheckBody", result);
-//    }
-//    catch (EmailExeption ex)
-//    {
-//        return View("Message", new MessageViewModel { Message = ex.Message });
-//    }
-//}
 
 
 

@@ -93,7 +93,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                     GmailId = id
                 };
                 var email = await this.service.CheckEmailBodyAsync(emailDto);
-                var decodeBody = this.encodeDecodeService.Base64Decode(email.Body);
+                var decodeBody = this.encodeDecodeService.Decrypt(email.Body);
 
                 var result = new EmailBodyViewModel(id, decodeBody);
 
@@ -123,7 +123,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         public async Task<IActionResult> EmailInfo()
         {
             var emails = await this.searchService.GetAllEmailsAsync();
-
+         
             var libraryViewModel = new EmailListViewModel(emails);
 
             return View(libraryViewModel);
@@ -156,9 +156,9 @@ namespace E_MailApplicationsManager.Web.Controllers
                     GmailId = id
                 };
                 var email = await this.service.TakeBodyAsync(emailDto);
-                var encodeBody = this.encodeDecodeService.Base64Decode(email.Body);
+                var encryptBody = this.encodeDecodeService.Decrypt(email.Body);
 
-                var result = new EmailBodyViewModel(id, encodeBody);
+                var result = new EmailBodyViewModel(id, encryptBody);
 
                 return View("FillEmailForm", result);
             }
