@@ -158,7 +158,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             var result = await controller.RefreshEmails(refreshData);
 
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
 
         [TestMethod]
