@@ -38,17 +38,17 @@ namespace E_MailApplicationsManager.Service.Service
 
             if (emailDto.GmailId.Length < 5 || emailDto.GmailId.Length > 100)
             {
-                throw new EmailExeption("GmailId Range is not correct!");
+                throw new EmailExeption("Lenght of GmailId is not correct!");
             }
 
             if (emailDto.Subject.Length < 3 || emailDto.Subject.Length > 100)
             {
-                throw new EmailExeption("Subject Range is not correct!");
+                throw new EmailExeption("Lenght of Subject is not correct!");
             }
 
             if (emailDto.Sender.Length < 5 || emailDto.Sender.Length > 50)
             {
-                throw new EmailExeption("Sender Range is not correct!");
+                throw new EmailExeption("Lenght of Sender is not correct!");
             }
 
             var gmailId = await this.context.Emails
@@ -120,6 +120,15 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
         {
+            if (attachmentDTO.FileName.Length < 5 || attachmentDTO.FileName.Length > 100)
+            {
+                throw new EmailExeption("Lenght of name attachment is not correct!");
+            }
+
+            if (attachmentDTO.GmailId.Length < 5 || attachmentDTO.GmailId.Length > 100)
+            {
+                throw new EmailExeption("Lenght of GmailId is not correct!");
+            }
 
             var gmaiId = await this.context.Emails
                .FirstOrDefaultAsync(id => id.GmailId == attachmentDTO.GmailId);
