@@ -329,6 +329,33 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
+
+        [TestMethod]
+        public void Home_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = controller.Home();
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
     }
 }
 

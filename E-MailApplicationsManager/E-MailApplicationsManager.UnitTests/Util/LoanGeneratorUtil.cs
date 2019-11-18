@@ -12,7 +12,7 @@ namespace E_MailApplicationsManager.UnitTests
         {
             var gmailId = "TestgmailId";
             var name = "TestName";
-            var egn = "TestEgn";
+            var egn = "9212123553";
             var phoneNumber = "TestPhoneNumber";
             var id = 1;
             var userId = "c23c3678-6194-4b7e-a928-09614190eb62";
