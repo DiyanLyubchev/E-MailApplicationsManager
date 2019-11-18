@@ -29,7 +29,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAccount(RegisterAccountViewModel viewModel)
+        public async Task<IActionResult> RegisterAccountAsync(RegisterAccountViewModel viewModel)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> ChangeAccountPassword(ChangePasswordViewModel viewModel)
+        public async Task<IActionResult> ChangeAccountPasswordAsync(ChangePasswordViewModel viewModel)
         {
             try
             {

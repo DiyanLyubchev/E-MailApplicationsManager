@@ -15,7 +15,7 @@ namespace E_MailApplicationsManager.Service.Service
             this.emailService = emailService;
         }
 
-        public async Task<Email> MappGmailBodyIntoEmailBody(string id, string codedBody, string userId)
+        public async Task<Email> MappGmailBodyIntoEmailBodyAsync(string id, string codedBody, string userId)
         {
             var emailDto = new EmailContentDto
             {
@@ -28,7 +28,7 @@ namespace E_MailApplicationsManager.Service.Service
             return await this.emailService.AddBodyToCurrentEmailAsync(emailDto);
         }
 
-        public async Task MappGmailDataIntoEmailData(string gmailId, string subjectOfEmail,
+        public async Task MappGmailDataIntoEmailDataAsync(string gmailId, string subjectOfEmail,
             string senderOfEmail, string dateOfEmail)
         {
             var emailDto = new EmailDto
@@ -42,7 +42,7 @@ namespace E_MailApplicationsManager.Service.Service
             await this.emailService.AddMailAsync(emailDto);
         }
 
-        public async Task MappGmailAttachmentIntoEmailAttachment(string gmailId,string fileName,double fileSize)
+        public async Task MappGmailAttachmentIntoEmailAttachmentAsync(string gmailId,string fileName,double fileSize)
         {
             var attachmentDto = new EmailAttachmentDTO
             {

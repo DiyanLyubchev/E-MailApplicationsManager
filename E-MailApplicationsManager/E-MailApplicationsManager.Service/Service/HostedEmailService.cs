@@ -19,12 +19,12 @@ namespace E_MailApplicationsManager.Service.Service
 
         public  Task StartAsync(CancellationToken cancellationToken)
         {
-            this.timer = new Timer(GetEmails, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60));
+            this.timer = new Timer(GetEmailsAsync, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60));
 
             return Task.CompletedTask;
         }
 
-        public async void GetEmails(object state)
+        public async void GetEmailsAsync(object state)
         {
             using (var scope = this.serviceProvider.CreateScope())
             {

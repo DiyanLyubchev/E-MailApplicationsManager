@@ -98,7 +98,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.FillEmailBody(emailData, setInvalidEmail);
+            var result = await controller.FillEmailBodyAsync(emailData, setInvalidEmail);
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
@@ -128,7 +128,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.FillEmailBody(emailData, setInvalidEmail);
+            var result = await controller.FillEmailBodyAsync(emailData, setInvalidEmail);
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
@@ -156,7 +156,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
             };
             var refreshData = "click";
 
-            var result = await controller.RefreshEmails(refreshData);
+            var result = await controller.RefreshEmailsAsync(refreshData);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -183,7 +183,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.CheckMyEmail();
+            var result = await controller.CheckMyEmailAsync();
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -210,7 +210,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.EmailInfoManager();
+            var result = await controller.EmailInfoManagerAsync();
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -240,7 +240,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.ChangeEmailStatus(emailData, setInvalidEmail);
+            var result = await controller.ChangeEmailStatusAsync(emailData, setInvalidEmail);
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
@@ -269,7 +269,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.DetailsManager(id);
+            var result = await controller.DetailsManagerAsync(id);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -298,7 +298,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.Details(id);
+            var result = await controller.DetailsAsync(id);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -325,7 +325,34 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
                 }
             };
 
-            var result = await controller.EmailInfo();
+            var result = await controller.EmailInfoAsync();
+
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Home_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var defaultContext = new DefaultHttpContext()
+            {
+                User = new ClaimsPrincipal()
+            };
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = defaultContext
+                }
+            };
+
+            var result = controller.Home();
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }

@@ -95,7 +95,7 @@ namespace E_MailApplicationsManager.Service.Service
                     senderOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(sender => sender.Name == "From").Value;
 
-                   await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
+                   await this.mapper.MappGmailDataIntoEmailDataAsync(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
 
                     var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
                     await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
@@ -124,10 +124,10 @@ namespace E_MailApplicationsManager.Service.Service
                             double fileSize = double.Parse(attachment.Body.Size.ToString());
                             fileSize /= 1024;
 
-                            await this.mapper.MappGmailAttachmentIntoEmailAttachment(gmailId, fileName, fileSize);
+                            await this.mapper.MappGmailAttachmentIntoEmailAttachmentAsync(gmailId, fileName, fileSize);
                         }
 
-                        await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
+                        await this.mapper.MappGmailDataIntoEmailDataAsync(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
 
                         var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
                         await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
@@ -178,7 +178,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                 var codedBody = this.encodeDecodeService.ReplaceSign(body);
 
-                email = await this.mapper.MappGmailBodyIntoEmailBody(id, codedBody, userId);
+                email = await this.mapper.MappGmailBodyIntoEmailBodyAsync(id, codedBody, userId);
             }
             else
             {
@@ -186,7 +186,7 @@ namespace E_MailApplicationsManager.Service.Service
 
                 var codedBody = this.encodeDecodeService.ReplaceSign(body);
 
-                email = await this.mapper.MappGmailBodyIntoEmailBody(id, codedBody, userId);
+                email = await this.mapper.MappGmailBodyIntoEmailBodyAsync(id, codedBody, userId);
             }
 
             return email;

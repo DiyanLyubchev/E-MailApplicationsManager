@@ -38,17 +38,17 @@ namespace E_MailApplicationsManager.Service.Service
 
             if (emailDto.GmailId.Length < 5 || emailDto.GmailId.Length > 100)
             {
-                throw new EmailExeption("Lenght of GmailId is not correct!");
+                throw new EmailExeption("The length of GmailId is not correct!");
             }
 
             if (emailDto.Subject.Length < 3 || emailDto.Subject.Length > 100)
             {
-                throw new EmailExeption("Lenght of Subject is not correct!");
+                throw new EmailExeption("The length of Subject is not correct!");
             }
 
             if (emailDto.Sender.Length < 5 || emailDto.Sender.Length > 50)
             {
-                throw new EmailExeption("Lenght of Sender is not correct!");
+                throw new EmailExeption("The length of Sender is not correct!");
             }
 
             var gmailId = await this.context.Emails
@@ -122,12 +122,12 @@ namespace E_MailApplicationsManager.Service.Service
         {
             if (attachmentDTO.FileName.Length < 5 || attachmentDTO.FileName.Length > 100)
             {
-                throw new EmailExeption("Lenght of name attachment is not correct!");
+                throw new EmailExeption("The attachment's name lenght is not correct!");
             }
 
             if (attachmentDTO.GmailId.Length < 5 || attachmentDTO.GmailId.Length > 100)
             {
-                throw new EmailExeption("Lenght of GmailId is not correct!");
+                throw new EmailExeption("The Gmail's id lenght is not correct!");
             }
 
             var gmaiId = await this.context.Emails
