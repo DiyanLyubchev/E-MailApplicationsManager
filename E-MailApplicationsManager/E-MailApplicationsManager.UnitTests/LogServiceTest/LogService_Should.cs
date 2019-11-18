@@ -21,7 +21,7 @@ namespace E_MailApplicationsManager.UnitTests.LogServiceTest
                 await actContext.SaveChangesAsync();
 
                 var sut = new LogService(actContext);
-                var result =await sut.SaveLastLoginUserAsync(user);
+                var result =await sut.SaveLastLoginUser(user);
                 Assert.IsTrue(result);
             }
            
@@ -38,7 +38,7 @@ namespace E_MailApplicationsManager.UnitTests.LogServiceTest
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
                 var sut = new LogService(actContext);
-                var result = await sut.SaveLastLoginUserAsync(user);
+                var result = await sut.SaveLastLoginUser(user);
                 Assert.IsFalse(result);
             }
 

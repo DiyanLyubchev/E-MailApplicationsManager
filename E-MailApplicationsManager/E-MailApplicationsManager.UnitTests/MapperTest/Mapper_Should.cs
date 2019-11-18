@@ -33,7 +33,7 @@ namespace E_MailApplicationsManager.UnitTests.MapperTest
 
                 var sut = new MapperService(emailServiceMock);
 
-                await sut.MappGmailBodyIntoEmailBodyAsync(firstEmail.GmailId, body, firstEmail.UserId);
+                await sut.MappGmailBodyIntoEmailBody(firstEmail.GmailId, body, firstEmail.UserId);
 
                 var emailBody = actContext.Emails
                     .Where(b => b.Body == body)
@@ -56,7 +56,7 @@ namespace E_MailApplicationsManager.UnitTests.MapperTest
             {
                 var sut = new MapperService(emailServiceMock);
 
-                await sut.MappGmailDataIntoEmailDataAsync(firstEmail.GmailId, firstEmail.DateReceived, firstEmail.Sender , firstEmail.Subject);
+                await sut.MappGmailDataIntoEmailData(firstEmail.GmailId, firstEmail.DateReceived, firstEmail.Sender , firstEmail.Subject);
 
                 await actContext.SaveChangesAsync();
 
@@ -84,7 +84,7 @@ namespace E_MailApplicationsManager.UnitTests.MapperTest
 
                 var sut = new MapperService(emailServiceMock);
 
-                await sut.MappGmailAttachmentIntoEmailAttachmentAsync(gmailId, FileName, fileSize);
+                await sut.MappGmailAttachmentIntoEmailAttachment(gmailId, FileName, fileSize);
 
                 await actContext.SaveChangesAsync();
 

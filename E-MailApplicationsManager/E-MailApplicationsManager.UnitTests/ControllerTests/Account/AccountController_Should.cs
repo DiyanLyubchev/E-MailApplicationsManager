@@ -71,7 +71,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests
                 Role = role
             };
 
-            var result = await controller.RegisterAccountAsync(registerAccountViewModel);
+            var result = await controller.RegisterAccount(registerAccountViewModel);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -126,7 +126,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests
                 NewPassword = newPassword 
             };
 
-            var result = await controller.ChangeAccountPasswordAsync(changePasswordViewModel);
+            var result = await controller.ChangeAccountPassword(changePasswordViewModel);
 
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
         }

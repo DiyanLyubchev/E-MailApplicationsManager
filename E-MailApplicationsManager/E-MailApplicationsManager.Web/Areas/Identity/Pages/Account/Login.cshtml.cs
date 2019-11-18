@@ -93,7 +93,7 @@ namespace E_MailApplicationsManager.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    await _logService.SaveLastLoginUserAsync(login);
+                    await _logService.SaveLastLoginUser(login);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

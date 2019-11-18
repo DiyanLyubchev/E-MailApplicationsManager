@@ -5,6 +5,6 @@ namespace E_MailApplicationsManager.Service.Service
 {
     public interface ILogService
     {
-        Task<bool> SaveLastLoginUserAsync(User user);
+        Task<bool> SaveLastLoginUser(User user);
     }
 }

@@ -50,7 +50,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> FillEmailBodyAsync(string emailData, string setInvalidEmail)
+        public async Task<IActionResult> FillEmailBody(string emailData, string setInvalidEmail)
         {
 
             try
@@ -83,7 +83,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> CheckBodyAsync(string id)
+        public async Task<IActionResult> CheckBody(string id)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> DetailsAsync(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var email = await this.searchService.FindEmailAsync(id);
             if (email == null)
@@ -120,7 +120,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> EmailInfoAsync()
+        public async Task<IActionResult> EmailInfo()
         {
             var emails = await this.searchService.GetAllEmailsAsync();
          
@@ -130,7 +130,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> CheckMyEmailAsync()
+        public async Task<IActionResult> CheckMyEmail()
         {
             var baseDto = new EmailContentDto
             {
@@ -147,7 +147,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> FillEmailFormAsync(string id)
+        public async Task<IActionResult> FillEmailForm(string id)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        public async Task<IActionResult> DetailsManagerAsync(int id)
+        public async Task<IActionResult> DetailsManager(int id)
         {
             var email = await this.searchService.FindEmailAsync(id);
             if (email == null)
@@ -185,7 +185,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> ChangeEmailStatusAsync(string statusData, string idData)
+        public async Task<IActionResult> ChangeEmailStatus(string statusData, string idData)
         {
             try
             {
@@ -207,7 +207,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        public async Task<IActionResult> EmailInfoManagerAsync()
+        public async Task<IActionResult> EmailInfoManager()
         {
             var emails = await this.searchService.GetAllEmailsForManagerAsync();
 
@@ -218,7 +218,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> RefreshEmailsAsync(string refreshData)
+        public async Task<IActionResult> RefreshEmails(string refreshData)
         {
             if (refreshData == "click")
             {

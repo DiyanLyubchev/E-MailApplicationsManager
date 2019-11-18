@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.UnitTests
@@ -313,122 +312,6 @@ namespace E_MailApplicationsManager.UnitTests
 
                 var sut = new UserService(assertContext, null, loggerMock);
                 await sut.ChangePasswordAsync(dto);
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserExeption))]
-        public async Task ThrowExeptionWhenUserNameIsMoreThanMaxLength_Test()
-        {
-            var username = new String('T', 51);
-            var password = "TestPassword";
-            var email = "TestEmail";
-            var role = "Manager";
-
-            var loggerMock = new Mock<ILogger<UserService>>().Object;
-
-            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenUserNameIsMoreThanMaxLength_Test));
-
-            using (var actContext = new E_MailApplicationsManagerContext(options))
-            {
-                var accountDto = new RegisterAccountDto
-                {
-                    UserName = username,
-                    Password = password,
-                    Role = role,
-                    Email = email
-                };
-
-                var accountService = new UserService(actContext, null, loggerMock);
-
-                await accountService.RegisterAccountAsync(accountDto);
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserExeption))]
-        public async Task ThrowExeptionWhenUserPasswordIsMoreThanMaxLength_Test()
-        {
-            var username = "TestUsername";
-            var password = new String('T', 101);
-            var email = "TestEmail";
-            var role = "Manager";
-
-            var loggerMock = new Mock<ILogger<UserService>>().Object;
-
-            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenUserPasswordIsMoreThanMaxLength_Test));
-
-            using (var actContext = new E_MailApplicationsManagerContext(options))
-            {
-                var accountDto = new RegisterAccountDto
-                {
-                    UserName = username,
-                    Password = password,
-                    Role = role,
-                    Email = email
-                };
-
-                var accountService = new UserService(actContext, null, loggerMock);
-
-                await accountService.RegisterAccountAsync(accountDto);
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserExeption))]
-        public async Task ThrowExeptionWhenUserEmailIsMoreThanMaxLength_Test()
-        {
-            var username = "TestUsername";
-            var password = "TestPassword";
-            var email = new String('T', 51);
-            var role = "Manager";
-
-            var loggerMock = new Mock<ILogger<UserService>>().Object;
-
-            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenUserEmailIsMoreThanMaxLength_Test));
-
-            using (var actContext = new E_MailApplicationsManagerContext(options))
-            {
-                var accountDto = new RegisterAccountDto
-                {
-                    UserName = username,
-                    Password = password,
-                    Role = role,
-                    Email = email
-                };
-
-                var accountService = new UserService(actContext, null, loggerMock);
-
-                await accountService.RegisterAccountAsync(accountDto);
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserExeption))]
-        public async Task ThrowExeptionWhenUserEmailIsLessThanMinLength_Test()
-        {
-            var username = "TestUsername";
-            var password = "TM";
-            var email = "TestEmail";
-            var role = "Manager";
-
-            var loggerMock = new Mock<ILogger<UserService>>().Object;
-
-            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenUserEmailIsLessThanMinLength_Test));
-
-            using (var actContext = new E_MailApplicationsManagerContext(options))
-            {
-                var accountDto = new RegisterAccountDto
-                {
-                    UserName = username,
-                    Password = password,
-                    Role = role,
-                    Email = email
-                };
-
-                var accountService = new UserService(actContext, null, loggerMock);
-
-                await accountService.RegisterAccountAsync(accountDto);
             }
         }
     }

@@ -14,7 +14,7 @@ namespace E_MailApplicationsManager.Service.Service
             this.context = context;
         }
 
-        public async Task<bool> SaveLastLoginUserAsync(User user)
+        public async Task<bool> SaveLastLoginUser(User user)
         {
             if (user == null)
             {

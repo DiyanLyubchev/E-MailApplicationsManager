@@ -26,39 +26,57 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task RegisterAccountAsync(RegisterAccountDto registerAccountDto)
         {
-            var validationMethod = ValidationMethod(registerAccountDto);       
+            if (registerAccountDto.Role != "Manager" && registerAccountDto.Role != "Operator")
+            {
+                throw new UserExeption("Wrong role name!");
+            }
+
+            if (registerAccountDto.UserName.Length < 3)
+            {
+                throw new UserExeption("Username cannotbe less that 3 symbols!");
+            }
+
+            if (registerAccountDto.Password.Length < 5)
+            {
+                throw new UserExeption("Password cannot be less than 5 symbols!");
+            }
+
+            if (registerAccountDto.Email == null)
+            {
+                throw new UserExeption("Email cannot be null!");
+            }
 
             var user = await this.context.Users
-                .Where(name => name.UserName == validationMethod.UserName)
+                .Where(name => name.UserName == registerAccountDto.UserName)
                 .Select(username => username.UserName)
                 .SingleOrDefaultAsync();
 
             if (user != null)
             {
-                throw new UserExeption($"You cannot register accout with the following username {validationMethod.UserName}");
+                throw new UserExeption($"You cannot register accout with the following username {registerAccountDto.UserName}");
             }
 
             var passwordHasher = new PasswordHasher<User>();
 
             var account = new User
             {
-                UserName = validationMethod.UserName,
-                NormalizedUserName = validationMethod.UserName.ToUpper(),
+                UserName = registerAccountDto.UserName,
+                NormalizedUserName = registerAccountDto.UserName.ToUpper(),
                 LockoutEnabled = true,
-                Email = validationMethod.Email,
-                NormalizedEmail = validationMethod.Email.ToUpper()
+                Email = registerAccountDto.Email,
+                NormalizedEmail = registerAccountDto.Email.ToUpper()
             };
-            account.PasswordHash = passwordHasher.HashPassword(account, validationMethod.Password);
+            account.PasswordHash = passwordHasher.HashPassword(account, registerAccountDto.Password);
 
             await this.userManager.CreateAsync(account);
-            await this.userManager.AddToRoleAsync(account, validationMethod.Role);
+            await this.userManager.AddToRoleAsync(account, registerAccountDto.Role);
 
             var currentUser = await this.context.Users
-                .Where(userId => userId.Id == validationMethod.CurrentUserId)
+                .Where(userId => userId.Id == registerAccountDto.CurrentUserId)
                 .Select(uName => uName.UserName)
                 .SingleOrDefaultAsync();
 
-            logger.LogInformation($"New user {validationMethod.UserName} registered by {currentUser}");
+            logger.LogInformation($"New user {registerAccountDto.UserName} registered by {currentUser}");
         }
 
         public async Task<User> GetUserAsync(string userId)
@@ -93,36 +111,6 @@ namespace E_MailApplicationsManager.Service.Service
             await this.context.SaveChangesAsync();
 
             return true;
-        }
-
-        public RegisterAccountDto ValidationMethod(RegisterAccountDto registerAccountDto)
-        {
-            if (registerAccountDto.Role != "Manager" && registerAccountDto.Role != "Operator")
-            {
-                throw new UserExeption("Wrong role name!");
-            }
-
-            if (registerAccountDto.UserName.Length < 3 || registerAccountDto.UserName.Length > 50)
-            {
-                throw new UserExeption("Username must be between 3 and 50 symbols!");
-            }
-
-            if (registerAccountDto.Password.Length < 5 || registerAccountDto.Password.Length > 100)
-            {
-                throw new UserExeption("Password cannot be less than 5 symbols!");
-            }
-
-            if (registerAccountDto.Email == null)
-            {
-                throw new UserExeption("Email cannot be null!");
-            }
-
-            if (registerAccountDto.Email.Length < 5 || registerAccountDto.Email.Length > 50)
-            {
-                throw new UserExeption("Email must be between 5 and 50 symbols!");
-            }
-
-            return registerAccountDto;
         }
     }
 }
