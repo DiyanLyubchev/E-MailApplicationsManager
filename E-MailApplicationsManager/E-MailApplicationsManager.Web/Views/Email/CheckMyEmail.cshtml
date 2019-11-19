@@ -5,7 +5,6 @@
 }
 
 <img src="~/images/tbilogo.jpg" alt="Sample Photo" />
-<h1>Check My Email</h1>
 <div class="row">
 
     @foreach (var email in Model.Result)
@@ -25,7 +24,7 @@
 
             @if (email.Status == 3)
             {
-                <button style="background-color:#34495e" class="btn btn-primary continue-with-email" type="button" value="@email.GmailId">Continue</button>
+                <button style="background-color:#34495e" class="continue-with-email" type="button" value="@email.GmailId">Continue</button>
             }
         </div>
         <hr id="design-hr" />
@@ -35,5 +34,5 @@
     }
 </div>
 <strong>
-    <a href="javascript:history.go(-1)" title="Go to previous page" class="goback">Go back</a>
+    <a href="javascript:history.go(-1)" style="color:#ff6a00" title="Go to previous page" class="goback">Go back</a>
 </strong>
