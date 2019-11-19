@@ -30,5 +30,7 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<DateTime?> FindByIdDateOfTerminalAsync(int id);
 
         Task<string> FindByIDIsApproveOrNotAsync(int id);
+
+         Task<IEnumerable<Email>> GetEmailsForChart();
     }
 }
