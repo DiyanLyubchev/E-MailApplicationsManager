@@ -15,6 +15,10 @@
         <div class="col-6">
             <ul style="font-weight: bold" class="col-sm-2">Text:</ul>
             <ul class="col-sm-10">@Model.Body</ul>
+            <br />
+            <strong>
+                <a style="color:#ff6a00" href="javascript:history.go(-1)" title="Go to previous page" class="goback">Go back</a>
+            </strong>
         </div>
         <div class="col-6">
             <div class="form-group row">
@@ -30,6 +34,7 @@
                         <input type="text" name="name" id="phone-number" class="form-control" minlength="8" required />
                         <br />
                         <button style="background-color:#34495e" value="@Model.GmailId" class="btn btn-primary" type="button" id="send-button">Create!</button><br />
+                     
                         <hr />
                     </form>
                 </div>

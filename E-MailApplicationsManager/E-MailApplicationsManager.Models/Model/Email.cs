@@ -33,7 +33,7 @@ namespace E_MailApplicationsManager.Models.Model
 
         public DateTime? SetTerminalState { get; set; }
 
-        public ICollection<EmailAttachment> EmailAttachments { get; set; } = new List<EmailAttachment>();
+        public ICollection<EmailAttachment> EmailAttachments { get; set; } 
 
         public bool IsSeen { get; set; } 
 

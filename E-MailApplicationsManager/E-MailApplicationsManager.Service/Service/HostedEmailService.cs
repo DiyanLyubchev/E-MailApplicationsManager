@@ -17,14 +17,14 @@ namespace E_MailApplicationsManager.Service.Service
             this.serviceProvider = serviceProvider;
         }
 
-        public  Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             this.timer = new Timer(GetEmails, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60));
 
             return Task.CompletedTask;
         }
 
-        public async void GetEmails(object state)
+        private async void GetEmails(object state)
         {
             using (var scope = this.serviceProvider.CreateScope())
             {
