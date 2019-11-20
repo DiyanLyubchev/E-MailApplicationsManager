@@ -28,7 +28,14 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<LoanApplicant> FillInFormForLoanAsync(LoanApplicantDto loanApplicantDto)
         {
-            var validationMethod = ValidationMethod(loanApplicantDto); 
+            var validationMethod = ValidationMethodFillFormForLoan(loanApplicantDto);
+
+            var isEgnCorrect = CheckEGNForDigit(loanApplicantDto.EGN);
+
+            if (isEgnCorrect == false)
+            {
+                throw new LoanExeption("EGN cannot contains digits");
+            }
 
             var user = await this.context.Users
                 .Include(l => l.LoanApplicant)
@@ -107,7 +114,7 @@ namespace E_MailApplicationsManager.Service.Service
             return true;
         }
 
-        public LoanApplicantDto ValidationMethod(LoanApplicantDto loanApplicantDto)
+        public LoanApplicantDto ValidationMethodFillFormForLoan(LoanApplicantDto loanApplicantDto)
         {
             if (loanApplicantDto.Name == null ||
                loanApplicantDto.EGN == null
@@ -136,6 +143,24 @@ namespace E_MailApplicationsManager.Service.Service
             }
 
             return loanApplicantDto;
+        }
+        public bool CheckEGNForDigit(string email)
+        {
+            var egn = email;
+
+            for (int i = 0; i < email.Length; i++)
+            {
+                if (Char.IsDigit(email[i]))
+                {
+                    egn.Concat(email[i].ToString());
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

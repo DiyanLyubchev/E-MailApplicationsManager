@@ -1,11 +1,9 @@
-﻿using E_MailApplicationsManager.Models;
-using E_MailApplicationsManager.Models.Context;
+﻿using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Service.Service;
-using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -224,7 +222,7 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
 
             using (var actContext = new E_MailApplicationsManagerContext(options))
             {
-                var loan = await actContext.LoanApplicants .AddAsync(
+                var loan = await actContext.LoanApplicants.AddAsync(
                     new LoanApplicant
                     {
                         GmailId = loanUtil.GmailId,
@@ -384,6 +382,43 @@ namespace E_MailApplicationsManager.UnitTests.LoanApplicantTest
                 var sut = new LoanService(actContext, mockEncodeDecodeService);
 
                 await sut.FillInFormForLoanAsync(loanDto);
+            }
+        }
+        [TestMethod]
+        public void CheckEmailForDigitReturtTrue_Test()
+        {
+            var egn = "7802120867";
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+            var options = TestUtilities.GetOptions(nameof(CheckEmailForDigitReturtTrue_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+
+                var sut = new LoanService(actContext, mockEncodeDecodeService);
+
+                var result = sut.CheckEGNForDigit(egn);
+
+                Assert.IsTrue(result);
+            }
+        }
+
+        [TestMethod]
+        public void CheckEmailForDigitReturnFalse_Test()
+        {
+            var egn = "7802120e67";
+
+            var mockEncodeDecodeService = new Mock<IEncodeDecodeService>().Object;
+            var options = TestUtilities.GetOptions(nameof(CheckEmailForDigitReturnFalse_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+
+                var sut = new LoanService(actContext, mockEncodeDecodeService);
+
+                var result = sut.CheckEGNForDigit(egn);
+
+                Assert.IsFalse(result);
             }
         }
     }

@@ -30,39 +30,20 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<Email> AddMailAsync(EmailDto emailDto)
         {
-            if (emailDto.DateReceived == null ||
-                emailDto.Sender == null || emailDto.Subject == null)
-            {
-                throw new EmailExeption("Email does not exist!");
-            }
-
-            if (emailDto.GmailId.Length < 5 || emailDto.GmailId.Length > 100)
-            {
-                throw new EmailExeption("Lenght of GmailId is not correct!");
-            }
-
-            if (emailDto.Subject.Length < 3 || emailDto.Subject.Length > 100)
-            {
-                throw new EmailExeption("Lenght of Subject is not correct!");
-            }
-
-            if (emailDto.Sender.Length < 5 || emailDto.Sender.Length > 50)
-            {
-                throw new EmailExeption("Lenght of Sender is not correct!");
-            }
+            var validationMetod = ValidationAddEmail(emailDto);
 
             var gmailId = await this.context.Emails
-                .FirstOrDefaultAsync(id => id.GmailId == emailDto.GmailId);
+                .FirstOrDefaultAsync(id => id.GmailId == validationMetod.GmailId);
 
             if (gmailId == null)
             {
                 var email = new Email
                 {
-                    GmailId = emailDto.GmailId,
-                    Sender = emailDto.Sender,
+                    GmailId = validationMetod.GmailId,
+                    Sender = validationMetod.Sender,
                     InitialRegistrationInData = DateTime.Now,
-                    DateReceived = emailDto.DateReceived,
-                    Subject = emailDto.Subject,
+                    DateReceived = validationMetod.DateReceived,
+                    Subject = validationMetod.Subject,
                 };
 
                 await this.context.Emails.AddAsync(email);
@@ -174,7 +155,7 @@ namespace E_MailApplicationsManager.Service.Service
             }
 
             var encodeBody = this.encodeDecodeService.Base64Decode(emailDto.Body);
-         
+
             var encriptBody = this.encodeDecodeService.Encrypt(encodeBody);
 
             if (email.Body == null)
@@ -246,6 +227,31 @@ namespace E_MailApplicationsManager.Service.Service
             return true;
         }
 
+        public EmailDto ValidationAddEmail(EmailDto emailDto)
+        {
+            if (emailDto.DateReceived == null ||
+              emailDto.Sender == null || emailDto.Subject == null)
+            {
+                throw new EmailExeption("Email does not exist!");
+            }
+
+            if (emailDto.GmailId.Length < 5 || emailDto.GmailId.Length > 100)
+            {
+                throw new EmailExeption("Lenght of GmailId is not correct!");
+            }
+
+            if (emailDto.Subject.Length < 3 || emailDto.Subject.Length > 100)
+            {
+                throw new EmailExeption("Lenght of Subject is not correct!");
+            }
+
+            if (emailDto.Sender.Length < 5 || emailDto.Sender.Length > 50)
+            {
+                throw new EmailExeption("Lenght of Sender is not correct!");
+            }
+
+            return emailDto;
+        }
 
     }
 }
