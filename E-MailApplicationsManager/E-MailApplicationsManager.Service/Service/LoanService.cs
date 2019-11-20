@@ -146,7 +146,7 @@ namespace E_MailApplicationsManager.Service.Service
         }
         public bool CheckEGNForDigit(string email)
         {
-            var egn = email;
+            var egn = "";
 
             for (int i = 0; i < email.Length; i++)
             {
