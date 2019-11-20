@@ -7,6 +7,10 @@
     <RootNamespace>E_MailApplicationsManager.Web</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Home\index.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Gmail.v1" Version="1.41.1.1635" />

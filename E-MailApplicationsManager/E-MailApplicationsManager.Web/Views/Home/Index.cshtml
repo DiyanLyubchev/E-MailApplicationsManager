@@ -1,8 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="alert alert-success alert-normal-success" hidden="hidden">
-    <button type="button" class="close">×</button>
-    I'm a normal success message. To close use  the appropriate button.
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<link href="~/css/index.css" rel="stylesheet" />
+<div class="example-css">
+    <div style="border: 5px solid;border-color:blue; height:200px; width:500px; margin-bottom: 50px">
+    </div>
+    <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
+        <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+            <canvas id="myChart">
+            </canvas>
+        </div>
+        <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+        </div>
+    </div>
 </div>
+<script src="~/js/index.js"></script>
