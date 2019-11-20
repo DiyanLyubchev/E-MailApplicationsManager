@@ -15,33 +15,34 @@ $('#send-button').on('click', function () {
         traditional: true,
         cache: false,
         success: function (result) {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: false,
-                timer: 1000
-            })
-            window.setInterval(foo, 500);
-            function foo() {
-                window.location.href = "/home/index/success" + result.emailId;
+            if (result.emailId) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                window.setInterval(foo, 1000);
+                function foo() {
+                    window.location.href = "/home/index/success" + result.emailId;
+                }
             }
-          
-        },
-        error: function (thrownError)
-        {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-                footer: '<a href>Why do I have this issue?</a>'
-            })
-            window.setInterval(errorRequest, 500);
-            function errorRequest() {
-                window.location.href = "/email/fillemailform/" + thrownError.emailId;
+            else if (result.exeption) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href>Why do I have this issue?</a>'
+                })
+                window.setInterval(errorRequest, 500);
+                function errorRequest() {
+                    window.location.href = "/email/fillemailform/" + thrownError.emailId;
+                }
             }
         }
     });
+    $
 });
 
 

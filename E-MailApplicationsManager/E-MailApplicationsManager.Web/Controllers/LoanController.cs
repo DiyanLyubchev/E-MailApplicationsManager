@@ -44,7 +44,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             catch (LoanExeption)
             {
 
-                return Json(new { emailId = idData });
+                return Json(new { exeption = idData });
             }
 
             return Json(new { emailId = idData });
