@@ -3,8 +3,9 @@
     ViewData["Title"] = "FillEmailForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 <img src="~/images/tbilogo.jpg" alt="Sample Photo" />
-<h1>FillEmailForm</h1>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
@@ -34,7 +35,6 @@
                         <input type="text" name="name" id="phone-number" class="form-control" minlength="8" required />
                         <br />
                         <button style="background-color:#34495e" value="@Model.GmailId" class="btn btn-primary" type="button" id="send-button">Create!</button><br />
-                     
                         <hr />
                     </form>
                 </div>

@@ -41,10 +41,10 @@ namespace E_MailApplicationsManager.Web.Controllers
 
                 await this.loanService.FillInFormForLoanAsync(loanDto);
             }
-            catch (LoanExeption ex)
+            catch (LoanExeption)
             {
 
-                return View("Message", new MessageViewModel { Message = ex.Message });
+                return Json(new { emailId = idData });
             }
 
             return Json(new { emailId = idData });

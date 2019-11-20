@@ -4,8 +4,9 @@
     ViewData["Title"] = "LoanEmailDetails";
 }
 
-<h1>LoanEmailDetails</h1>
-
+<script src="sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<img src="~/images/tbilogo.jpg" alt="Sample Photo" />
 <div>
     <h4>StatusOpenEmailsViewModel</h4>
     <hr />
@@ -35,11 +36,11 @@
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
     </dl>
-</div>   
+</div>
 <div class="form-group row">
     <div class="col-xs-2">
-        <button id="loan-approve" value="1 @Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Approve</button>
-        <button id="loan-reject" value="0 @Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Reject</button>
+        <button type="button" id="loan-approve" value="1 @Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Approve</button>
+        <button type="button" id="loan-reject" value="0 @Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Reject</button>
     </div>
 </div>
 <div>
