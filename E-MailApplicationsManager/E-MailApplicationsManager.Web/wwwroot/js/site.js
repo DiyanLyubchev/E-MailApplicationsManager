@@ -75,8 +75,8 @@ $('#refresh-email').on('click', function () {
 
 //Countinue to work with email status 3
 
-$('#continue-with-email').on('click', function () {
-    const currentEmail = $('#continue-with-email').val();
+$('.continue-with-email').on('click', function () {
+    const currentEmail = $('.continue-with-email').val();
 
     $.ajax({
         url: '/Email/ContinueWithEmmail',
@@ -92,6 +92,6 @@ $('#continue-with-email').on('click', function () {
     });
 });
 
-$('#continue-with-email').on('click', function () {
-    $('#continue-with-email').css('background', 'red');
+$('.continue-with-email').on('click', function () {
+    $('.continue-with-email').css('background', 'red');
 });

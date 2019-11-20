@@ -15,22 +15,35 @@ $('#send-button').on('click', function () {
         traditional: true,
         cache: false,
         success: function (result) {
-            console.log(result);
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
                 title: 'Your work has been saved',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             })
             window.setInterval(foo, 500);
             function foo() {
                 window.location.href = "/home/index/success" + result.emailId;
             }
+          
+        },
+        error: function (thrownError)
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: '<a href>Why do I have this issue?</a>'
+            })
+            window.setInterval(errorRequest, 500);
+            function errorRequest() {
+                window.location.href = "/email/fillemailform/" + thrownError.emailId;
+            }
         }
     });
-
 });
+
 
 // Approve Loan 
 
