@@ -40,8 +40,8 @@
     <link href="~/css/login.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white ">
+    <header style="color:#ff6a00">
+        <nav style="color:#ff6a00" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white ">
             <partial name="_LoginPartial" />
             <ul class="menu cf">
                 @if (User.IsInRole("Manager"))
@@ -55,7 +55,6 @@
                 }
             </ul>
         </nav>
-
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" />

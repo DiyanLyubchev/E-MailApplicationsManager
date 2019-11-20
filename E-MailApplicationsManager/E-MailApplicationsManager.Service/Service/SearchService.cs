@@ -151,5 +151,15 @@ namespace E_MailApplicationsManager.Service.Service
 
             return emailList;
         }
+
+        public async Task<int> GetAllNotReviewedEmails()
+        {
+            var emailCount = await this.context.Emails
+               .Where(mail => mail.EmailStatusId == (int)EmailStatusesType.NotReviewed)
+               .Select(email => email.EmailStatusId)
+               .CountAsync();
+
+            return emailCount;
+        }
     }
 }
