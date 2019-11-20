@@ -31,6 +31,8 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<string> FindByIDIsApproveOrNotAsync(int id);
 
-         Task<IEnumerable<Email>> GetEmailsForChart();
+        Task<IEnumerable<Email>> GetEmailsForChart();
+
+        Task<int> GetAllNotReviewedEmails();
     }
 }

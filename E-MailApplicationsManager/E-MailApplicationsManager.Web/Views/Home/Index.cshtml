@@ -1,19 +1,38 @@
-﻿@{
+﻿@inject UserManager<User> UserManager
+@model NotReviewedEmailsViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <link href="~/css/index.css" rel="stylesheet" />
-<div class="exam    ple-css">
-    <div style="border: 5px solid;border-color:blue; height:200px; width:500px; margin-bottom: 50px">
-
-    </div>
-    <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
-        <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
-            <canvas id="myChart">
-            </canvas>
+<body class="background">
+    <div class="exam ple-css">
+        <div style="border: 5px solid;border-color:#ffffdc; height:200px; display: flex; width:1050px; margin-bottom: 50px; justify-content:space-between">
+            <div style="border: 5px solid;border-color:#ffffdc; height:190px; width:300px; margin-bottom: 50px">
+                <img class="logo" src="~/images/tbilogo.jpg" />
+            </div>
+            <div style="border: 5px solid;border-color:#ffffdc; height:190px; width:150px; margin-bottom: 50px; margin-left:300px">
+                <img class="profile-picture" src="~/images/profile_picture.png" />
+            </div>
+            <div style="border: 5px solid;border-color:#ffffdc; height:190px; width:300px; margin-bottom: 50px; margin-left:80px">
+                <br />
+                <h1 class="text-center">Welcome!</h1>
+                <br />
+                <h3 class="text-center">@User.Identity.Name's account</h3>
+            </div>
         </div>
-        <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+        <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
+            <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                <canvas id="myChart">
+                </canvas>
+            </div>
+            <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                <br />
+                <br />
+                <br />
+                    <h1 class="text-center">You have @Model.NotReviewedEmails emails that are not reviewed.</h1>
+            </div>
         </div>
     </div>
-</div>
-<script src="~/js/index.js"></script>
+    <script src="~/js/index.js"></script>
+</body>

@@ -19,13 +19,19 @@ namespace E_MailApplicationsManager.Web.Controllers
             this.searchService = searchService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return LocalRedirect("~/identity/account/login");
             }
-            return View();
+
+            var allNotReviewed = await this.searchService.GetAllNotReviewedEmails();
+
+            var result = new NotReviewedEmailsViewModel(allNotReviewed);
+
+            return View(result);
         }
 
         [HttpGet]
@@ -33,11 +39,10 @@ namespace E_MailApplicationsManager.Web.Controllers
         public async Task<IActionResult> GetChartData()
         {
             var list = await this.searchService.GetEmailsForChart();
-        
+
             var viewModel = new ListEmailsFromChartViewModel(list);
-           
+
             return Json(viewModel);
         }
-
     }
 }

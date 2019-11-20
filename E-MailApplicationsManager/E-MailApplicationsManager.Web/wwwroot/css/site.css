@@ -78,10 +78,16 @@ body {
     border-style: inset;
     border-width: 1px;
 }
-body {
-    background-color: cornsilk
+.background {
+    background-color: #ffffdc
 }
+
  .logo{
      width: 300px;
      height: 120px;
  }
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+}
