@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\tbicollage.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Home\index.css" />
   </ItemGroup>
 
