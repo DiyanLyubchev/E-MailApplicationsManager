@@ -16,13 +16,21 @@ $('#send-button').on('click', function () {
         cache: false,
         success: function (result) {
             console.log(result);
-            window.location.href = "/home/index/" + result.emailId;
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            window.setInterval(foo, 500);
+            function foo() {
+                window.location.href = "/home/index/success" + result.emailId;
+            }
         }
     });
 
 });
-
-
 
 // Approve Loan 
 
