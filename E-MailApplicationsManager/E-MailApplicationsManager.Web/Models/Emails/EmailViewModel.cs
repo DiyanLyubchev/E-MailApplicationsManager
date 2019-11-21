@@ -18,11 +18,8 @@ namespace E_MailApplicationsManager.Web.Models.Emails
             this.UserId = email.UserId;
         }
 
-      
-
         public EmailViewModel()
         {
-
         }
 
         [ScaffoldColumn(false)]
