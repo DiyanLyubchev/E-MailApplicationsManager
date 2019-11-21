@@ -8,7 +8,8 @@
 @using E_MailApplicationsManager.Models.Common;
 
 <img src="~/images/tbilogo.jpg" class="logo" alt="Sample Photo" />
-<body >
+<br />
+<body>
     @*refresh button*@
     @{ var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -17,7 +18,6 @@
         if (currentUser.FirstLog == true)
         {
             <button style="background-color:#34495e" class="btn btn-primary" type="submit" id="refresh-email" value="click">Refresh</button>
-            <h1 class="text-center">Welcome!</h1>
             <hr />
             <div>
                 <table class="table table-hover">

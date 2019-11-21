@@ -7,15 +7,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <link href="~/css/index.css" rel="stylesheet" />
 <body class="background">
-    <div class="exam ple-css">
-        <div style="border: 5px solid;border-color:#ffffdc; height:200px; display: flex; width:1050px; margin-bottom: 50px; justify-content:space-between">
-            <div style="border: 5px solid;border-color:#ffffdc; height:190px; width:300px; margin-bottom: 50px">
+    <div class="page-css">
+        <div class="half">
+            <div class="left-top-half">
                 <img class="logo" src="~/images/tbilogo.jpg" />
             </div>
-            <div style="border: 5px solid;border-color:#ffffdc; height:190px; width:150px; margin-bottom: 50px; margin-left:300px">
+            <div class="center-top-half">
                 <img class="profile-picture" src="~/images/profile_picture.png" />
             </div>
-            <div style="border: 5px solid;border-color:#ffffdc; height:190px; width:300px; margin-bottom: 50px; margin-left:80px">
+            <div class="right-top-half">
                 <br />
                 <h1 class="text-center" style="color:#ff6a00">Welcome!</h1>
                 <br />
@@ -29,12 +29,12 @@
 
             if (currentUser.FirstLog == true)
             {
-                <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
-                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                <div class="half">
+                    <div class="bottom-left-half">
                         <canvas id="myChart">
                         </canvas>
                     </div>
-                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                    <div class="bottom-right-half">
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />
@@ -44,12 +44,12 @@
             }
             else
             {
-                <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
-                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                <div class="top-half">
+                    <div class="bottom-left-half">
                         <canvas id="myChart">
                         </canvas>
                     </div>
-                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                    <div class="bottom-right-half">
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />

@@ -1,7 +1,65 @@
-﻿.example-css {
+﻿.page-css {
     border: 5px solid;
-    border-color: red;
+    border-color: #ffffdc;
     height: 630px;
+}
+
+.half {
+    border: 5px solid;
+    border-color:#ffffdc; 
+    height:200px;
+    display: flex;
+    width:1050px; 
+    margin-bottom: 50px;
+    justify-content:space-between;
+}
+
+.left-top-half {
+    border: 5px solid;
+    border-color:#ffffdc; 
+    height:190px; 
+    width:300px; 
+    margin-bottom: 50px;
+}
+
+.center-top-half {
+    border: 5px solid;
+    border-color:#ffffdc; 
+    height:190px; 
+    width:150px; 
+    margin-bottom: 50px; 
+    margin-left:300px;
+}
+
+.right-top-half {
+    border: 5px solid;
+    border-color:#ffffdc; 
+    height:190px; 
+    width:300px; 
+    margin-bottom: 50px; 
+    margin-left:80px;
+}
+
+.bottom-half {
+    border: 5px solid;
+    border-color:green; 
+    height:310px; 
+    display: flex; 
+    justify-content:space-between;
+}
+
+.bottom-right-half {
+    border: 5px solid;
+    border-color:#ffffdc;
+    height:300px; 
+    width: 450px;
+}
+
+.bottom-left-half {
+    border: 5px solid;
+    border-color:orange; 
+    height:300px;
+    width: 450px;
 }
 
 #letter-image {

@@ -262,8 +262,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "ce1feead-6ded-49d4-80fe-3daefc40ab87", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "e7608ab9-2d07-4a11-8218-70d4a5484429", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "c46c2a25-af3c-42e1-a6d7-4520035bf5ef", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "27af1b0e-2234-4945-98cd-102e943eb4a0", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -271,8 +271,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LastLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "47023603-be4b-4dac-a0c0-20a24faaff44", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEPtTS7M5M38p/3HcCHqXtA3uKw0lUp+9lKgWUwvxdQwlV59bUHyYORoGBpQ4YYX1uA==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "bc265476-f42e-4bfc-82fd-14712158204c", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAELmqAA0nj9B/Y5YuFjHJLPrOMiiTApce34ZR+YKd1e1VsK3aFaxquzG8ucIwVEFo3g==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "ba21fcef-0374-426e-9477-4d59c473db0a", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEBXb7zfWqn1hKP9aHe+6VNY86Oyz6DkDzlFczxyeJc2BuSLR8FfwVtvhZ4mHy9Olng==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "2d7df773-4bfa-4785-88b1-367a55792e82", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEDE4ILv8nzihUAb6Xk0P9P9rht8BhVXwS//PDs17F2uUW8MJl3ozPgyKfztN+wmfdw==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
                 });
 
             migrationBuilder.InsertData(
