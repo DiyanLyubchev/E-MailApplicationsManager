@@ -18,8 +18,6 @@ namespace E_MailApplicationsManager.Service.Service
         private readonly E_MailApplicationsManagerContext context;
         private readonly IEncodeDecodeService encodeDecodeService;
 
-
-
         public EmailService(E_MailApplicationsManagerContext context, ILogger<EmailService> logger,
             IEncodeDecodeService encodeDecodeService)
         {
