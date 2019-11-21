@@ -1,4 +1,6 @@
 ﻿@model EmailListViewModel
+@inject UserManager<User> UserManager
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "EmailInfoManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,39 +8,42 @@
 @using E_MailApplicationsManager.Models.Common;
 
 <img src="~/images/tbilogo.jpg" class="logo" alt="Sample Photo" />
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
+<body >
     @*refresh button*@
-    <button style="background-color:#34495e" class="btn btn-primary" type="submit" id="refresh-email" value="click">Refresh</button>
-    <h1 class="text-center">Welcome!</h1>
-    <hr />
-    <div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Mail Id</th>
-                    <th scope="col">Sender</th>
-                    <th scope="col">Date Received</th>
-                    <th scope="col">State</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var email in Model.Emails)
-                {
-                    <tr>
-                        <td>@email.GmailId</td>
-                        <td>@email.Sender</td>
-                        <td>@email.DateReceived</td>
-                        <td>Current status: @(((EmailStatusesType)email.Status).ToString())</td>
-                        <td> <a asp-controller="Email" asp-action="DetailsManager" asp-route-id="@email.Id"><button style="background-color:#34495e" class="btn btn-primary">Process</button></a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    @{ var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var currentUser = await UserManager.FindByIdAsync(userId);
+
+        if (currentUser.FirstLog == true)
+        {
+            <button style="background-color:#34495e" class="btn btn-primary" type="submit" id="refresh-email" value="click">Refresh</button>
+            <h1 class="text-center">Welcome!</h1>
+            <hr />
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mail Id</th>
+                            <th scope="col">Sender</th>
+                            <th scope="col">Date Received</th>
+                            <th scope="col">State</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var email in Model.Emails)
+                        {
+                            <tr>
+                                <td>@email.GmailId</td>
+                                <td>@email.Sender</td>
+                                <td>@email.DateReceived</td>
+                                <td>Current status: @(((EmailStatusesType)email.Status).ToString())</td>
+                                <td> <a asp-controller="Email" asp-action="DetailsManager" asp-route-id="@email.Id"><button style="background-color:#34495e" class="btn btn-primary">Process</button></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
 </body>
-</html>
