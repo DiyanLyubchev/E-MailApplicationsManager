@@ -222,5 +222,54 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 Assert.IsNotNull(result);
             }
         }
+
+        [TestMethod]
+        public async Task GetEmailsForChart_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.EmailStatusId = (int)EmailStatusesType.New;
+
+            var options = TestUtilities.GetOptions(nameof(GetEmailsForChart_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = await sut.GetEmailsForChart();
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [TestMethod]
+        public async Task GetAllNotReviewedEmails_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+            firstEmail.EmailStatusId = (int)EmailStatusesType.NotReviewed;
+
+            var secondEmail = EmailGeneratorUtil.GenerateEmailSecond();
+            firstEmail.EmailStatusId = (int)EmailStatusesType.NotReviewed;
+
+            var options = TestUtilities.GetOptions(nameof(GetEmailsForChart_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                await actContext.Emails.AddAsync(firstEmail);
+                await actContext.Emails.AddAsync(secondEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var sut = new SearchService(actContext);
+
+                var result = await sut.GetAllNotReviewedEmails();
+
+                Assert.AreEqual(2,result);
+            }
+        }
     }
 }
+

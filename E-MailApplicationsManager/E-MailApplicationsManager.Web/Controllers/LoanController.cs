@@ -39,7 +39,9 @@ namespace E_MailApplicationsManager.Web.Controllers
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
 
-                await this.loanService.FillInFormForLoanAsync(loanDto);
+                var result = await this.loanService.FillInFormForLoanAsync(loanDto);
+
+                var stop = 0;
             }
             catch (LoanExeption)
             {

@@ -42,7 +42,6 @@ $('#send-button').on('click', function () {
             }
         }
     });
-    $
 });
 
 
