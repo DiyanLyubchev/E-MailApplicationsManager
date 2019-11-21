@@ -4,14 +4,13 @@ const serverResponseHandler = (serverData) => {
 
     $('.info-email').remove();
 
-    const teamContainer = $('#fill-email');
+    const emailContainer = $('#fill-email');
 
     serverData
         .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived}  ${email.emailStatusId}</div>`))
         .forEach(teamElement => {
-            teamContainer.append(teamElement);
+            emailContainer.append(teamElement);
         });
-
 };
 
 $('#search-email').on('keyup', function () {
@@ -56,7 +55,7 @@ $('#refresh-email').click(function () {
 
     $.ajax({
         url: '/Email/RefreshEmails',
-        data: { refreshData: refresh},
+        data: { refreshData: refresh },
         type: 'POST',
         dataType: 'json',
         traditional: true,

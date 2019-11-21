@@ -30,7 +30,7 @@ namespace E_MailApplicationsManager.Web.Controllers
 
 
         [Authorize]
-        public  IActionResult Home()
+        public IActionResult Home()
         {
             return View();
         }
@@ -44,6 +44,11 @@ namespace E_MailApplicationsManager.Web.Controllers
             };
 
             var emailStatus = await this.searchService.SearchEamilByStatusIdAsync(statusDto);
+
+            //if (emailStatus.Count() == 0)
+            //{
+            //    return View(new MessageViewModel {Message = "We don't have emails with this status id" } );
+            //}
 
             return Json(emailStatus);
         }
@@ -123,7 +128,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         public async Task<IActionResult> EmailInfo()
         {
             var emails = await this.searchService.GetAllEmailsAsync();
-         
+
             var libraryViewModel = new EmailListViewModel(emails);
 
             return View(libraryViewModel);
@@ -222,7 +227,7 @@ namespace E_MailApplicationsManager.Web.Controllers
         {
             if (refreshData == "click")
             {
-               await this.concreteMailService.QuickStartAsync();
+                await this.concreteMailService.QuickStartAsync();
             }
 
             return Json(new { refresh = refreshData });

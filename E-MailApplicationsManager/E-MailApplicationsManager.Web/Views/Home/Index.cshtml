@@ -1,5 +1,6 @@
 ﻿@inject UserManager<User> UserManager
 @model NotReviewedEmailsViewModel
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -21,18 +22,43 @@
                 <h3 class="text-center">@User.Identity.Name's account</h3>
             </div>
         </div>
-        <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
-            <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
-                <canvas id="myChart">
-                </canvas>
-            </div>
-            <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
-                <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
-                <br />
-                <br />
-                <h1 class="text-center">You have <a style="color:red" href=https://localhost:5001/email/emailinfomanager>@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
-            </div>
-        </div>
+        @{
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var currentUser = await UserManager.FindByIdAsync(userId);
+
+            if (currentUser.FirstLog == true)
+            {
+                <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
+                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                        <canvas id="myChart">
+                        </canvas>
+                    </div>
+                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                        <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
+                        <br />
+                        <br />
+                        <h1 class="text-center">You have <a style="color:red" href=https://localhost:5001/email/emailinfomanager>@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div style="border: 5px solid;border-color:green; height:310px; display: flex; justify-content:space-between">
+                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                        <canvas id="myChart">
+                        </canvas>
+                    </div>
+                    <div style="border: 5px solid;border-color:orange; height:300px; width: 450px">
+                        <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
+                        <br />
+                        <br />
+                        <h1 class="text-center">You have 0 emails that are not reviewed.</h1>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
     <script src="~/js/index.js"></script>
 </body>
