@@ -7,17 +7,17 @@ const serverResponseHandler = (serverData) => {
 
     const emailContainer = $('#fill-email');
 
-    let massege = `<div class="info-massege"> We don't have emails with this status id </div>`
+    let massege = `<div  style="color:#ff6a00" class="info-massege"> We don't have emails with this status id </div>`
 
     if (serverData === null) {
         emailContainer.append(massege);
     }
     else {
-        serverData
-            .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived} </div>`))
-            .forEach(emailElement => {
-                emailContainer.append(emailElement);
-            });
+      serverData
+          .map(email => $(`<div style="color:#ff6a00" class="info-email"> ${email.sender}   ${email.dateReceived} <div>`))
+          .forEach(emailElement => {
+              emailContainer.append(emailElement);
+          });
     }
 };
 

@@ -25,7 +25,7 @@ $('#send-button').on('click', function () {
                 })
                 window.setInterval(foo, 1000);
                 function foo() {
-                    window.location.href = "/home/index/success" + result.emailId;
+                    window.location.href = "/home/index/" + result.emailId;
                 }
             }
             else if (result.exeption) {
