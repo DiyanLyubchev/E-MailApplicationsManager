@@ -51,9 +51,6 @@ $('#loan-approve').click(function () {
 
     const approve = $('#loan-approve').val();
 
-    $(this).css('background-color', 'red');
-    clicked = false;
-
     $.ajax({
         url: '/Loan/ApproveLoan',
         data: { approveData: approve },
@@ -68,15 +65,15 @@ $('#loan-approve').click(function () {
     });
 });
 
+$('#loan-approve').click( function () {
+    $('#loan-approve').css('background', '#ff6a00');
+});
 
 // Reject Loan  
 
 $('#loan-reject').click(function () {
 
     const reject = $('#loan-reject').val();
-
-    $(this).css('background-color', 'red');
-    clicked = false;
 
     $.ajax({
         url: '/Loan/ApproveLoan',
@@ -90,5 +87,9 @@ $('#loan-reject').click(function () {
             window.location.href = "/home/index/" + result.emailId;
         }
     });
+});
+
+$('#loan-reject').click( function () {
+    $('#loan-reject').css('background', '#ff6a00');
 });
 

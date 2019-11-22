@@ -4,7 +4,7 @@ $('#email-result').click(function () {
 
     const emailbody = $('#email-result').val();
 
-    $(this).css('background-color', 'red');
+    $(this).css('background-color', '#ff6a00');
     clicked = false;
 
     $.ajax({
@@ -27,7 +27,7 @@ $('#email-invalid').click(function () {
 
     const emailinvalid = $('#email-invalid').val();
 
-    $(this).css('background-color', 'red');
+    $(this).css('background-color', '#ff6a00');
     clicked = false;
 
     $.ajax({
@@ -50,7 +50,7 @@ $('#email-invalid-manager').click(function () {
 
     const emailinvalid = $('#email-invalid-manager').val();
 
-    $(this).css('background-color', 'red');
+    $(this).css('background-color', '#ff6a00');
     clicked = false;
 
     $.ajax({
@@ -74,7 +74,7 @@ $('#email-result').click(function () {
 
     const emailbody = $('#email-result').val();
 
-    $(this).css('background-color', 'red');
+    $(this).css('background-color', '#ff6a00');
     clicked = false;
 
     $.ajax({

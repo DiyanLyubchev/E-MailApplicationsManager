@@ -72,7 +72,7 @@ $('#refresh-email').click(function () {
 });
 
 $('#refresh-email').on('click', function () {
-    $('#refresh-email').css('background', 'red');
+    $('#refresh-email').css('background', '#ff6a00');
 });
 
 
@@ -96,5 +96,5 @@ $('.continue-with-email').on('click', function () {
 });
 
 $('.continue-with-email').on('click', function () {
-    $('.continue-with-email').css('background', 'red');
+    $('.continue-with-email').css('background', '#ff6a00');
 });
