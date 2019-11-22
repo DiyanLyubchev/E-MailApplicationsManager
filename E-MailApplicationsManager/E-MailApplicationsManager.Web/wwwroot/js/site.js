@@ -3,19 +3,23 @@ const serverResponseHandler = (serverData) => {
     console.log(serverData);
 
     $('.info-email').remove();
+    $('.info-massege').remove();
 
     const emailContainer = $('#fill-email');
 
-    serverData
-        .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived}  ${email.emailStatusId}</div>`))
-        .forEach(teamElement => {
-            emailContainer.append(teamElement);
-        });
-};
+    let massege = `<div class="info-massege"> We don't have emails with this status id </div>`
 
-$('#search-email').on('keyup', function () {
-    console.log($(this).val());
-});
+    if (serverData === null) {
+        emailContainer.append(massege);
+    }
+    else {
+        serverData
+            .map(email => $(`<div class="info-email"> ${email.sender}   ${email.dateReceived} </div>`))
+            .forEach(emailElement => {
+                emailContainer.append(emailElement);
+            });
+    }
+};
 
 $('#search-button').click(function () {
     const searchText = $('#search-email').val();

@@ -45,11 +45,11 @@ namespace E_MailApplicationsManager.Web.Controllers
 
             var emailStatus = await this.searchService.SearchEamilByStatusIdAsync(statusDto);
 
-            //if (emailStatus.Count() == 0)
-            //{
-            //    return View(new MessageViewModel {Message = "We don't have emails with this status id" } );
-            //}
-
+            if (emailStatus.Count() == 0)
+            {
+                emailStatus = null;
+                return Json(emailStatus);
+            }
             return Json(emailStatus);
         }
 
