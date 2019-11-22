@@ -40,8 +40,6 @@ namespace E_MailApplicationsManager.Web.Controllers
                 };
 
                 var result = await this.loanService.FillInFormForLoanAsync(loanDto);
-
-                var stop = 0;
             }
             catch (LoanExeption)
             {

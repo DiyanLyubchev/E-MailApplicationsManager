@@ -38,7 +38,14 @@
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />
-                        <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" href=https://localhost:5001/email/emailinfomanager>@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" href=https://localhost:5001/email/emailinfomanager>@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
+                        }
+                        @if (User.IsInRole("Operator"))
+                        {
+                            <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" href=https://localhost:5001/email/emailinfo>@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
+                        }
                     </div>
                 </div>
             }
