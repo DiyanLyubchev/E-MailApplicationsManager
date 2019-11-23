@@ -58,7 +58,7 @@ namespace E_MailApplicationsManager.Service.Service
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
 
             var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
-            allListMails.LabelIds = "INBOX";    // take data only from inbox
+            allListMails.LabelIds = "UNREAD";    // take data only from inbox
             allListMails.IncludeSpamTrash = false;  // not take data from spam
 
             var emails = await allListMails.ExecuteAsync();

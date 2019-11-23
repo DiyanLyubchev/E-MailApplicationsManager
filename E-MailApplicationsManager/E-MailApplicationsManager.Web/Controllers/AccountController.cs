@@ -15,7 +15,6 @@ namespace E_MailApplicationsManager.Web.Controllers
     {
         private readonly IUserService service;
 
-
         public AccountController(IUserService service)
         {
             this.service = service;

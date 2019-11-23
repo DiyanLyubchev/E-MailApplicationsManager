@@ -1,9 +1,5 @@
 ﻿using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Web.Models.Emails
 {

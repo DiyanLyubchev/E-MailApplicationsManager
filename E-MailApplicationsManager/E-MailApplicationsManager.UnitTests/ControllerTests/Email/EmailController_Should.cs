@@ -2,6 +2,7 @@ using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Dto;
 using E_MailApplicationsManager.Web.Controllers;
+using E_MailApplicationsManager.Web.Models.Emails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -255,20 +256,9 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             var id = 1;
 
-            var defaultContext = new DefaultHttpContext()
-            {
-                User = new ClaimsPrincipal()
-            };
-
             var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
-                searchServiceMock, encodeDecodeServiceMock)
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = defaultContext
-                }
-            };
-
+                searchServiceMock, encodeDecodeServiceMock);
+ 
             var result = await controller.DetailsManager(id);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -284,20 +274,9 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             var id = 1;
 
-            var defaultContext = new DefaultHttpContext()
-            {
-                User = new ClaimsPrincipal()
-            };
-
             var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
-                searchServiceMock, encodeDecodeServiceMock)
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = defaultContext
-                }
-            };
-
+                searchServiceMock, encodeDecodeServiceMock);
+     
             var result = await controller.Details(id);
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -311,19 +290,8 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
             var searchServiceMock = new Mock<ISearchService>().Object;
             var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
 
-            var defaultContext = new DefaultHttpContext()
-            {
-                User = new ClaimsPrincipal()
-            };
-
             var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
-                searchServiceMock, encodeDecodeServiceMock)
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = defaultContext
-                }
-            };
+                searchServiceMock, encodeDecodeServiceMock);
 
             var result = await controller.EmailInfo();
 
@@ -338,19 +306,8 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
             var searchServiceMock = new Mock<ISearchService>().Object;
             var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
 
-            var defaultContext = new DefaultHttpContext()
-            {
-                User = new ClaimsPrincipal()
-            };
-
             var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
-                searchServiceMock, encodeDecodeServiceMock)
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = defaultContext
-                }
-            };
+                searchServiceMock, encodeDecodeServiceMock);
 
             var result = controller.Home();
 
@@ -358,7 +315,6 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
         }
     }
 }
-
 
 
 
