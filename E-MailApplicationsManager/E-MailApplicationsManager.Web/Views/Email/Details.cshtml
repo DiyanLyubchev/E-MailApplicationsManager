@@ -7,44 +7,46 @@
 
 <h1>Details</h1>
 <img src="~/images/tbilogo.jpg" class="logo" alt="Sample Photo" />
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.GmailId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GmailId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Subject)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Subject)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateReceived)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateReceived)
-        </dd>
-    </dl>
-    <div class="form-group row">
-        <div class="col-xs-2">
+<body class="background">
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.GmailId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.GmailId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Sender)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Sender)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DateReceived)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateReceived)
+            </dd>
+        </dl>
+        <div class="form-group row">
+            <div class="col-xs-2">
                 <button id="email-result" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">New</button>
-            <button id="email-invalid" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">InvalidApplication</button>
+                <button id="email-invalid" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">InvalidApplication</button>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <br />
-    <string>
-        <a class="goback" style="color:#ff6a00" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
-    </string>
-</div>
+    <div>
+        <br />
+        <string>
+            <a class="goback" style="color:#ff6a00" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
+        </string>
+    </div>
+</body>

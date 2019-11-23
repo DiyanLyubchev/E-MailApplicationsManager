@@ -31,4 +31,7 @@
     overflow: hidden;
     border-radius: .25em;
     padding-bottom: 10px;
-} 
+}
+body {
+    color: #ff6a00 ;
+}

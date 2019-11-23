@@ -13,13 +13,19 @@
 <head>
     <title></title>
 </head>
-<body>
+<body class="background">
     <hr />
     <div>
         @foreach (var loan in Model.Emails)
         {
             <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName </p> </a>
         }
+    </div>
+    <div>
+        <br />
+        <string>
+            <a class="goback" style="color:#ff6a00" href="javascript:history.go(-1)" title="Go to previous page">Go back</a>
+        </string>
     </div>
 </body>
 </html>

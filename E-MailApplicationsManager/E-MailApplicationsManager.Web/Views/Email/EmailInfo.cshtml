@@ -11,7 +11,7 @@
 <head>
     <title></title>
 </head>
-<body>
+<body class="background">
     @{ var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         var currentUser = await UserManager.FindByIdAsync(userId);
