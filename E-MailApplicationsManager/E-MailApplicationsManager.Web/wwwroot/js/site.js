@@ -6,18 +6,21 @@ const serverResponseHandler = (serverData) => {
     $('.info-massege').remove();
 
     const emailContainer = $('#fill-email');
+   
 
-    let massege = `<div  style="color:#ff6a00" class="info-massege"> We don't have emails with this status id </div>`
+    let massege = `<div  style="color:#ff6a00" class="info-massege"> We don't have emails with this status!</div>`
 
     if (serverData === null) {
         emailContainer.append(massege);
     }
     else {
-      serverData
-          .map(email => $(`<div style="color:#ff6a00" class="info-email"> ${email.sender}   ${email.dateReceived} <div>`))
-          .forEach(emailElement => {
+        let count = 1;
+        serverData
+            .map(email => $(`<div style="color:#ff6a00" class="info-email">${count++}. ${email.sender}   ${email.dateReceived} <div>`))
+            .forEach(emailElement => {
               emailContainer.append(emailElement);
           });
+       
     }
 };
 
@@ -71,7 +74,7 @@ $('#refresh-email').click(function () {
     });
 });
 
-$('#refresh-email').on('click', function () {
+$('#refresh-email').click( function () {
     $('#refresh-email').css('background', '#ff6a00');
 });
 

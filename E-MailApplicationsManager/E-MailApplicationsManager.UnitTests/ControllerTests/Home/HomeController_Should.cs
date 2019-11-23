@@ -17,18 +17,7 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Home
         {
             var mockSearchService = new Mock<ISearchService>().Object;
 
-            var defaultContext = new DefaultHttpContext()
-            {
-                User = new ClaimsPrincipal()
-            };
-
-            var controller = new HomeController(mockSearchService)
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = defaultContext
-                }
-            };
+            var controller = new HomeController(mockSearchService);
 
             var result =await controller.GetChartData();
 

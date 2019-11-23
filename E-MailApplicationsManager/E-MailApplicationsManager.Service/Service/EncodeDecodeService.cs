@@ -17,12 +17,6 @@ namespace E_MailApplicationsManager.Service.Service
             return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
-        public string Base64Encode(string plainText)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            return Convert.ToBase64String(plainTextBytes);
-        }
-
         public LoanApplicant DecodeLoanApplicant(LoanApplicant loanApplicant)
         {
             var name = Decrypt(loanApplicant.Name);

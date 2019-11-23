@@ -19,17 +19,7 @@ namespace E_MailApplicationsManager.UnitTests.EncodeDecodeTest
 
             Assert.IsNotNull(result);
         }
-        [TestMethod]
-        public void Encode_Test()
-        {
-            var test = "TestName";
-
-            var sut = new EncodeDecodeService();
-            var result = sut.Base64Encode(test);
-
-            Assert.IsNotNull(result);
-        }
-
+      
         [TestMethod]
         public void DecodeLoanApplicant_Test()
         {

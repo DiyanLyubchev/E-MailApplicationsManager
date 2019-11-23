@@ -8,8 +8,6 @@ namespace E_MailApplicationsManager.Service.Contracts
     {
         string Base64Decode(string base64EncodedData);
 
-        string Base64Encode(string plainText);
-
         string ReplaceSign(string body);
 
         LoanApplicant DecodeLoanApplicant(LoanApplicant loanApplicant);
