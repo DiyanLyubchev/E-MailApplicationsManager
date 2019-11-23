@@ -32,8 +32,7 @@ $('#send-button').on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
-                    footer: '<a href>Why do I have this issue?</a>'
+                    text: 'Something went wrong!'
                 })
                 window.setInterval(errorRequest, 500);
                 function errorRequest() {

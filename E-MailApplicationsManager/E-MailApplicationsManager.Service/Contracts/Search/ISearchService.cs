@@ -7,7 +7,7 @@ using E_MailApplicationsManager.Service.Dto;
 
 namespace E_MailApplicationsManager.Service.Contracts
 {
-    public interface ISearchService
+    public interface ISearchService : ISearchLoanApplicant
     {
         Task<Email> FindEmailAsync(int id);
 
@@ -17,19 +17,7 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<IEnumerable<Email>> GetAllUserWorkingOnEmailAsync(EmailContentDto userIdDto);
 
-        Task<IEnumerable<LoanApplicant>> ListEmailsWithStatusOpenAsync(LoanApplicantDto loanApplicantDto);
-
         Task<IEnumerable<Email>> GetAllEmailsForManagerAsync();
-
-        Task<LoanApplicant> FindLoansByIdAsync(int id);
-
-        Task<IEnumerable<LoanApplicant>> GetAllFinishLoanApplicantAsync();
-
-        Task<string> FindByIdNameOfEmployeeAsync(int id);
-
-        Task<DateTime?> FindByIdDateOfTerminalAsync(int id);
-
-        Task<string> FindByIDIsApproveOrNotAsync(int id);
 
         Task<IEnumerable<Email>> GetEmailsForChart();
 
