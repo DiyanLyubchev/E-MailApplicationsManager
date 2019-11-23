@@ -143,10 +143,10 @@ namespace E_MailApplicationsManager.Service.Service
 
             return result;
         }
-        public async Task<IEnumerable<Email>> GetEmailsForChart()
+        public async Task<IEnumerable<EmailStatus>> GetEmailsForChart()
         {
-            var emailList = await this.context.Emails
-               .Where(mail => mail.EmailStatusId != (int)EmailStatusesType.Closed)
+            var emailList = await this.context.Statuses
+               .Include(email => email.Emails)
                .ToListAsync();
 
             return emailList;

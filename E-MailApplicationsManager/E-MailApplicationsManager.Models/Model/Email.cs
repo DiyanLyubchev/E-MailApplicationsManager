@@ -1,5 +1,6 @@
 ﻿using E_MailApplicationsManager.Models.BaseEntitys;
 using E_MailApplicationsManager.Models.Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,6 +38,7 @@ namespace E_MailApplicationsManager.Models.Model
 
         public bool IsSeen { get; set; } 
 
+        [JsonIgnore]
         public EmailStatus Status { get; set; }
 
         public int EmailStatusId { get; set; } = (int)EmailStatusesType.NotReviewed;

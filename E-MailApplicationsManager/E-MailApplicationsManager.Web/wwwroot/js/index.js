@@ -6,22 +6,17 @@
         cache: false,
         success: function (result) {
             console.log(result);
+            result = result.filter(element => element.emails.length != 0);
             var ctx = document.getElementById('myChart').getContext('2d');
             new Chart(ctx, {
                 type: 'polarArea',
                 data: {
-                    labels: result.email.map(element => element.EmailStatus),  
+                    labels: result.map(element => element.status),  
                     datasets: [{
-                        label: 'My First dataset',
-                        backgroundColor: result.element.map(element => {
-                            var colorNumber = 255 - 255 / (element.id + 1);
-                            return `rgb(${255},${colorNumber},${colorNumber})`
-                        }),
-                        borderColor: result.element.map(element => {
-                            var colorNumber = 255 - 255 / (element.id + 1);
-                            return `rgb(${255},${colorNumber},${colorNumber})`
-                        }),
-                        data: result.emails.map(element => element.emails.StatusId)
+                        label: 'Email Data',
+                        backgroundColor: result.map(element => "#" + ((1 << 24) * Math.random() | 0).toString(16)),
+                        borderColor: 'white',
+                        data: result.map(element => element.emails.length)
                     }]
                 },
                 options: {}

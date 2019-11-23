@@ -36,9 +36,9 @@ namespace E_MailApplicationsManager.Web.Controllers
         {
             var list = await this.searchService.GetEmailsForChart();
 
-            var viewModel = new ListEmailsFromChartViewModel(list);
+            //var viewModel = new ListEmailsFromChartViewModel(list);
 
-            return Json(viewModel);
+            return Json(list);
         }
     }
 }

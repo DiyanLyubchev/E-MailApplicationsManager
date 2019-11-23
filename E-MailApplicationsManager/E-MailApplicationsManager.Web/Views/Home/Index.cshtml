@@ -10,7 +10,7 @@
     <div class="page-css">
         <div class="half">
             <div class="left-top-half">
-                <img class="logo" src="~/images/tbilogo.jpg" />
+                <img  src="~/images/tbilogo.png" />
             </div>
             <div class="center-top-half">
                 <img class="profile-picture" src="~/images/profile_picture.png" />
@@ -31,10 +31,6 @@
             {
                 <div class="half">
                     <div class="bottom-left-half">
-                        <canvas id="myChart">
-                        </canvas>
-                    </div>
-                    <div class="bottom-right-half">
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />
@@ -47,20 +43,24 @@
                             <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" asp-action="EmailInfo" asp-controller="Email">@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
                         }
                     </div>
+                    <div class="bottom-right-half">
+                        <canvas id="myChart">
+                        </canvas>
+                    </div>
                 </div>
             }
             else
             {
                 <div class="half">
                     <div class="bottom-left-half">
-                        <canvas id="myChart">
-                        </canvas>
-                    </div>
-                    <div class="bottom-right-half">
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />
-                        <h1 class="text-center">You have 0 emails that are not reviewed.</h1>
+                        <h1 class="text-center">You have 0 emails that are not reviewed for your accont.</h1>
+                    </div>
+                    <div class="bottom-right-half">
+                        <canvas id="myChart">
+                        </canvas>
                     </div>
                 </div>
             }

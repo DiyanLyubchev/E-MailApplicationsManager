@@ -19,7 +19,7 @@ namespace E_MailApplicationsManager.Service.Contracts
 
         Task<IEnumerable<Email>> GetAllEmailsForManagerAsync();
 
-        Task<IEnumerable<Email>> GetEmailsForChart();
+        Task<IEnumerable<EmailStatus>> GetEmailsForChart();
 
         Task<int> GetAllNotReviewedEmails();
     }
