@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using E_MailApplicationsManager.Models;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Dto;
 
 namespace E_MailApplicationsManager.Service.Contracts
 {
-    public interface ISearchService : ISearchLoanApplicant
+    public interface ISearchService : ISearchLoanApplicant , ISearchEmailByStatus
     {
         Task<Email> FindEmailAsync(int id);
-
-        Task<IEnumerable<Email>> SearchEamilByStatusIdAsync(EmailStatusIdDto status);
 
         Task<IEnumerable<Email>> GetAllEmailsAsync();
 
@@ -20,7 +16,6 @@ namespace E_MailApplicationsManager.Service.Contracts
         Task<IEnumerable<Email>> GetAllEmailsForManagerAsync();
 
         Task<IEnumerable<EmailStatus>> GetEmailsForChart();
-
-        Task<int> GetAllNotReviewedEmails();
+       
     }
 }
