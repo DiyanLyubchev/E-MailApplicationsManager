@@ -38,8 +38,6 @@ namespace E_MailApplicationsManager.Web.Controllers
         {
             var list = await this.searchService.GetEmailsForChart();
 
-            //var viewModel = new ListEmailsFromChartViewModel(list);
-
             return Json(list);
         }
 
