@@ -1,6 +1,5 @@
 ﻿using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Service.Contracts;
-using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using System.Linq;
 using System;
 using E_MailApplicationsManager.Models.Common;
 using E_MailApplicationsManager.Models.Model;
+using E_MailApplicationsManager.Service.Util;
 
 namespace E_MailApplicationsManager.Service.Service
 {
@@ -28,38 +28,15 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<LoanApplicant> FillInFormForLoanAsync(LoanApplicantDto loanApplicantDto)
         {
-            if (loanApplicantDto.Name == null ||
-              loanApplicantDto.EGN == null
-              || loanApplicantDto.PhoneNumber == null)
-            {
-                throw new LoanExeption("Тhe details of the loan request have not been filled in correctly");
-            }
+            ValidatorLoanService.ValidatorDetailsOfLoanIfAreNull(loanApplicantDto);
 
-            if (loanApplicantDto.GmailId == null)
-            {
-                throw new LoanExeption($"Email with ID {loanApplicantDto.GmailId} does not exist!");
-            }
+            ValidatorLoanService.ValidatorGmailId(loanApplicantDto);
 
-            if (loanApplicantDto.EGN.Length != 10)
-            {
-                throw new LoanExeption("The EGN of the client must be exactly 10 digits!");
-            }
-
-            if (loanApplicantDto.Name.Length < 3 || loanApplicantDto.Name.Length > 50)
-            {
-                throw new LoanExeption("The length of the client's name is not correct!");
-            }
-            if (loanApplicantDto.PhoneNumber.Length < 3 || loanApplicantDto.PhoneNumber.Length > 50)
-            {
-                throw new LoanExeption("The length of the client's phone number is not correct!");
-            }
+            ValidatorLoanService.ValidatorDetailsOfLoan(loanApplicantDto);
 
             var isEgnCorrect = CheckEGNForDigit(loanApplicantDto.EGN);
 
-            if (isEgnCorrect == false)
-            {
-                throw new LoanExeption("EGN cannot contains digits");
-            }
+            ValidatorLoanService.ValidatorEGN(isEgnCorrect);
 
             var user = await this.context.Users
                 .Include(l => l.LoanApplicant)
@@ -97,11 +74,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<bool> ApproveLoanAsync(ApproveLoanDto approveLoanDto)
         {
-
-            if (approveLoanDto.GmailId == null || approveLoanDto.IsApprove == null)
-            {
-                throw new LoanExeption($"Тhe details of the loan request are invalid");
-            }
+            ValidatorLoanService.ValidatorApproveLoan(approveLoanDto);
 
             int expectedResult = int.Parse(approveLoanDto.IsApprove);
 

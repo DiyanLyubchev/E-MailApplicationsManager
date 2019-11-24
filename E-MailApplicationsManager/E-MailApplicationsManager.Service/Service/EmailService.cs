@@ -2,8 +2,8 @@
 using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
-using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
+using E_MailApplicationsManager.Service.Util;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -28,26 +28,11 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<Email> AddMailAsync(EmailDto emailDto)
         {
-            if (emailDto.DateReceived == null ||
-            emailDto.Sender == null || emailDto.Subject == null)
-            {
-                throw new EmailExeption("Email does not exist!");
-            }
+            ValidatorEmailService.ValidatorAddMailIfDtoIsNull(emailDto);
 
-            if (emailDto.GmailId.Length < 5 || emailDto.GmailId.Length > 100)
-            {
-                throw new EmailExeption("Lenght of GmailId is not correct!");
-            }
-
-            if (emailDto.Subject.Length < 3 || emailDto.Subject.Length > 100)
-            {
-                throw new EmailExeption("Lenght of Subject is not correct!");
-            }
-
-            if (emailDto.Sender.Length < 5 || emailDto.Sender.Length > 50)
-            {
-                throw new EmailExeption("Lenght of Sender is not correct!");
-            }
+            ValidatorEmailService.ValidatorGmailIdLength(emailDto);
+            ValidatorEmailService.ValidatorSubjectLength(emailDto);
+            ValidatorEmailService.ValidatorSenderLength(emailDto);
 
             var gmailId = await this.context.Emails
                 .FirstOrDefaultAsync(id => id.GmailId == emailDto.GmailId);
@@ -73,10 +58,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<bool> ChangeStatusAsync(EmailStatusIdDto emailStatusId)
         {
-            if (emailStatusId.StatusId == null || emailStatusId.GmailId == null)
-            {
-                throw new EmailExeption("Status id or Gmail id cannot be null");
-            }
+            ValidatorEmailService.ValidatorChangeStatus(emailStatusId);
 
             int status = int.Parse(emailStatusId.StatusId);
 
@@ -118,15 +100,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task AddAttachmentAsync(EmailAttachmentDTO attachmentDTO)
         {
-            if (attachmentDTO.FileName.Length < 5 || attachmentDTO.FileName.Length > 100)
-            {
-                throw new EmailExeption("Lenght of name attachment is not correct!");
-            }
-
-            if (attachmentDTO.GmailId.Length < 5 || attachmentDTO.GmailId.Length > 100)
-            {
-                throw new EmailExeption("Lenght of GmailId is not correct!");
-            }
+            ValidatorEmailService.ValidatorAddAttachment(attachmentDTO);
 
             var gmaiId = await this.context.Emails
                .FirstOrDefaultAsync(id => id.GmailId == attachmentDTO.GmailId);
@@ -156,20 +130,11 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(id => id.Id == emailDto.UserId)
                 .SingleOrDefaultAsync();
 
-            if (emailDto.Body == null)
-            {
-                throw new EmailExeption($"Email with the following id {emailDto.GmailId} does not exist");
-            }
+            ValidatorEmailService.ValidatorAddBodyToCurrentEmailIfDtoBodyIsNull(emailDto);
 
-            if (emailDto.Body.Length > 1000)
-            {
-                throw new EmailExeption($"Body of email is to long!");
-            }
+            ValidatorEmailService.ValidatorAddBodyToCurrentEmailBodyLength(emailDto);
 
-            if (email.Body != null)
-            {
-                throw new EmailExeption($"Email with the following id {emailDto.GmailId} contains body");
-            }
+            ValidatorEmailService.ValidatorAddBodyToCurrentEmailExistBody(email, emailDto);
 
             var encodeBody = this.encodeDecodeService.Base64Decode(emailDto.Body);
 
@@ -192,10 +157,7 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
                 .SingleOrDefaultAsync();
 
-            if (email.Body == null)
-            {
-                throw new EmailExeption("Email body is empty");
-            }
+            ValidatorEmailService.ValidatorCheckEmailBody(email);
 
             var currentUser = await this.context.Users
                 .Where(userId => userId.Id == emailDto.UserId)
@@ -221,10 +183,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<bool> SetEmailStatusInvalidApplicationAsync(StatusInvalidApplicationDto dto)
         {
-            if (dto.GmailId == null)
-            {
-                throw new EmailExeption($"Email with the following id {dto.GmailId} does not exist!");
-            }
+            ValidatorEmailService.ValidatorSetEmailStatusInvalidApplication(dto);
 
             var email = await this.context.Emails
                 .Include(u => u.User)
