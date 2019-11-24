@@ -27,7 +27,7 @@ namespace E_MailApplicationsManager.Web.Models.Loan
         public string GmailId { get; set; }
 
         [Required]
-        public string EmployeeName { get; set; }
+        public string CompletedBy { get; set; }
 
         public DateTime? TerminalDate { get; set; }
 

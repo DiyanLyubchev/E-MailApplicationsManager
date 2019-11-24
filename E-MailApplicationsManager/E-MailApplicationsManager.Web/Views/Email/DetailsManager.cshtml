@@ -13,7 +13,7 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.GmailId)
+                Gmail id:
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.GmailId)
@@ -31,13 +31,13 @@
                 @Html.DisplayFor(model => model.Sender)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.DateReceived)
+                Date received:
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.DateReceived)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.UserId)
+                User id:
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.UserId)
@@ -75,7 +75,7 @@
 
                             }
 
-                            <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">InvalidApplication</button>
+                            <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Invalid Application</button>
 
                         </div>
                     </div>

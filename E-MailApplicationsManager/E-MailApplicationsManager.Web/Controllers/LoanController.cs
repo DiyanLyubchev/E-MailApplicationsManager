@@ -151,7 +151,7 @@ namespace E_MailApplicationsManager.Web.Controllers
             var decodeLoan = this.encodeDecodeService.DecodeLoanApplicant(loan);
 
             var result = new StatusCloseEmailViewModel(decodeLoan);
-            result.EmployeeName = nameEmployee;
+            result.CompletedBy = nameEmployee;
             result.TerminalDate = date;
             result.Status = resultOfLoanApplicant;
 
