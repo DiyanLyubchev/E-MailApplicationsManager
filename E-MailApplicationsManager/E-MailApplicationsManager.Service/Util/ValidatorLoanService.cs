@@ -30,7 +30,7 @@ namespace E_MailApplicationsManager.Service.Util
                 throw new LoanExeption("The EGN of the client must be exactly 10 digits!");
             }
 
-            if (loanApplicantDto.Name.Length < 3 || loanApplicantDto.Name.Length > 50)
+            if (loanApplicantDto.Name.Length < 8 || loanApplicantDto.Name.Length > 50)
             {
                 throw new LoanExeption("The length of the client's name is not correct!");
             }

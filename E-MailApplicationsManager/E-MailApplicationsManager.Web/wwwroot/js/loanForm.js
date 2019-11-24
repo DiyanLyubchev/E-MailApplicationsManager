@@ -7,6 +7,21 @@ $('#send-button').on('click', function () {
     const addPhoneNumber = $('#phone-number').val();
     const gmailId = $('#send-button').val();
 
+    let massege = 'Something went wrong!';
+
+    if (addName.length === 0 || addEGN.length === 0 || addPhoneNumber.length === 0) {
+        massege = "The client's details cannot be null!";
+    }
+    else if (addName.length < 3 || addName.length > 50) {
+        massege = "The length of the client's name is not correct!";
+    }
+    else if (addEGN.length < 10 || addEGN.length > 10) {
+        massege = "The client's Egn must be 10 symbols!";
+    }
+    else if (addPhoneNumber.length < 8 || addPhoneNumber.length > 50) {
+        massege = "The length of the client's phone number is not correct!";
+    }
+
     $.ajax({
         url: '/Loan/Loanform',
         data: { userData: addName, egnData: addEGN, phoneData: addPhoneNumber, idData: gmailId },
@@ -32,11 +47,12 @@ $('#send-button').on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!'
+                    showConfirmButton: true,
+                    text: massege
                 })
-                window.setInterval(errorRequest, 500);
+                window.setInterval(errorRequest, 5000);
                 function errorRequest() {
-                    window.location.href = "/email/fillemailform/" + thrownError.emailId;
+                    window.location.href = "/email/fillemailform/" + result.exeption;
                 }
             }
         }
@@ -64,7 +80,7 @@ $('#loan-approve').click(function () {
     });
 });
 
-$('#loan-approve').click( function () {
+$('#loan-approve').click(function () {
     $('#loan-approve').css('background', '#ff6a00');
 });
 
@@ -88,7 +104,7 @@ $('#loan-reject').click(function () {
     });
 });
 
-$('#loan-reject').click( function () {
+$('#loan-reject').click(function () {
     $('#loan-reject').css('background', '#ff6a00');
 });
 
