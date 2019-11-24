@@ -13,6 +13,7 @@ using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Service.Service;
 using E_MailApplicationsManager.Models.Model;
 using Serilog;
+using E_MailApplicationsManager.Web.Middlewares;
 
 namespace E_MailApplicationsManager.Web
 {
@@ -120,6 +121,8 @@ namespace E_MailApplicationsManager.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseMiddleware<NotFoundPageMiddleware>();
 
             app.UseMvc(routes =>
             {
