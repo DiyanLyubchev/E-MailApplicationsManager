@@ -1,7 +1,9 @@
 ﻿using E_MailApplicationsManager.Service.Contracts;
 using E_MailApplicationsManager.Web.Models.Emails;
+using E_MailApplicationsManager.Web.Models.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace E_MailApplicationsManager.Web.Controllers
@@ -39,6 +41,12 @@ namespace E_MailApplicationsManager.Web.Controllers
             //var viewModel = new ListEmailsFromChartViewModel(list);
 
             return Json(list);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

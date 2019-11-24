@@ -1,8 +1,8 @@
 ﻿using E_MailApplicationsManager.Models.Context;
 using E_MailApplicationsManager.Models.Model;
 using E_MailApplicationsManager.Service.Contracts;
-using E_MailApplicationsManager.Service.CustomException;
 using E_MailApplicationsManager.Service.Dto;
+using E_MailApplicationsManager.Service.Util;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -26,40 +26,17 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task RegisterAccountAsync(RegisterAccountDto registerAccountDto)
         {
-            if (registerAccountDto.Role != "Manager" && registerAccountDto.Role != "Operator")
-            {
-                throw new UserExeption("Wrong role name!");
-            }
-
-            if (registerAccountDto.UserName.Length < 3 || registerAccountDto.UserName.Length > 50)
-            {
-                throw new UserExeption("Username must be betweeen 3 and 50 symbols!");
-            }
-
-            if (registerAccountDto.Password.Length < 5 || registerAccountDto.Password.Length > 100)
-            {
-                throw new UserExeption("Password must be betweeen 5 and 100 symbols!");
-            }
-
-            if (registerAccountDto.Email == null)
-            {
-                throw new UserExeption("Email cannot be null!");
-            }
-
-            if (registerAccountDto.Email.Length < 5 || registerAccountDto.Email.Length > 50)
-            {
-                throw new UserExeption("Email must be betweeen 5 and 50 symbols!");
-            }
+            ValidatorUserService.ValidatorRoleName(registerAccountDto);
+            ValidatorUserService.ValidatorUserName(registerAccountDto);
+            ValidatorUserService.ValidatorPassword(registerAccountDto);
+            ValidatorUserService.ValidatorUserEmail(registerAccountDto);
 
             var user = await this.context.Users
                 .Where(name => name.UserName == registerAccountDto.UserName)
                 .Select(username => username.UserName)
                 .SingleOrDefaultAsync();
 
-            if (user != null)
-            {
-                throw new UserExeption($"You cannot register accout with the following username {registerAccountDto.UserName}");
-            }
+            ValidatorUserService.ValidatorForExistUsername(user, registerAccountDto);
 
             var passwordHasher = new PasswordHasher<User>();
 
@@ -94,20 +71,14 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<bool> ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
-            if (changePasswordDto.OldPassword == null ||
-                changePasswordDto.NewPassword == null)
-            {
-                throw new UserExeption("Invalid password");
-            }
+            ValidatorUserService.ValidatorChangePassword(changePasswordDto);
 
             var user = await this.context.Users
                 .Where(userPaswword => userPaswword.Id == changePasswordDto.UserId)
                 .FirstOrDefaultAsync();
 
-            if (user == null)
-            {
-                throw new UserExeption("Incorect password");
-            }
+            ValidatorUserService.ValidatorExistUser(user);
+
             var passwordHasher = new PasswordHasher<User>();
 
             user.PasswordHash = user.PasswordHash = passwordHasher.HashPassword(user, changePasswordDto.NewPassword);
