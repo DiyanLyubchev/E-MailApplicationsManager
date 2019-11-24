@@ -40,6 +40,10 @@ namespace E_MailApplicationsManager.Web.Controllers
 
             return Json(list);
         }
+        public IActionResult NotFoundPage()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
