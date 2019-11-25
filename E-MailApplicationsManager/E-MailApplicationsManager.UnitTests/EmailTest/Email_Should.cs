@@ -696,5 +696,66 @@ namespace E_MailApplicationsManager.UnitTests.EmailTest
                 Assert.IsNotNull(result);
             }
         }
+
+        [TestMethod]
+        public async Task ChangeEmailStatusFromClose_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            firstEmail.EmailStatusId = 5;
+
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ChangeEmailStatusFromClose_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailDto
+                {
+                    GmailId = email.Entity.GmailId
+                };
+
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
+                var result = await sut.ChangeEmailStatusFromClose(dto);
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailExeption))]
+        public async Task ThrowExeptionWhenEmailDtoIsNullChangeEmailStatusFromClose_Test()
+        {
+            var firstEmail = EmailGeneratorUtil.GenerateEmailFirst();
+
+            firstEmail.EmailStatusId = 5;
+
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+            var loggerMock = new Mock<ILogger<EmailService>>().Object;
+
+            var options = TestUtilities.GetOptions(nameof(ThrowExeptionWhenEmailDtoIsNullChangeEmailStatusFromClose_Test));
+
+            using (var actContext = new E_MailApplicationsManagerContext(options))
+            {
+                var email = await actContext.Emails.AddAsync(firstEmail);
+
+                await actContext.SaveChangesAsync();
+
+                var dto = new EmailDto
+                {
+                    GmailId =null
+                };
+
+                var sut = new EmailService(actContext, loggerMock, encodeDecodeServiceMock);
+                var result = await sut.ChangeEmailStatusFromClose(dto);
+
+                Assert.IsNotNull(result);
+            }
+        }
     }
 }

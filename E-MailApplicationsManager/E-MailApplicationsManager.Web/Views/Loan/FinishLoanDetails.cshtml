@@ -50,6 +50,10 @@
             </dd>
         </dl>
     </div>
+    @if (Model.Status == "Reject")
+    {
+        <button style="background-color:#34495e" class="btn btn-primary" value="@Model.GmailId" type="submit" id="change-email-status-from-close">Change status</button>
+    }
     <div>
         <br />
         <string>

@@ -89,11 +89,11 @@ namespace E_MailApplicationsManager.Service.Util
             }
         }
 
-        public static void ValidatorSetEmailStatusInvalidApplication(StatusInvalidApplicationDto dto)
+        public static void ValidatorSetEmailStatusInvalidApplication(string dto)
         {
-            if (dto.GmailId == null)
+            if (dto == null)
             {
-                throw new EmailExeption($"Email with the following id {dto.GmailId} does not exist!");
+                throw new EmailExeption($"Email with the following id {dto} does not exist!");
             }
         }
 

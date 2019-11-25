@@ -5,7 +5,7 @@
 }
 
 
-<img src="~/images/tbilogo.png"  alt="Sample Photo" />
+<img src="~/images/tbilogo.png" alt="Sample Photo" />
 <br />
 <br />
 <h1>Finished Loan Applicant</h1>
@@ -18,7 +18,14 @@
     <div>
         @foreach (var loan in Model.Emails)
         {
+            @*if(loan.Status == "Reject")
+            {
+                <a style="color: red; text-decoration : none" asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id">
+                    <p>@loan.ClienName </p>
+                </a>
+            }*@
             <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName </p> </a>
+
         }
     </div>
     <div>

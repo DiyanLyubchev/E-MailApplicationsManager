@@ -183,7 +183,7 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<bool> SetEmailStatusInvalidApplicationAsync(StatusInvalidApplicationDto dto)
         {
-            ValidatorEmailService.ValidatorSetEmailStatusInvalidApplication(dto);
+            ValidatorEmailService.ValidatorSetEmailStatusInvalidApplication(dto.GmailId);
 
             var email = await this.context.Emails
                 .Include(u => u.User)
@@ -201,6 +201,20 @@ namespace E_MailApplicationsManager.Service.Service
 
             logger.LogInformation($"Changed email status to Invalid Application by {currentUser.UserName}");
             return true;
+        }
+
+        public async Task<string> ChangeEmailStatusFromClose(EmailDto emailDto)
+        {
+            ValidatorEmailService.ValidatorSetEmailStatusInvalidApplication(emailDto.GmailId);
+
+            var email = this.context.Emails
+                .Where(gmailId => gmailId.GmailId == emailDto.GmailId)
+                .FirstOrDefault();
+
+            email.EmailStatusId = (int)EmailStatusesType.New;
+            await this.context.SaveChangesAsync();
+
+            return emailDto.GmailId;
         }
     }
 }
