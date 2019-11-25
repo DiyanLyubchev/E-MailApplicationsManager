@@ -239,5 +239,14 @@ namespace E_MailApplicationsManager.Web.Controllers
         {
             return Json(new { emailId = currentEmailId });
         }
+
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> ChangeEmailStatusFromClose(string changeStatusData)
+        {
+            var emailDto = new EmailDto { GmailId = changeStatusData };
+            await this.service.ChangeEmailStatusFromClose(emailDto);
+
+            return Json(new { changeStatus = changeStatusData });
+        }
     }
 }

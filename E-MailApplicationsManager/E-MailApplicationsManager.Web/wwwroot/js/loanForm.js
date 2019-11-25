@@ -108,3 +108,22 @@ $('#loan-reject').click(function () {
     $('#loan-reject').css('background', '#ff6a00');
 });
 
+//change-email-status-from-close in new
+
+$('#change-email-status-from-close').click(function () {
+
+    const changeStatus = $('#change-email-status-from-close').val();
+
+    $.ajax({
+        url: '/Email/ChangeEmailStatusFromClose',
+        data: { changeStatusData: changeStatus },
+        type: 'POST',
+        dataType: 'json',
+        traditional: true,
+        cache: false,
+        success: function (result) {
+            console.log(result);
+            window.location.href = "/email/fillemailform/" + result.changeStatus;
+        }
+    });
+});

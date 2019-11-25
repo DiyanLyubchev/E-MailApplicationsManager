@@ -313,6 +313,24 @@ namespace E_MailApplicationsManager.UnitTests.ControllerTests.Email
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
+
+        [TestMethod]
+        public async Task ChangeEmailStatusFromClose_Test()
+        {
+            var emailServiceMock = new Mock<IEmailService>().Object;
+            var concreteMailServiceMock = new Mock<IConcreteMailService>().Object;
+            var searchServiceMock = new Mock<ISearchService>().Object;
+            var encodeDecodeServiceMock = new Mock<IEncodeDecodeService>().Object;
+
+            var controller = new EmailController(emailServiceMock, concreteMailServiceMock,
+                searchServiceMock, encodeDecodeServiceMock);
+
+            var setEmailStatusFromCloseToNew = "3 TestGmailId";
+
+            var result =await controller.ChangeEmailStatusFromClose(setEmailStatusFromCloseToNew);
+
+            Assert.IsInstanceOfType(result, typeof(JsonResult));
+        }
     }
 }
 
