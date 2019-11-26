@@ -12,6 +12,7 @@ namespace E_MailApplicationsManager.Web.Models.Loan
             this.ClienName = loanApplicant.Name;
             this.PhoneNumber = loanApplicant.PhoneNumber;
             this.GmailId = loanApplicant.GmailId;
+            this.IsApproved = loanApplicant.IsApproved;
         }
 
         [ScaffoldColumn(false)]
@@ -33,5 +34,7 @@ namespace E_MailApplicationsManager.Web.Models.Loan
 
         [Required]
         public string Status { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

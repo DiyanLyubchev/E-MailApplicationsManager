@@ -197,6 +197,7 @@ namespace E_MailApplicationsManager.Service.Service
             email.User = currentUser;
             email.UserId = dto.UserId;
             email.EmailStatusId = (int)EmailStatusesType.InvalidApplication;
+            email.SetCurrentStatus = DateTime.Now;
             await this.context.SaveChangesAsync();
 
             logger.LogInformation($"Changed email status to Invalid Application by {currentUser.UserName}");
@@ -212,6 +213,7 @@ namespace E_MailApplicationsManager.Service.Service
                 .FirstOrDefault();
 
             email.EmailStatusId = (int)EmailStatusesType.New;
+            email.SetCurrentStatus = DateTime.Now;
             await this.context.SaveChangesAsync();
 
             return emailDto.GmailId;
