@@ -15,7 +15,6 @@ namespace E_MailApplicationsManager.Service.Service
 {
     public class ConcreteMailService : IConcreteMailService
     {
-      
         private readonly IEncodeDecodeService encodeDecodeService;
         private readonly IMapperService mapper;
         public ConcreteMailService(IEncodeDecodeService encodeDecodeService, IMapperService mapper)

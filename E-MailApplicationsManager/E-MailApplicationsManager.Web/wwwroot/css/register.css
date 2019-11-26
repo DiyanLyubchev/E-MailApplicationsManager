@@ -27,13 +27,13 @@ a {
 .register-wrap {
     width: 100%;
     margin: auto;
-    margin-top: 100px;
     max-width: 525px;
     min-height: 480px;
     position: relative;
     background: url(https://budapest-travel-tips.com/wp-content/uploads/2018/11/hungarian_currency_change.jpg) no-repeat center;
     background-size: 930px 480px;
     box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+    z-index: 500;
 }
 
 .register-html {
