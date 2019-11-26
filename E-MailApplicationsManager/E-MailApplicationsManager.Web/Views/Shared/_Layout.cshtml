@@ -42,18 +42,30 @@
 <body>
     <header style="color:#ff6a00">
         <nav style="color:#ff6a00" class="navbar navbar-expand-sm navbar-toggleable-sm ">
-            <partial name="_LoginPartial" />
-            <ul class="menu cf">
-                @if (User.IsInRole("Manager"))
-                {
-                    @await Component.InvokeAsync("Manager")
-                }
+            <div class="col-2">
+                <partial name="_LoginPartial" />
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-2">
+                    <img src="~/images/tbilogo.png" />
+                </div>
+                <div class="col-8">
+                    <ul class="menu cf">
+                        @if (User.IsInRole("Manager"))
+                        {
+                            @await Component.InvokeAsync("Manager")
+                        }
 
-                @if (User.IsInRole("Operator"))
-                {
-                    @await Component.InvokeAsync("Operator")
-                }
-            </ul>
+                        @if (User.IsInRole("Operator"))
+                        {
+                            @await Component.InvokeAsync("Operator")
+                        }
+                    </ul>
+                </div>
+            }
+
+
         </nav>
     </header>
     <div class="container">

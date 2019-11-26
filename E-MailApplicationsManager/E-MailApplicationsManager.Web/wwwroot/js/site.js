@@ -1,33 +1,41 @@
 ﻿//search
-const serverResponseHandler = (serverData) => {
-    console.log(serverData);
 
-    $('.info-email').remove();
-    $('.info-massege').remove();
-
-    const emailContainer = $('#fill-email');
-   
-
-    let massege = `<div  style="color:#ff6a00" class="info-massege"> We don't have emails with this status!</div>`
-
-    if (serverData === null) {
-        emailContainer.append(massege);
-    }
-    else {
-        let count = 1;
-        serverData
-            .map(email => $(`<div style="color:#ff6a00" class="info-email">${count++}. ${email.sender}   ${email.dateReceived} <div>`))
-            .forEach(emailElement => {
-              emailContainer.append(emailElement);
-          });
-       
-    }
-};
 
 $('#search-button').click(function () {
     const searchText = $('#search-email').val();
 
-    $.get('/email/search?status=' + searchText, serverResponseHandler);
+    $.ajax({
+        url: '/email/search?status=' + searchText,
+        type: 'GET',
+        success: function (serverData) {
+            console.log(serverData);
+
+            $('#info-table').remove();
+            $('.info-massege').remove();
+
+            const emailContainer = $('#fill-email');
+
+            const tableStart =
+                `<table class="table table-bordered" id="info-table"><tr><th scope="col">Number</th><th scope="col">Sender</th><th scope="col">Date Received</th></tr>`;
+            const tableEnd = `</table>`;
+            const massege = `<div  style="color:#ff6a00" class="info-massege"> We don't have emails with this status!</div>`
+
+            if (serverData === null) {
+                emailContainer.append(massege);
+            }
+            else {
+                emailContainer.append(tableStart)
+                const emailTable = $('#info-table');
+                let count = 1;
+                serverData
+                    .map(email => $(`<tr scope="row"><td>${count++}</td><td>${email.sender}</td><td>${email.date}</td></tr>`))
+                    .forEach(emailElement => {
+                        emailTable.append(emailElement);
+                    });
+                emailContainer.append(tableEnd);
+            }
+        }
+    });
 });
 
 

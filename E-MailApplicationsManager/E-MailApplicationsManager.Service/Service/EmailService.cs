@@ -29,7 +29,6 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<Email> AddMailAsync(EmailDto emailDto)
         {
             ValidatorEmailService.ValidatorAddMailIfDtoIsNull(emailDto);
-
             ValidatorEmailService.ValidatorGmailIdLength(emailDto);
             ValidatorEmailService.ValidatorSubjectLength(emailDto);
             ValidatorEmailService.ValidatorSenderLength(emailDto);
@@ -121,6 +120,12 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<Email> AddBodyToCurrentEmailAsync(EmailContentDto emailDto)
         {
+
+            ValidatorEmailService.ValidatorAddBodyToCurrentEmailIfDtoBodyIsNull(emailDto);
+            ValidatorEmailService.ValidatorAddBodyToCurrentEmailBodyLength(emailDto);
+
+            var encodeBody = this.encodeDecodeService.Base64Decode(emailDto.Body);
+
             var email = await this.context.Emails
                 .Include(u => u.User)
                 .Where(gMail => gMail.GmailId == emailDto.GmailId)
@@ -130,13 +135,7 @@ namespace E_MailApplicationsManager.Service.Service
                 .Where(id => id.Id == emailDto.UserId)
                 .SingleOrDefaultAsync();
 
-            ValidatorEmailService.ValidatorAddBodyToCurrentEmailIfDtoBodyIsNull(emailDto);
-
-            ValidatorEmailService.ValidatorAddBodyToCurrentEmailBodyLength(emailDto);
-
             ValidatorEmailService.ValidatorAddBodyToCurrentEmailExistBody(email, emailDto);
-
-            var encodeBody = this.encodeDecodeService.Base64Decode(emailDto.Body);
 
             var encriptBody = this.encodeDecodeService.Encrypt(encodeBody);
 

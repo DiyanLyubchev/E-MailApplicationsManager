@@ -9,17 +9,13 @@ $('#send-button').on('click', function () {
 
     let massege = 'Something went wrong!';
 
-    function isNumeric(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
+    function isNumeric(checkEgn) {
+        return !isNaN(parseFloat(checkEgn)) && isFinite(checkEgn);
     }
 
-
-   
-        if (!isNumeric(addEGN)) {
-            massege = "Egn connot contains letter"
-        }
- 
-
+    if (!isNumeric(addEGN)) {
+        massege = "Egn connot contains letter"
+    }
 
     if (addName.length === 0 || addEGN.length === 0 || addPhoneNumber.length === 0) {
         massege = "The client's details cannot be null!";

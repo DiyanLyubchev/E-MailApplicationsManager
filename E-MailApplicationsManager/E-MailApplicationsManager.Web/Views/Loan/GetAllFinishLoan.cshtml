@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<img src="~/images/tbilogo.png" alt="Sample Photo" />
 <br />
 <br />
 <h1>Finished Loan Applicant</h1>
@@ -26,7 +24,7 @@
             }
             if(loan.IsApproved == true)
             {
-                <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName - Approved</p> </a>
+                <a style="color: green;"  text-decoration : none" asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName - Approved</p> </a>
             }
 
         }

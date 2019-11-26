@@ -50,7 +50,12 @@ namespace E_MailApplicationsManager.Web.Controllers
                 emailStatus = null;
                 return Json(emailStatus);
             }
-            return Json(emailStatus);
+
+            var response = emailStatus.Select(e => {
+                var cleanSender = e.Sender.Replace('<', ' ').Replace('>', ' ');
+                return new { sender = cleanSender, date = e.DateReceived };
+            } );
+            return Json(response);
         }
 
         [HttpPost]
