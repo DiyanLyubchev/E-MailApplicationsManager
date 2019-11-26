@@ -28,7 +28,7 @@ namespace E_MailApplicationsManager.Service.Service
                 Name = name,
                 EGN = egn,
                 PhoneNumber = phoneNumber,
-                GmailId = loanApplicant.GmailId
+                GmailId = loanApplicant.GmailId,
             };
 
             return loan;
@@ -41,7 +41,7 @@ namespace E_MailApplicationsManager.Service.Service
             foreach (var item in loanApplicant)
             {
                 var name = Decrypt(item.Name);
-                loan.Add(new LoanApplicant { Name = name, Id = item.Id });
+                loan.Add(new LoanApplicant { Name = name, Id = item.Id , IsApproved = item.IsApproved});
             }
             return loan;
         }

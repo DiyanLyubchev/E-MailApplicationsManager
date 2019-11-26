@@ -18,13 +18,16 @@
     <div>
         @foreach (var loan in Model.Emails)
         {
-            @*if(loan.Status == "Reject")
+            if(loan.IsApproved == false)
             {
                 <a style="color: red; text-decoration : none" asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id">
                     <p>@loan.ClienName </p>
                 </a>
-            }*@
-            <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName </p> </a>
+            }
+            if(loan.IsApproved == true)
+            {
+                <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName </p> </a>
+            }
 
         }
     </div>
