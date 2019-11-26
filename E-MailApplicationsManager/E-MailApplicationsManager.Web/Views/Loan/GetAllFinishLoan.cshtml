@@ -26,7 +26,7 @@
             }
             if(loan.IsApproved == true)
             {
-                <a asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName - Approved</p> </a>
+                <a style="color: green;"  text-decoration : none" asp-controller="Loan" asp-action="FinishLoanDetails" asp-route-id="@loan.Id"><p>@loan.ClienName - Approved</p> </a>
             }
 
         }
