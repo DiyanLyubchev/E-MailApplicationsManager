@@ -8,11 +8,11 @@ namespace E_MailApplicationsManager.Models.Model
     public class LoanApplicant : BaseIdEntity
     {
         [Required]
-        [StringLength(50, MinimumLength = 3)]
+        [StringLength(150, MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 8)]
+        [StringLength(100, MinimumLength = 8)]
         public string PhoneNumber { get; set; }
 
         [Required]

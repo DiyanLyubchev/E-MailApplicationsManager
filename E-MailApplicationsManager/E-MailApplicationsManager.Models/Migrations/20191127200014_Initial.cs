@@ -232,8 +232,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(maxLength: 150, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 100, nullable: false),
                     EGN = table.Column<string>(nullable: false),
                     GmailId = table.Column<string>(maxLength: 100, nullable: false),
                     IsApproved = table.Column<bool>(nullable: false),
@@ -262,8 +262,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ca678235-7571-4177-984f-e9d1957b0187", "c46c2a25-af3c-42e1-a6d7-4520035bf5ef", "RoleUser", "Manager", "MANAGER" },
-                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "27af1b0e-2234-4945-98cd-102e943eb4a0", "RoleUser", "Operator", "OPERATOR" }
+                    { "ca678235-7571-4177-984f-e9d1957b0187", "6216776a-6198-436c-8d8e-4568c14bef9b", "RoleUser", "Manager", "MANAGER" },
+                    { "ef1c4fa2-0b76-4598-aaee-c6e02803d486", "df60cb11-1972-4072-9f36-39acc2746820", "RoleUser", "Operator", "OPERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -271,8 +271,8 @@ namespace E_MailApplicationsManager.Models.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstLog", "LastLog", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "ba21fcef-0374-426e-9477-4d59c473db0a", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEBXb7zfWqn1hKP9aHe+6VNY86Oyz6DkDzlFczxyeJc2BuSLR8FfwVtvhZ4mHy9Olng==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
-                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "2d7df773-4bfa-4785-88b1-367a55792e82", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEDE4ILv8nzihUAb6Xk0P9P9rht8BhVXwS//PDs17F2uUW8MJl3ozPgyKfztN+wmfdw==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
+                    { "c23c3678-6194-4b7e-a928-09614190eb62", 0, "72bd1194-344e-4cbd-8ccb-9d8e6cf7485a", "admin1@admin.com", false, true, null, true, null, "ADMIN1@ADMIN.COM", "DIYAN", "AQAAAAEAACcQAAAAEK+/dBbLl+l2yP+SAuJrKz9sfq6Vgrau21itf85z46R6HrVSQ5ZwFrrU0kdFSFDxRg==", null, false, "7I5VNHIJTSZNOT3KDWKNFUV5PVYBHGXN", false, "Diyan" },
+                    { "d5b2211a-4ddc-4451-af5e-36b5cfad9a2c", 0, "f06b3b2c-2efc-4fd6-9d4a-ecb3fe899bae", "admin2@admin.com", false, true, null, true, null, "ADMIN2@ADMIN.COM", "BOBI", "AQAAAAEAACcQAAAAEHq+wEJW0OCe85CaMNsGRuSpPODmNcsYbYj1tqODCK9WKFs9rr1unVga68DiER7hQA==", null, false, "74CLJEIXNYLPRXMVXXNSWXZH6R6KJRRU", false, "Bobi" }
                 });
 
             migrationBuilder.InsertData(
