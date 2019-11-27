@@ -68,7 +68,7 @@ namespace E_MailApplicationsManager.Web.Controllers
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (emailData != null)
                 {
-                    var email = await this.concreteMailService.GetEmailByIdAsync(emailData, userId);
+                    await this.concreteMailService.GetEmailByIdAsync(emailData, userId);
                 }
                 else if (setInvalidEmail != null)
                 {
