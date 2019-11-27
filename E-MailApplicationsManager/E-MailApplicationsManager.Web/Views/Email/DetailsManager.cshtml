@@ -62,21 +62,19 @@
                         <button style="background-color:#34495e" class="btn btn-primary" value="@Model.GmailId" type="submit" id="change-email-status">Change</button>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-xs-2">
+                        <div class="col-6">
+                            <br />
                             <br />
                             <br />
                             <br />
                             @if (Model.Status == 1)
                             {
-                                <button id="email-result" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">New</button>
+                            <button id="email-result" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">New</button>
 
                             }
-
-                            <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Invalid Application</button>
-
+                            
+                                <button id="email-invalid-manager" value="@Model.GmailId" style="background-color:#34495e" class="btn btn-primary">Invalid Application</button>
                         </div>
-                    </div>
                 </div>
                 <div>
                     <br />

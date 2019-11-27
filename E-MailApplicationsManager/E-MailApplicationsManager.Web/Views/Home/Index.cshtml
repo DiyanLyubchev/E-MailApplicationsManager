@@ -8,61 +8,62 @@
 <link href="~/css/index.css" rel="stylesheet" />
 <body class="background">
     <div class="page-css">
-        <div class="half">
-            <div class="center-top-half">
-                <img class="profile-picture" src="~/images/profile_picture.png" />
+        <div class="left">
+            <div class="top-half">
+                <div class="left-top-half">
+                    <img class="profile-picture" src="~/images/profile_picture.png" />
+                </div>
+                <div class="right-top-half">
+                    <br />
+                    <h1 class="text-center" style="color:#ff6a00">Welcome!</h1>
+                    <br />
+                    <h3 class="text-center" style="color:#ff6a00">@User.Identity.Name's account</h3>
+                </div>
             </div>
-            <div class="right-top-half">
-                <br />
-                <h1 class="text-center" style="color:#ff6a00">Welcome!</h1>
-                <br />
-                <h3 class="text-center" style="color:#ff6a00">@User.Identity.Name's account</h3>
-            </div>
-        </div>
-        @{
+            @{
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var currentUser = await UserManager.FindByIdAsync(userId);
 
             if (currentUser.FirstLog == true)
             {
-                <div class="half">
+                <div class="bottom-half">
                     <div class="bottom-left-half">
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />
                         @if (User.IsInRole("Manager"))
                         {
-                            <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" asp-action="EmailInfoManager" asp-controller="Email">@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
+                        <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" asp-action="EmailInfoManager" asp-controller="Email">@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
                         }
                         @if (User.IsInRole("Operator"))
                         {
-                            <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" asp-action="EmailInfo" asp-controller="Email">@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
+                        <h1 style="color:#ff6a00" class="text-center">You have <a style="color:blue" asp-action="EmailInfo" asp-controller="Email">@Model.NotReviewedEmails</a> emails that are not reviewed.</h1>
                         }
-                    </div>
-                    <div class="bottom-right-half">
-                        <canvas id="myChart">
-                        </canvas>
                     </div>
                 </div>
             }
             else
             {
-                <div class="half">
+                <div class="bottom-half">
                     <div class="bottom-left-half">
                         <img class="center" id="letter-image" src="~/images/101090_thumb.png" />
                         <br />
                         <br />
                         <h1 class="text-center">You have 0 emails that are not reviewed for your accont.</h1>
                     </div>
-                    <div class="bottom-right-half">
-                        <canvas id="myChart">
-                        </canvas>
-                    </div>
+
                 </div>
             }
-        }
-
+            }
+        </div>
+        <div class="right">
+            <div class="chart-container" style="position: relative; height:25vh; width:50vw">
+                <canvas id="myChart">
+                </canvas>
+            </div>
+        </div>
     </div>
+
     <script src="~/js/index.js"></script>
 </body>
