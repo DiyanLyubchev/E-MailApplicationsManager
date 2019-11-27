@@ -17,50 +17,20 @@ namespace E_MailApplicationsManager.Service.Service
     {
         private readonly IEncodeDecodeService encodeDecodeService;
         private readonly IMapperService mapper;
+        private const int kbDivider = 1024;
         public ConcreteMailService(IEncodeDecodeService encodeDecodeService, IMapperService mapper)
         {
             this.encodeDecodeService = encodeDecodeService;
             this.mapper = mapper;
         }
 
-        // If modifying these scopes, delete your previously saved credentials
-        // at ~/.credentials/gmail-dotnet-quickstart.json
         static string[] Scopes = { GmailService.Scope.GmailModify };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
         public async Task QuickStartAsync()
         {
-            UserCredential credential;
-
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true));
-            }
-
-            // Create Gmail API service.
-            var service = new GmailService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            // Define parameters of request.
-            UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
-
-            var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
-            allListMails.LabelIds = "UNREAD";    // take data only from inbox
-            allListMails.IncludeSpamTrash = false;  // not take data from spam
-
-            var emails = await allListMails.ExecuteAsync();
+            var emails = await ListMessages("UNREAD");
+            var service = await Service();
 
             if (emails.Messages == null)
             {
@@ -94,7 +64,7 @@ namespace E_MailApplicationsManager.Service.Service
                     senderOfEmail = responseMail.Payload.Headers
                         .FirstOrDefault(sender => sender.Name == "From").Value;
 
-                   await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
+                    await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
 
                     var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
                     await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
@@ -121,7 +91,7 @@ namespace E_MailApplicationsManager.Service.Service
                         {
                             string fileName = attachment.Filename;
                             double fileSize = double.Parse(attachment.Body.Size.ToString());
-                            fileSize /= 1024;
+                            fileSize /= kbDivider;
 
                             await this.mapper.MappGmailAttachmentIntoEmailAttachment(gmailId, fileName, fileSize);
                         }
@@ -137,33 +107,9 @@ namespace E_MailApplicationsManager.Service.Service
 
         public async Task<Email> GetEmailByIdAsync(string id, string userId)
         {
-            UserCredential credential;
 
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = "token.json";
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true));
-            }
-
-            var service = new GmailService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
-
-            var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
-            allListMails.LabelIds = "INBOX";
-            allListMails.IncludeSpamTrash = false;
-
-            var emails = await allListMails.ExecuteAsync();
+            var emails = await ListMessages("INBOX");
+            var service = await Service();
 
             var foundEmail = emails.Messages.Where(m => m.Id == id).FirstOrDefault();
             var currentEmail = await (service.Users.Messages.Get("bobidiyantelerik@gmail.com", foundEmail.Id)).ExecuteAsync();
@@ -189,6 +135,54 @@ namespace E_MailApplicationsManager.Service.Service
             }
 
             return email;
+
+        }
+
+        private async Task<UserCredential> Credential()
+        {
+            UserCredential credential;
+
+            using (var stream =
+                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            {
+                // The file token.json stores the user's access and refresh tokens, and is created
+                // automatically when the authorization flow completes for the first time.
+                string credPath = "token.json";
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true));
+            }
+
+            return credential;
+        }
+
+        private async Task<ListMessagesResponse> ListMessages(string label)
+        {
+
+            var service = await Service();
+            // Define parameters of request.
+            UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
+
+            var allListMails = service.Users.Messages.List("bobidiyantelerik@gmail.com");
+            allListMails.LabelIds = label;    // take data only from inbox
+            allListMails.IncludeSpamTrash = false;  // not take data from spam
+
+            return await allListMails.ExecuteAsync();
+        }
+
+        private async Task<GmailService> Service()
+        {
+            var credential = await Credential();
+
+            // Create Gmail API service.
+            return new GmailService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
 
         }
     }

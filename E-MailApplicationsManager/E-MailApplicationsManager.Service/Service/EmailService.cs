@@ -66,8 +66,7 @@ namespace E_MailApplicationsManager.Service.Service
                 .SingleOrDefaultAsync();
 
             var currentUser = await this.context.Users
-               .Where(id => id.Id == emailStatusId.UserId)
-               .SingleOrDefaultAsync();
+               .SingleOrDefaultAsync(id => id.Id == emailStatusId.UserId);
 
             if (status == 1)
             {
@@ -153,8 +152,7 @@ namespace E_MailApplicationsManager.Service.Service
         public async Task<Email> CheckEmailBodyAsync(EmailContentDto emailDto)
         {
             var email = await this.context.Emails
-                .Where(gMail => gMail.GmailId == emailDto.GmailId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(gMail => gMail.GmailId == emailDto.GmailId);
 
             ValidatorEmailService.ValidatorCheckEmailBody(email);
 
