@@ -37,11 +37,6 @@ namespace E_MailApplicationsManager.Service.Service
                 return;
             }
 
-            string subjectOfEmail = null;
-            string dateOfEmail = null;
-            string senderOfEmail = null;
-            string gmailId = null;
-
             foreach (var currentEmail in emails.Messages)
             {
                 var requestMail = service.Users.Messages.Get("bobidiyantelerik@gmail.com", currentEmail.Id);
@@ -53,54 +48,11 @@ namespace E_MailApplicationsManager.Service.Service
 
                 if (mailAttach.MimeType == "text/plain")
                 {
-                    gmailId = responseMail.Id;
-
-                    subjectOfEmail = responseMail.Payload.Headers
-                        .FirstOrDefault(subject => subject.Name == "Subject").Value;
-
-                    dateOfEmail = responseMail.Payload.Headers
-                        .FirstOrDefault(date => date.Name == "Date").Value;
-
-                    senderOfEmail = responseMail.Payload.Headers
-                        .FirstOrDefault(sender => sender.Name == "From").Value;
-
-                    await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
-
-                    var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
-                    await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
+                    await TakeDataFromGmail(responseMail);
                 }
                 else
                 {
-                    gmailId = responseMail.Id;
-
-                    subjectOfEmail = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "Subject").Value;
-
-                    dateOfEmail = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "Date").Value;
-
-                    senderOfEmail = responseMail.Payload.Headers
-                        .FirstOrDefault(s => s.Name == "From").Value;
-
-                    var attachmentLists = responseMail.Payload.Parts.Skip(1).ToList();
-
-                    if (attachmentLists.Any())
-                    {
-
-                        foreach (var attachment in attachmentLists)
-                        {
-                            string fileName = attachment.Filename;
-                            double fileSize = double.Parse(attachment.Body.Size.ToString());
-                            fileSize /= kbDivider;
-
-                            await this.mapper.MappGmailAttachmentIntoEmailAttachment(gmailId, fileName, fileSize);
-                        }
-
-                        await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
-
-                        var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
-                        await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
-                    }
+                    await TakeDataWithAttachment(responseMail);
                 }
             }
         }
@@ -184,6 +136,61 @@ namespace E_MailApplicationsManager.Service.Service
                 ApplicationName = ApplicationName,
             });
 
+        }
+        private async Task TakeDataFromGmail(Message responseMail)
+        {
+            var service = await Service();
+            string gmailId = responseMail.Id;
+
+            string subjectOfEmail = responseMail.Payload.Headers
+                 .FirstOrDefault(subject => subject.Name == "Subject").Value;
+
+            string dateOfEmail = responseMail.Payload.Headers
+                 .FirstOrDefault(date => date.Name == "Date").Value;
+
+            string senderOfEmail = responseMail.Payload.Headers
+                  .FirstOrDefault(sender => sender.Name == "From").Value;
+
+            await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
+
+            var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
+            await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
+        }
+
+        private async Task TakeDataWithAttachment(Message responseMail)
+        {
+            var service = await Service();
+
+            string gmailId = responseMail.Id;
+
+            string subjectOfEmail = responseMail.Payload.Headers
+                  .FirstOrDefault(s => s.Name == "Subject").Value;
+
+            string dateOfEmail = responseMail.Payload.Headers
+                 .FirstOrDefault(s => s.Name == "Date").Value;
+
+            string senderOfEmail = responseMail.Payload.Headers
+                  .FirstOrDefault(s => s.Name == "From").Value;
+
+            var attachmentLists = responseMail.Payload.Parts.Skip(1).ToList();
+
+            if (attachmentLists.Any())
+            {
+
+                foreach (var attachment in attachmentLists)
+                {
+                    string fileName = attachment.Filename;
+                    double fileSize = double.Parse(attachment.Body.Size.ToString());
+                    fileSize /= kbDivider;
+
+                    await this.mapper.MappGmailAttachmentIntoEmailAttachment(gmailId, fileName, fileSize);
+                }
+
+                await this.mapper.MappGmailDataIntoEmailData(gmailId, subjectOfEmail, senderOfEmail, dateOfEmail);
+
+                var changeEmailStatus = new ModifyMessageRequest { RemoveLabelIds = new List<string> { "UNREAD" } };
+                await service.Users.Messages.Modify(changeEmailStatus, "bobidiyantelerik@gmail.com", gmailId).ExecuteAsync();
+            }
         }
     }
 }
